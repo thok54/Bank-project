@@ -51,7 +51,7 @@ public class PaymentManagerImpl implements PaymentManager {
 				in.close();
 				
 				//Writes accounts after payments
-				fwriter("src\\main\\resources\\csv\\AccountsAfterPayments", bestBank);
+				fwriter(String.join(File.separator, "src", "main", "resources", "csv", "AccountsAfterPayments.csv"), bestBank);
 				
 				return payments;
 			}

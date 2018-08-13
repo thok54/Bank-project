@@ -20,9 +20,9 @@ public class MainProcess {
         AccountManager accountManager = new AccountManagerImpl();
         PaymentManager paymentManager = new PaymentManagerImpl();
         // File names might change depending on file location
-        String bankFile = String.join(File.separator, "src", "test", "resources", "bankTest.csv");
-        String accountFile = String.join(File.separator, "src", "test", "resources", "accountTest.csv");
-        String paymentFile = String.join(File.separator, "src", "test", "resources", "paymentTest.csv");
+        String bankFile = String.join(File.separator, "src", "main", "resources", "csv", "bank.csv");
+        String accountFile = String.join(File.separator, "src", "main", "resources", "csv", "accounts.csv");
+        String paymentFile = String.join(File.separator, "src", "main", "resources", "csv", "payments.csv");
 
         // Creates the bank
         Bank bestBank = bankManager.manage(bankFile);
@@ -35,7 +35,7 @@ public class MainProcess {
 
 
         //Writes accounts before payments
-        paymentManager.fwriter("C:\\Users\\Oem_\\IdeaProjects\\bank-services\\src\\main\\resources\\csv\\AccountsBeforePayments", bestBank);
+        paymentManager.fwriter(String.join(File.separator, "src", "main", "resources", "csv", "accountsBeforePayments.csv"), bestBank);
 
 
         //This is the code that will be repeated if user wants
