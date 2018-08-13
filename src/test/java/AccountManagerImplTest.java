@@ -1,11 +1,13 @@
 package test.java;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
 import main.java.ejercicio.banco.dto.Account;
 import main.java.ejercicio.banco.service.AccountManager;
 import main.java.ejercicio.banco.service.AccountManagerImpl;
+import org.junit.Test;
 
 import static org.junit.Assert.*;
 
@@ -13,11 +15,11 @@ import static org.junit.Assert.*;
 //Tests if AccountManagerImpl is generating Accounts properly from files
 public class AccountManagerImplTest {
 
-    @org.junit.Test
+    @Test
     public void manage() throws FileNotFoundException {
 
         AccountManager accountManagerTest = new AccountManagerImpl();
-        List<Account> accounts = accountManagerTest.manage("src\\test\\resources\\accountsTest.csv");
+        List<Account> accounts = accountManagerTest.manage(String.join(File.separator, "src", "test", "resources", "accountsTest.csv"));
         assertTrue("Not getting the right Address", accounts.get(1).getMoney() == 0.00);
     }
 }

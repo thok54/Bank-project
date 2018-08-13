@@ -3,6 +3,8 @@ import main.java.ejercicio.banco.dto.Account;
 import main.java.ejercicio.banco.dto.Bank;
 import main.java.ejercicio.banco.dto.Payment;
 import main.java.ejercicio.banco.service.*;
+
+import java.io.File;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -18,9 +20,9 @@ public class MainProcess {
         AccountManager accountManager = new AccountManagerImpl();
         PaymentManager paymentManager = new PaymentManagerImpl();
         // File names might change depending on file location
-        String bankFile = "src\\main\\resources\\csv\\bank.csv";
-        String accountFile = "src\\main\\resources\\csv\\accounts.csv";
-        String paymentFile = "src\\main\\resources\\csv\\payments.csv";
+        String bankFile = String.join(File.separator, "src", "test", "resources", "bankTest.csv");
+        String accountFile = String.join(File.separator, "src", "test", "resources", "accountTest.csv");
+        String paymentFile = String.join(File.separator, "src", "test", "resources", "paymentTest.csv");
 
         // Creates the bank
         Bank bestBank = bankManager.manage(bankFile);
