@@ -30,6 +30,10 @@
       <FILTER>test.java.*</FILTER>
     </SUITE>
   </component>
+  <component name="CoverageViewManager">
+    <option name="myFlattenPackages" value="true" />
+    <option name="myElementSize" value="144" />
+  </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-1968679375">
       <usages-collector id="statistics.lifecycle.project">
@@ -53,19 +57,32 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="csv" value="5" />
-          <entry key="java" value="9" />
+          <entry key="java" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="9" />
+          <entry key="JAVA" value="12" />
           <entry key="PLAIN_TEXT" value="5" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/BankManagerImplTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="63" selection-start-line="19" selection-start-column="63" selection-end-line="19" selection-end-column="63" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -110,16 +127,15 @@
         <option value="$PROJECT_DIR$/src/main/java/ejercicio/banco/service/AccountManagerImplTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/ejercicio/banco/service/PaymentManagerImplTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/ejercicio/banco/MainProcess.java" />
-        <option value="$PROJECT_DIR$/src/test/java/BankManagerImplTest.java" />
         <option value="$PROJECT_DIR$/src/test/resources/paymentTest.csv" />
         <option value="$PROJECT_DIR$/src/test/java/PaymentManagerImplTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/AccountManagerImplTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/BankManagerImplTest.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="360" />
-    <option name="y" value="29" />
+    <option name="x" value="311" />
     <option name="width" value="1136" />
     <option name="height" value="861" />
   </component>
@@ -199,7 +215,7 @@
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="SearchEverywhereHistoryKey" value="AccountM&#9;PSI&#9;JAVA://main.java.ejercicio.banco.service.AccountManager&#10;bankM&#9;PSI&#9;JAVA://main.java.ejercicio.banco.service.BankManager&#10;main&#9;FILE&#9;file://C:/Users/Oem_/IdeaProjects/bank-services/src/main/java/ejercicio/banco/MainProcess.java&#10;Mai&#9;FILE&#9;file://C:/Users/Oem_/IdeaProjects/bank-services/src/ejercicio/banco/MainProcess.java" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1534200558227" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1534200771983" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Groovy JUnit" value="groovy.util.GroovyTestCase" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
@@ -371,6 +387,12 @@
     <history-entry file="AccountManagerImplTest - 2018.08.14 at 10h 45m 59s.xml">
       <configuration name="AccountManagerImplTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="BankManagerImplTest - 2018.08.14 at 10h 46m 18s.xml">
+      <configuration name="BankManagerImplTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PaymentManagerImplTest - 2018.08.14 at 10h 46m 28s.xml">
+      <configuration name="PaymentManagerImplTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -382,9 +404,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="200" y="0" width="1244" height="861" extended-state="0" />
+    <frame x="311" y="0" width="1136" height="861" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25422296" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27973977" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -393,16 +415,16 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32852563" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.41953233" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2696011" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39872408" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32961783" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3280255" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32737276" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32961783" />
       <window_info anchor="bottom" id="Messages" order="10" />
-      <window_info anchor="right" id="Coverage" side_tool="true" visible="true" weight="0.3293919" />
+      <window_info anchor="right" id="Coverage" side_tool="true" weight="0.3293919" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -513,16 +535,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/BankManagerImplTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="14" column="9" lean-forward="true" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ejercicio/banco/service/PaymentManagerImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -565,9 +577,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/PaymentManagerImplTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="26" column="36" lean-forward="true" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/AccountManagerImplTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
+        <state relative-caret-position="339">
           <caret line="21" column="124" selection-start-line="21" selection-start-column="124" selection-end-line="21" selection-end-column="124" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -575,10 +597,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/PaymentManagerImplTest.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/BankManagerImplTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="36" lean-forward="true" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
+        <state relative-caret-position="323">
+          <caret line="19" column="63" selection-start-line="19" selection-start-column="63" selection-end-line="19" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
