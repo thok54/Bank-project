@@ -1,4 +1,4 @@
-package test.java;
+package test.java.ejercicio.banco.tester;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,15 +19,15 @@ public class PaymentManagerImplTest {
     @Test
     public void manage() throws FileNotFoundException {
         BankManager bankManagerTest = new BankManagerImpl();
-        String bankFileTest = String.join(File.separator, "src", "test", "resources", "bankTest.csv");
+        String bankFileTest = String.join(File.separator, "src", "test", "resources", "csv", "bankTest.csv");
         Bank testBank = bankManagerTest.manage(bankFileTest);
 
         AccountManager accountManagerTest = new AccountManagerImpl();
-        List<Account> accounts = accountManagerTest.manage(String.join(File.separator, "src", "test", "resources", "accountsTest.csv"));
+        List<Account> accounts = accountManagerTest.manage(String.join(File.separator, "src", "test", "resources", "csv", "accountsTest.csv"));
         testBank.setUsers(accounts);
 
         PaymentManager paymentManagerTest = new PaymentManagerImpl();
-        String paymentFileTest = String.join(File.separator, "src", "test", "resources", "paymentTest.csv");
+        String paymentFileTest = String.join(File.separator, "src", "test", "resources", "csv", "paymentTest.csv");
         List<Payment> payments = paymentManagerTest.manage(paymentFileTest, testBank);
         assertTrue("Not getting the right Amount", payments.get(1).getAmount() == 87.25);
     }

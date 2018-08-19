@@ -1,4 +1,4 @@
-package test.java;
+package test.java.ejercicio.banco.tester;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,7 +15,7 @@ public class BankManagerImplTest {
     @Test
     public void manage() throws FileNotFoundException {
         BankManager bankManagerTest = new BankManagerImpl();
-        String bankFileTest = String.join(File.separator, "src", "test", "resources", "bankTest.csv");
+        String bankFileTest = String.join(File.separator, "src", "test", "resources", "csv", "bankTest.csv");
         Bank testBank = bankManagerTest.manage(bankFileTest);
         assertEquals("TestAddress", testBank.getBankAddress());
     }

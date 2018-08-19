@@ -1,4 +1,4 @@
-package test.java;
+package test.java.ejercicio.banco.tester;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,7 +19,7 @@ public class AccountManagerImplTest {
     public void manage() throws FileNotFoundException {
 
         AccountManager accountManagerTest = new AccountManagerImpl();
-        List<Account> accounts = accountManagerTest.manage(String.join(File.separator, "src", "test", "resources", "accountsTest.csv"));
+        List<Account> accounts = accountManagerTest.manage(String.join(File.separator, "src", "test", "resources", "csv", "accountsTest.csv"));
         assertTrue("Not getting the right Address", accounts.get(1).getMoney() == 0.00);
     }
 }
