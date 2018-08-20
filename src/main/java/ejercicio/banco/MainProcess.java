@@ -2,6 +2,7 @@ package main.java.ejercicio.banco;
 import main.java.ejercicio.banco.dto.Account;
 import main.java.ejercicio.banco.dto.Bank;
 import main.java.ejercicio.banco.dto.Payment;
+import main.java.ejercicio.banco.repository.*;
 import main.java.ejercicio.banco.service.*;
 
 import java.io.File;
@@ -16,55 +17,82 @@ public class MainProcess {
         //This will identify wether to repeat process or not
         Boolean yesNo = true;
 
-        BankManager bankManager = new BankManagerImpl();
-        AccountManager accountManager = new AccountManagerImpl();
-        PaymentManager paymentManager = new PaymentManagerImpl();
-        // File names might change depending on file location
-        String bankFile = String.join(File.separator, "src", "main", "resources", "csv", "bank.csv");
-        String accountFile = String.join(File.separator, "src", "main", "resources", "csv", "accounts.csv");
-        String paymentFile = String.join(File.separator, "src", "main", "resources", "csv", "payments.csv");
 
-        // Creates the bank
-        Bank bestBank = bankManager.manage(bankFile);
+        BankService bankService;
+        AccountService accountService;
+        PaymentService paymentService;
 
-        // Creates account list with Account manager
-        List<Account> accounts = accountManager.manage(accountFile);
+        Scanner scann = new Scanner(System.in);
+        System.out.println("Do you wish to work with csv or sql?(type either csv or sql)");
 
-        // Stores all the accounts into our bank before payments
-        bestBank.setUsers(accounts);
+        //Waits for input
+        String type = scann.nextLine();
+
+        //If using sql
+        if (type.equals("sql")) {
+
+            //Because sql repositories are not implemented yet, it will just terminate
+            System.out.println("You choosed sql, you choosed wrong");
+
+            bankService = new BankServiceImpl(new MySqlBankRepository());
+            accountService = new AccountServiceImpl(new MySqlAccountRepository());
+            paymentService = new PaymentServiceImpl(new MySqlPaymentRepository());
+        }
+
+        //If using csv
+        else {
+
+            bankService = new BankServiceImpl(new CsvBankRepository());
+            accountService = new AccountServiceImpl(new CsvAccountRepository());
+            paymentService = new PaymentServiceImpl(new CsvPaymentRepository());
 
 
-        //Writes accounts before payments
-        paymentManager.fwriter(String.join(File.separator, "src", "main", "resources", "csv", "accountsBeforePayments.csv"), bestBank);
+            // File names might change depending on file location
+            String bankFile = String.join(File.separator, "src", "main", "resources", "csv", "bank.csv");
+            String accountFile = String.join(File.separator, "src", "main", "resources", "csv", "accounts.csv");
+            String paymentFile = String.join(File.separator, "src", "main", "resources", "csv", "payments.csv");
+
+            // Creates the bank
+            Bank bestBank = bankService.manage(bankFile);
+
+            // Creates account list with Account manager
+            List<Account> accounts = accountService.manage(accountFile);
+
+            // Stores all the accounts into our bank before payments
+            bestBank.setUsers(accounts);
 
 
-        //This is the code that will be repeated if user wants
-        while (yesNo) {
-            List<Payment> payments = paymentManager.manage(paymentFile, bestBank);
+            //Writes accounts before payments
+            paymentService.fwriter(String.join(File.separator, "src", "main", "resources", "csv", "accountsBeforePayments.csv"), bestBank);
 
 
-            Scanner scan = new Scanner(System.in);
+            //This is the code that will be repeated if user wants
+            while (yesNo) {
+                List<Payment> payments = paymentService.manage(paymentFile, bestBank);
 
 
-            Boolean repeat = true;
-            while (repeat) {
+                Scanner scan = new Scanner(System.in);
 
-                System.out.println("Do you wish to continue?(y/n)");
 
-                //Waits for input
-                String answer = scan.nextLine();
+                Boolean repeat = true;
+                while (repeat) {
 
-                //For comparing strings, use "equals()" rather than "=="
-                if (answer.equals("y")) {
-                    yesNo = true;
-                    repeat = false;
-                } else if (answer.equals("n")) {
-                    yesNo = false;
-                    repeat = false;
+                    System.out.println("Do you wish to continue?(y/n)");
+
+                    //Waits for input
+                    String answer = scan.nextLine();
+
+                    //For comparing strings, use "equals()" rather than "=="
+                    if (answer.equals("y")) {
+                        yesNo = true;
+                        repeat = false;
+                    } else if (answer.equals("n")) {
+                        yesNo = false;
+                        repeat = false;
+                    }
                 }
             }
         }
+
     }
-
-
 }

@@ -3,61 +3,61 @@ package main.java.ejercicio.banco.dto;
 import java.util.List;
 
 public class Bank {
-	
-	//Variables
-	private int bankId;
-	private String bankName;
-	private String bankAddress;
-	private List<Account> users;
-	
-	
-	//Constructor (When a bank is created for the first time, it does so without users)
-	public Bank(int bankId, String bankName, String bankAddress) {
-		this.bankId = bankId;
-		this.bankName = bankName;
-		this.bankAddress = bankAddress;
-	}
+
+    //Variables
+    private int bankId;
+    private String bankName;
+    private String bankAddress;
+    private List<Account> users;
 
 
-	//Getters and Setters
-	public int getBankId() {
-		return bankId;
-	}
+    //Constructor (When a bank is created for the first time, it does so without users)
+    public Bank(int bankId, String bankName, String bankAddress) {
+        this.bankId = bankId;
+        this.bankName = bankName;
+        this.bankAddress = bankAddress;
+    }
 
 
-	public void setBankId(int bankId) {
-		this.bankId = bankId;
-	}
+    //Getters and Setters
+    public int getBankId() {
+        return bankId;
+    }
 
 
-	public String getBankName() {
-		return bankName;
-	}
+    public void setBankId(int bankId) {
+        this.bankId = bankId;
+    }
 
 
-	public void setBankName(String bankName) {
-		this.bankName = bankName;
-	}
+    public String getBankName() {
+        return bankName;
+    }
 
 
-	public String getBankAddress() {
-		return bankAddress;
-	}
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
 
 
-	public void setBankAddress(String bankAddress) {
-		this.bankAddress = bankAddress;
-	}
+    public String getBankAddress() {
+        return bankAddress;
+    }
 
 
-	public List<Account> getUsers() {
-		return users;
-	}
+    public void setBankAddress(String bankAddress) {
+        this.bankAddress = bankAddress;
+    }
 
 
-	public void setUsers(List<Account> users) {
-		this.users = users;
-	}	
-		
+    public List<Account> getUsers() {
+        return users;
+    }
+
+
+    public void setUsers(List<Account> users) {
+        this.users = users;
+    }
+
 
 }

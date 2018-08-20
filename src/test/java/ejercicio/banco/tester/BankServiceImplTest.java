@@ -4,19 +4,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import static org.junit.Assert.*;
 import main.java.ejercicio.banco.dto.Bank;
-import main.java.ejercicio.banco.service.BankManager;
-import main.java.ejercicio.banco.service.BankManagerImpl;
+import main.java.ejercicio.banco.repository.CsvBankRepository;
+import main.java.ejercicio.banco.service.BankService;
+import main.java.ejercicio.banco.service.BankServiceImpl;
 import org.junit.Test;
 
 
-//Tests if BankManagerImpl is generating Banks properly from files
-public class BankManagerImplTest {
+//Tests if BankServiceImpl is generating Banks properly from files
+public class BankServiceImplTest {
 
     @Test
     public void manage() throws FileNotFoundException {
-        BankManager bankManagerTest = new BankManagerImpl();
+        BankService bankServiceTest = new BankServiceImpl(new CsvBankRepository());
         String bankFileTest = String.join(File.separator, "src", "test", "resources", "csv", "bankTest.csv");
-        Bank testBank = bankManagerTest.manage(bankFileTest);
+        Bank testBank = bankServiceTest.manage(bankFileTest);
         assertEquals("TestAddress", testBank.getBankAddress());
     }
 }
