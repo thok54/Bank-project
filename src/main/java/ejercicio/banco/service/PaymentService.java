@@ -6,7 +6,7 @@ import main.java.ejercicio.banco.dto.Payment;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public interface PaymentManager {
+public interface PaymentService {
 	
 	public List<Payment> manage(String filename, Bank bestBank) throws FileNotFoundException;
 	
