@@ -11,7 +11,7 @@ public class AccountServiceImpl implements AccountService {
 
     private AccountRepository repository;
 
-    public AccountServiceImpl(AccountRepository repository){
+    public AccountServiceImpl(AccountRepository repository) {
         this.repository = repository;
     }
 

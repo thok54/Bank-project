@@ -1,9 +1,21 @@
 package main.java.ejercicio.banco;
+
 import main.java.ejercicio.banco.dto.Account;
 import main.java.ejercicio.banco.dto.Bank;
 import main.java.ejercicio.banco.dto.Payment;
-import main.java.ejercicio.banco.repository.*;
-import main.java.ejercicio.banco.service.*;
+import main.java.ejercicio.banco.repository.CsvAccountRepository;
+import main.java.ejercicio.banco.repository.CsvBankRepository;
+import main.java.ejercicio.banco.repository.CsvPaymentRepository;
+import main.java.ejercicio.banco.repository.MySqlAccountRepository;
+import main.java.ejercicio.banco.repository.MySqlBankRepository;
+import main.java.ejercicio.banco.repository.MySqlPaymentRepository;
+import main.java.ejercicio.banco.service.AccountService;
+import main.java.ejercicio.banco.service.AccountServiceImpl;
+import main.java.ejercicio.banco.service.BankService;
+import main.java.ejercicio.banco.service.BankServiceImpl;
+import main.java.ejercicio.banco.service.PaymentService;
+import main.java.ejercicio.banco.service.PaymentServiceImpl;
+
 
 import java.io.File;
 import java.util.Scanner;
@@ -15,7 +27,7 @@ public class MainProcess {
     // Read csv, process info, and write result in new csv
     public static void main(String[] args) throws FileNotFoundException {
         //This will identify wether to repeat process or not
-        Boolean yesNo = true;
+        Boolean doAgain = true;
 
 
         BankService bankService;
@@ -67,7 +79,7 @@ public class MainProcess {
 
 
             //This is the code that will be repeated if user wants
-            while (yesNo) {
+            while (doAgain) {
                 List<Payment> payments = paymentService.manage(paymentFile, bestBank);
 
 
@@ -84,10 +96,10 @@ public class MainProcess {
 
                     //For comparing strings, use "equals()" rather than "=="
                     if (answer.equals("y")) {
-                        yesNo = true;
+                        doAgain = true;
                         repeat = false;
                     } else if (answer.equals("n")) {
-                        yesNo = false;
+                        doAgain = false;
                         repeat = false;
                     }
                 }

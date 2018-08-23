@@ -5,5 +5,5 @@ import main.java.ejercicio.banco.dto.Bank;
 import java.io.FileNotFoundException;
 
 public interface BankService {
-	public Bank manage(String filename) throws FileNotFoundException;
+    public Bank manage(String filename) throws FileNotFoundException;
 }

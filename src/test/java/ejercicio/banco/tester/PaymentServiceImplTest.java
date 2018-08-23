@@ -10,10 +10,15 @@ import main.java.ejercicio.banco.dto.Payment;
 import main.java.ejercicio.banco.repository.CsvAccountRepository;
 import main.java.ejercicio.banco.repository.CsvBankRepository;
 import main.java.ejercicio.banco.repository.CsvPaymentRepository;
-import main.java.ejercicio.banco.service.*;
+import main.java.ejercicio.banco.service.AccountService;
+import main.java.ejercicio.banco.service.AccountServiceImpl;
+import main.java.ejercicio.banco.service.BankService;
+import main.java.ejercicio.banco.service.BankServiceImpl;
+import main.java.ejercicio.banco.service.PaymentService;
+import main.java.ejercicio.banco.service.PaymentServiceImpl;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.assertTrue;
 
 
 //Tests if PaymentServiceImpl is generating Payment properly from files

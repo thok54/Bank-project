@@ -3,19 +3,22 @@ package main.java.ejercicio.banco.repository;
 import main.java.ejercicio.banco.dto.Account;
 import main.java.ejercicio.banco.util.CsvReader;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class CsvAccountRepository implements AccountRepository {
 
+    private static final String FILENAME = String.join(File.separator, "src", "main", "resources", "csv", "accounts.csv");
+
     private CsvReader reader;
 
-    public CsvAccountRepository(){
+    public CsvAccountRepository() {
         this.reader = new CsvReader();
     }
 
@@ -31,7 +34,7 @@ public class CsvAccountRepository implements AccountRepository {
 
         List<String> in = reader.read(filename);
 
-        for (int x = 0; x<in.size(); x++) {
+        for (int x = 0; x < in.size(); x++) {
             String line = in.get(x);
             System.out.println(line);
 
@@ -56,58 +59,46 @@ public class CsvAccountRepository implements AccountRepository {
 
     @Override
     public Account find(int id) throws FileNotFoundException {
-        //Since we dont want to give the method a file parameter, Im hardcoding the filename
-        String filename = String.join(File.separator, "src", "main", "resources", "csv", "accounts.csv");
-        List<String> in = reader.read(filename);
+        List<Account> all = findAll(FILENAME);
 
-        String line = in.get(id);
-        System.out.println(line);
-
-        // Assuming that the info is separated by "; " ,splits it
-        String[] parts = line.split(";");
-        String userName = parts[0];
-        float money = Float.valueOf(parts[1]);
-        String iban = parts[2];
-
-        //Prints user into console
-        System.out.println("User " + id + " named " + userName + " has been processed");
-
-        // Creates a new account and returns it
-        Account acc = new Account(id, userName, money, iban);
-        return acc;
+        for (Account account : all) {
+            if (id == account.getId()) {
+                return account;
+            }
+        }
+        //Method requires a return statement
+        return all.get(0);
     }
 
     @Override
     public void store(Account account) throws IOException {
-        String filename = String.join(File.separator, "src", "main", "resources", "csv", "accounts.csv");
 
         //Adds account to file
         try {
-            Files.write(Paths.get(filename), account.toString().getBytes(), StandardOpenOption.APPEND);
-        }catch (IOException e) {
-            System.out.println("Unable to read file " + filename);
+            Files.write(Paths.get(FILENAME), account.toString().getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.out.println("Unable to read file " + FILENAME);
         }
     }
 
     @Override
     public void update(int id, Account account) throws FileNotFoundException {
-        String filename = String.join(File.separator, "src", "main", "resources", "csv", "accounts.csv");
-        List<String> in = reader.read(filename);
+
+        List<String> in = reader.read(FILENAME);
 
         String line = in.get(id);
 
         //For now, we just print "Updating"
-        System.out.println("Updating account "+line+" to be "+ account);
+        System.out.println("Updating account " + line + " to be " + account);
     }
 
     @Override
     public void delete(int id) throws FileNotFoundException {
-        String filename = String.join(File.separator, "src", "main", "resources", "csv", "accounts.csv");
-        List<String> in = reader.read(filename);
+        List<String> in = reader.read(FILENAME);
 
         String line = in.get(id);
 
         //For now, we just print "deleting"
-        System.out.println("Deleting account "+line);
+        System.out.println("Deleting account " + line);
     }
 }

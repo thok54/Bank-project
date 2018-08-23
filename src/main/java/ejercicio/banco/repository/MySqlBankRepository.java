@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-public class MySqlBankRepository implements BankRepository{
+public class MySqlBankRepository implements BankRepository {
     @Override
     public List<Bank> findAll(String filename) throws FileNotFoundException {
         return null;

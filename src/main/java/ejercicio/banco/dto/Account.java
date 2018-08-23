@@ -2,7 +2,6 @@ package main.java.ejercicio.banco.dto;
 
 public class Account {
 
-    //Variables
     private int id;
     private String userName;
     private float money;
@@ -58,7 +57,6 @@ public class Account {
         this.iban = iban;
     }
 
-    //Overrrite toString() method using String builder
     public String toString() {
 
         StringBuilder sb = new StringBuilder();

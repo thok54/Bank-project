@@ -14,9 +14,11 @@ import java.util.List;
 
 public class CsvBankRepository implements BankRepository {
 
+    private static final String FILENAME = String.join(File.separator, "src", "main", "resources", "csv", "bank.csv");
+
     private CsvReader reader;
 
-    public CsvBankRepository(){
+    public CsvBankRepository() {
         this.reader = new CsvReader();
     }
 
@@ -26,7 +28,7 @@ public class CsvBankRepository implements BankRepository {
         List<Bank> banks = new ArrayList<Bank>();
         List<String> in = reader.read(filename);
 
-        for (int x = 0; x<in.size(); x++) {
+        for (int x = 0; x < in.size(); x++) {
             String line = in.get(x);
             System.out.println(line);
 
@@ -37,7 +39,7 @@ public class CsvBankRepository implements BankRepository {
             String bankAddress = parts[2];
 
             //Prints bank info in concolse
-            System.out.println("Our bank "+bankName+" has been processed");
+            System.out.println("Our bank " + bankName + " has been processed");
 
 
             // Creates a new bank
@@ -49,57 +51,44 @@ public class CsvBankRepository implements BankRepository {
 
     @Override
     public Bank find(int id) throws FileNotFoundException {
-        String filename = String.join(File.separator, "src", "main", "resources", "csv", "bank.csv");
-        List<String> in = reader.read(filename);
+        List<Bank> all = findAll(FILENAME);
 
-        String line = in.get(id);
-        System.out.println(line);
-
-        // Assuming that the info is separated by "; " ,splits it
-        String[] parts = line.split(";");
-        int bankId = Integer.parseInt(parts[0]);
-        String bankName = parts[1];
-        String bankAddress = parts[2];
-
-        //Prints bank info in concolse
-        System.out.println("Our bank "+bankName+" has been processed");
-
-        // Creates a new bank and returns it
-        Bank bnk = new Bank(bankId, bankName, bankAddress);
-        return bnk;
+        for (Bank bank : all) {
+            if (id == bank.getId()) {
+                return bank;
+            }
+        }
+        //Method requires a return statement
+        return all.get(0);
     }
 
     @Override
     public void store(Bank bank) throws IOException {
-        String filename = String.join(File.separator, "src", "main", "resources", "csv", "bank.csv");
-
         //Adds account to file
         try {
-            Files.write(Paths.get(filename), bank.toString().getBytes(), StandardOpenOption.APPEND);
-        }catch (IOException e) {
-            System.out.println("Unable to read file " + filename);
+            Files.write(Paths.get(FILENAME), bank.toString().getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.out.println("Unable to read file " + FILENAME);
         }
     }
 
     @Override
     public void update(int id, Bank bank) throws FileNotFoundException {
-        String filename = String.join(File.separator, "src", "main", "resources", "csv", "bank.csv");
-        List<String> in = reader.read(filename);
+        List<String> in = reader.read(FILENAME);
 
         String line = in.get(id);
 
         //For now, we just print "Updating"
-        System.out.println("Updating bank "+line+" to be "+ bank);
+        System.out.println("Updating bank " + line + " to be " + bank);
     }
 
     @Override
     public void delete(int id) throws FileNotFoundException {
-        String filename = String.join(File.separator, "src", "main", "resources", "csv", "bank.csv");
-        List<String> in = reader.read(filename);
+        List<String> in = reader.read(FILENAME);
 
         String line = in.get(id);
 
         //For now, we just print "deleting"
-        System.out.println("Deleting bank "+line);
+        System.out.println("Deleting bank " + line);
     }
 }

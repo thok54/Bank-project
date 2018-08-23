@@ -14,9 +14,11 @@ import java.util.List;
 
 public class CsvPaymentRepository implements PaymentRepository {
 
+    private static final String FILENAME = String.join(File.separator, "src", "main", "resources", "csv", "payments.csv");
+
     private CsvReader reader;
 
-    public CsvPaymentRepository(){
+    public CsvPaymentRepository() {
         this.reader = new CsvReader();
     }
 
@@ -26,7 +28,7 @@ public class CsvPaymentRepository implements PaymentRepository {
         List<Payment> payments = new ArrayList<Payment>();
 
         List<String> in = reader.read(filename);
-        for (int x = 0; x<in.size(); x++) {
+        for (int x = 0; x < in.size(); x++) {
             String line = in.get(x);
             System.out.println(line);
 
@@ -37,7 +39,7 @@ public class CsvPaymentRepository implements PaymentRepository {
             int userId = Integer.parseInt(parts[2]);
             float amount = Float.valueOf(parts[3]);
 
-            System.out.println("Processing payment "+paymentId+ " of"+amount+"$");
+            System.out.println("Processing payment " + paymentId + " of" + amount + "$");
 
             // Creates a new payment and adds it to the list
             Payment pay = new Payment(paymentId, bankId, userId, amount);
@@ -48,57 +50,44 @@ public class CsvPaymentRepository implements PaymentRepository {
 
     @Override
     public Payment find(int id) throws FileNotFoundException {
-        String filename = String.join(File.separator, "src", "main", "resources", "csv", "payments.csv");
-        List<String> in = reader.read(filename);
+        List<Payment> all = findAll(FILENAME);
 
-        String line = in.get(id);
-        System.out.println(line);
-
-        // Assuming that the info is separated by "; " ,splits it
-        String[] parts = line.split(";");
-        int paymentId = Integer.parseInt(parts[0]);
-        int bankId = Integer.parseInt(parts[1]);
-        int userId = Integer.parseInt(parts[2]);
-        float amount = Float.valueOf(parts[3]);
-
-        System.out.println("Processing payment "+paymentId+ " of"+amount+"$");
-
-        // Creates a new payment and returns it
-        Payment pay = new Payment(paymentId, bankId, userId, amount);
-        return pay;
+        for (Payment payment : all) {
+            if (id == payment.getPaymentId()) {
+                return payment;
+            }
+        }
+        //Method requires a return statement
+        return all.get(0);
     }
 
     @Override
     public void store(Payment payment) throws IOException {
-        String filename = String.join(File.separator, "src", "main", "resources", "csv", "payments.csv");
-
         //Adds account to file
         try {
-            Files.write(Paths.get(filename), payment.toString().getBytes(), StandardOpenOption.APPEND);
-        }catch (IOException e) {
-            System.out.println("Unable to read file " + filename);
+            Files.write(Paths.get(FILENAME), payment.toString().getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.out.println("Unable to read file " + FILENAME);
         }
     }
 
     @Override
     public void update(int id, Payment payment) throws FileNotFoundException {
-        String filename = String.join(File.separator, "src", "main", "resources", "csv", "payments.csv");
-        List<String> in = reader.read(filename);
+        List<String> in = reader.read(FILENAME);
 
         String line = in.get(id);
 
         //For now, we just print "Updating"
-        System.out.println("Updating payment "+line+" to be "+ payment);
+        System.out.println("Updating payment " + line + " to be " + payment);
     }
 
     @Override
     public void delete(int id) throws FileNotFoundException {
-        String filename = String.join(File.separator, "src", "main", "resources", "csv", "payments.csv");
-        List<String> in = reader.read(filename);
+        List<String> in = reader.read(FILENAME);
 
         String line = in.get(id);
 
         //For now, we just print "deleting"
-        System.out.println("Deleting payment "+line);
+        System.out.println("Deleting payment " + line);
     }
 }
