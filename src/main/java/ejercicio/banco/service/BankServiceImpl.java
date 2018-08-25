@@ -14,7 +14,7 @@ public class BankServiceImpl implements BankService {
         this.repository = repository;
     }
 
-    public Bank manage(String filename) throws FileNotFoundException {
+    public Bank processBank(String filename) throws FileNotFoundException {
         List<Bank> banks = repository.findAll(filename);
         return banks.get(0);
     }

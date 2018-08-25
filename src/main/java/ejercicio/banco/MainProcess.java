@@ -65,22 +65,22 @@ public class MainProcess {
             String paymentFile = String.join(File.separator, "src", "main", "resources", "csv", "payments.csv");
 
             // Creates the bank
-            Bank bestBank = bankService.manage(bankFile);
+            Bank bestBank = bankService.processBank(bankFile);
 
             // Creates account list with Account manager
-            List<Account> accounts = accountService.manage(accountFile);
+            List<Account> accounts = accountService.processAccounts(accountFile);
 
             // Stores all the accounts into our bank before payments
             bestBank.setUsers(accounts);
 
 
             //Writes accounts before payments
-            paymentService.fwriter(String.join(File.separator, "src", "main", "resources", "csv", "accountsBeforePayments.csv"), bestBank);
+            paymentService.fileWriter(String.join(File.separator, "src", "main", "resources", "csv", "accountsBeforePayments.csv"), bestBank);
 
 
             //This is the code that will be repeated if user wants
             while (doAgain) {
-                List<Payment> payments = paymentService.manage(paymentFile, bestBank);
+                List<Payment> payments = paymentService.processPayments(paymentFile, bestBank);
 
 
                 Scanner scan = new Scanner(System.in);

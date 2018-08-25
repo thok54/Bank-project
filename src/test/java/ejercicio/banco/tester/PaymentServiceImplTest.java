@@ -28,15 +28,15 @@ public class PaymentServiceImplTest {
     public void manage() throws FileNotFoundException {
         BankService bankServiceTest = new BankServiceImpl(new CsvBankRepository());
         String bankFileTest = String.join(File.separator, "src", "test", "resources", "csv", "bankTest.csv");
-        Bank testBank = bankServiceTest.manage(bankFileTest);
+        Bank testBank = bankServiceTest.processBank(bankFileTest);
 
         AccountService accountServiceTest = new AccountServiceImpl(new CsvAccountRepository());
-        List<Account> accounts = accountServiceTest.manage(String.join(File.separator, "src", "test", "resources", "csv", "accountsTest.csv"));
+        List<Account> accounts = accountServiceTest.processAccounts(String.join(File.separator, "src", "test", "resources", "csv", "accountsTest.csv"));
         testBank.setUsers(accounts);
 
         PaymentService paymentServiceTest = new PaymentServiceImpl(new CsvPaymentRepository());
         String paymentFileTest = String.join(File.separator, "src", "test", "resources", "csv", "paymentTest.csv");
-        List<Payment> payments = paymentServiceTest.manage(paymentFileTest, testBank);
+        List<Payment> payments = paymentServiceTest.processPayments(paymentFileTest, testBank);
         assertTrue("Not getting the right Amount", payments.get(1).getAmount() == 87.25);
     }
 }

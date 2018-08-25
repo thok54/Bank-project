@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PaymentService {
 
-    public List<Payment> manage(String filename, Bank bestBank) throws FileNotFoundException;
+    public List<Payment> processPayments(String filename, Bank bestBank) throws FileNotFoundException;
 
-    public void fwriter(String filename, Bank bestBank);
+    public void fileWriter(String filename, Bank bestBank);
 }

@@ -20,7 +20,7 @@ public class AccountServiceImplTest {
     public void manage() throws FileNotFoundException {
 
         AccountService accountServiceTest = new AccountServiceImpl(new CsvAccountRepository());
-        List<Account> accounts = accountServiceTest.manage(String.join(File.separator, "src", "test", "resources", "csv", "accountsTest.csv"));
+        List<Account> accounts = accountServiceTest.processAccounts(String.join(File.separator, "src", "test", "resources", "csv", "accountsTest.csv"));
         assertTrue("Not getting the right Address", accounts.get(1).getMoney() == 0.00);
     }
 }

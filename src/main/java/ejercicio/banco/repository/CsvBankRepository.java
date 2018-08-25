@@ -59,7 +59,7 @@ public class CsvBankRepository implements BankRepository {
             }
         }
         //Method requires a return statement
-        return all.get(0);
+        return null;
     }
 
     @Override

@@ -19,7 +19,7 @@ public class BankServiceImplTest {
     public void manage() throws FileNotFoundException {
         BankService bankServiceTest = new BankServiceImpl(new CsvBankRepository());
         String bankFileTest = String.join(File.separator, "src", "test", "resources", "csv", "bankTest.csv");
-        Bank testBank = bankServiceTest.manage(bankFileTest);
-        assertEquals("TestAddress", testBank.getBankAddress());
+        Bank testBank = bankServiceTest.processBank(bankFileTest);
+        assertEquals("TestAddress", testBank.getAddress());
     }
 }

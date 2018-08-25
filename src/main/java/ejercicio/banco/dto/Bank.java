@@ -5,16 +5,16 @@ import java.util.List;
 public class Bank {
 
     private int id;
-    private String bankName;
-    private String bankAddress;
+    private String name;
+    private String address;
     private List<Account> users;
 
 
     //Constructor (When a bank is created for the first time, it does so without users)
-    public Bank(int id, String bankName, String bankAddress) {
+    public Bank(int id, String name, String address) {
         this.id = id;
-        this.bankName = bankName;
-        this.bankAddress = bankAddress;
+        this.name = name;
+        this.address = address;
     }
 
 
@@ -29,23 +29,23 @@ public class Bank {
     }
 
 
-    public String getBankName() {
-        return bankName;
+    public String getName() {
+        return name;
     }
 
 
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
+    public void setName(String name) {
+        this.name = name;
     }
 
 
-    public String getBankAddress() {
-        return bankAddress;
+    public String getAddress() {
+        return address;
     }
 
 
-    public void setBankAddress(String bankAddress) {
-        this.bankAddress = bankAddress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 

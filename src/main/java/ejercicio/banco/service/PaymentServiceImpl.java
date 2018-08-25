@@ -20,7 +20,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     // Process payment
-    public List<Payment> manage(String filename, Bank bestBank) throws FileNotFoundException {
+    public List<Payment> processPayments(String filename, Bank bestBank) throws FileNotFoundException {
         // Creates list of payments
         List<Payment> payments = repository.findAll(filename);
 
@@ -36,14 +36,14 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         //Writes accounts after payments
-        fwriter(String.join(File.separator, "src", "main", "resources", "csv", "AccountsAfterPayments.csv"), bestBank);
+        fileWriter(String.join(File.separator, "src", "main", "resources", "csv", "AccountsAfterPayments.csv"), bestBank);
 
         return payments;
     }
 
 
     // File writer helper method.
-    public void fwriter(String filename, Bank bestBank) {
+    public void fileWriter(String filename, Bank bestBank) {
 
         // Creates a file with specified name
         File file = new File(filename);

@@ -67,7 +67,7 @@ public class CsvAccountRepository implements AccountRepository {
             }
         }
         //Method requires a return statement
-        return all.get(0);
+        return null;
     }
 
     @Override
