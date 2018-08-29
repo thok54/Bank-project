@@ -2,7 +2,6 @@ package main.java.ejercicio.banco.dto;
 
 public class Payment {
 
-    //Variables
     private int paymentId;
     private int bankId;
     private int userId;

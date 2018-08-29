@@ -6,6 +6,6 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public interface AccountService {
-	
-	public List<Account> manage(String filename) throws FileNotFoundException;
+
+    public List<Account> processAccounts(String filename) throws FileNotFoundException;
 }

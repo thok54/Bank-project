@@ -11,12 +11,12 @@ public class AccountServiceImpl implements AccountService {
 
     private AccountRepository repository;
 
-    public AccountServiceImpl(AccountRepository repository){
+    public AccountServiceImpl(AccountRepository repository) {
         this.repository = repository;
     }
 
     // Process user
-    public List<Account> manage(String filename) throws FileNotFoundException {
+    public List<Account> processAccounts(String filename) throws FileNotFoundException {
         // Creates list of Accounts
         List<Account> accounts = repository.findAll(filename);
         return accounts;

@@ -4,7 +4,7 @@ import main.java.ejercicio.banco.dto.Account;
 
 import java.util.List;
 
-public class MySqlAccountRepository implements AccountRepository{
+public class MySqlAccountRepository implements AccountRepository {
     @Override
     public List<Account> findAll(String filename) {
         return null;

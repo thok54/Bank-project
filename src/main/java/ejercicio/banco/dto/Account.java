@@ -2,17 +2,16 @@ package main.java.ejercicio.banco.dto;
 
 public class Account {
 
-    //Variables
     private int id;
-    private String userName;
+    private String name;
     private float money;
     private String iban;
 
 
     //Constructor
-    public Account(int id, String userName, float money, String iban) {
+    public Account(int id, String name, float money, String iban) {
         this.id = id;
-        this.userName = userName;
+        this.name = name;
         this.money = money;
         this.iban = iban;
     }
@@ -29,13 +28,13 @@ public class Account {
     }
 
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
 
@@ -58,13 +57,12 @@ public class Account {
         this.iban = iban;
     }
 
-    //Overrrite toString() method using String builder
     public String toString() {
 
         StringBuilder sb = new StringBuilder();
         sb.append(id);
         sb.append("; ");
-        sb.append(userName);
+        sb.append(name);
         sb.append("; ");
         sb.append(money);
         sb.append("; ");

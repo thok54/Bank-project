@@ -4,49 +4,48 @@ import java.util.List;
 
 public class Bank {
 
-    //Variables
-    private int bankId;
-    private String bankName;
-    private String bankAddress;
+    private int id;
+    private String name;
+    private String address;
     private List<Account> users;
 
 
     //Constructor (When a bank is created for the first time, it does so without users)
-    public Bank(int bankId, String bankName, String bankAddress) {
-        this.bankId = bankId;
-        this.bankName = bankName;
-        this.bankAddress = bankAddress;
+    public Bank(int id, String name, String address) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
     }
 
 
     //Getters and Setters
-    public int getBankId() {
-        return bankId;
+    public int getId() {
+        return id;
     }
 
 
-    public void setBankId(int bankId) {
-        this.bankId = bankId;
+    public void setId(int id) {
+        this.id = id;
     }
 
 
-    public String getBankName() {
-        return bankName;
+    public String getName() {
+        return name;
     }
 
 
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
+    public void setName(String name) {
+        this.name = name;
     }
 
 
-    public String getBankAddress() {
-        return bankAddress;
+    public String getAddress() {
+        return address;
     }
 
 
-    public void setBankAddress(String bankAddress) {
-        this.bankAddress = bankAddress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 
