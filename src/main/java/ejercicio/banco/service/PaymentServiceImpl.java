@@ -30,8 +30,11 @@ public class PaymentServiceImpl implements PaymentService {
             // If our bank is involved in payment, resolves it
             if (bestBank.getId() == payments.get(i).getBankId()) {
 
-                // Modifies the money from the user after payment(assuming user is paying)
-                bestBank.getUsers().get(payments.get(i).getUserId() - 1).setMoney(bestBank.getUsers().get(payments.get(i).getUserId() - 1).getMoney() - payments.get(i).getAmount());
+                try {
+                    // Modifies the money from the user after payment(assuming user is paying)
+                    bestBank.getUsers().get(payments.get(i).getUserId() - 1).setMoney(bestBank.getUsers().get(payments.get(i).getUserId() - 1).getMoney() - payments.get(i).getAmount());
+                }
+                catch(Exception e){}
             }
         }
 
