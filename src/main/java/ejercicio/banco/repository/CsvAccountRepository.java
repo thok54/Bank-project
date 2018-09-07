@@ -77,7 +77,7 @@ public class CsvAccountRepository implements AccountRepository {
 
 
     @Override
-    public Account find(int id){
+    public Account find(int id) throws AccountNotFoundException{
         List<Account> all = null;
         all = findAll(FILENAME);
 
