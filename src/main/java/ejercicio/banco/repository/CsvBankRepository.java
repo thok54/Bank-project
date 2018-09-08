@@ -33,25 +33,32 @@ public class CsvBankRepository implements BankRepository {
             in = null;
         }
 
-        for (int x = 0; x < in.size(); x++) {
-            String line = in.get(x);
-            System.out.println(line);
+       try {
+           for (int x = 0; x < in.size(); x++) {
+               String line = in.get(x);
+               System.out.println(line);
 
-            // Assuming that the info is separated by "; " ,splits it
-            try {
-                String[] parts = line.split(";");
-                int bankId = Integer.parseInt(parts[0]);
-                String bankName = parts[1];
-                String bankAddress = parts[2];
+               // Assuming that the info is separated by "; " ,splits it
+               try {
+                   String[] parts = line.split(";");
+                   int bankId = Integer.parseInt(parts[0]);
+                   String bankName = parts[1];
+                   String bankAddress = parts[2];
 
-                //Prints bank info in concolse
-                System.out.println("Our bank " + bankName + " has been processed");
-                // Creates a new bank
-                Bank bnk = new Bank(bankId, bankName, bankAddress);
-                banks.add(bnk);
-            }
-            catch(Exception e){};
-        }
+                   //Prints bank info in concolse
+                   System.out.println("Our bank " + bankName + " has been processed");
+                   // Creates a new bank
+                   Bank bnk = new Bank(bankId, bankName, bankAddress);
+                   banks.add(bnk);
+               } catch (NumberFormatException e) {
+                   System.out.println(e);
+               } catch (NullPointerException e) {
+                   System.out.println(e);
+               }
+
+           }
+       }
+       catch (NullPointerException e){System.out.println(e);}
         return banks;
     }
 
@@ -74,6 +81,7 @@ public class CsvBankRepository implements BankRepository {
         try {
             Files.write(Paths.get(FILENAME), bank.toString().getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
+            System.out.println(e);
             System.out.println("Unable to read file " + FILENAME);
         }
     }
@@ -83,8 +91,14 @@ public class CsvBankRepository implements BankRepository {
         List<String> in = null;
         try {
             in = reader.read(FILENAME);
-        } catch (Exception e) {
-            System.out.println("Failed to update");
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
+            System.out.println("Failed to find file");
+            return;
+        }
+        catch (IndexOutOfBoundsException e) {
+            System.out.println(e);
+            System.out.println("Bank not in list");
             return;
         }
 
@@ -100,6 +114,7 @@ public class CsvBankRepository implements BankRepository {
         try {
             in = reader.read(FILENAME);
         } catch (FileNotFoundException e) {
+            System.out.println(e);
             System.out.println("Failed to delete");
             return;
         }

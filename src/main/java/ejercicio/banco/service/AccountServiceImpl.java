@@ -30,6 +30,7 @@ public class AccountServiceImpl implements AccountService {
             account = repository.find(n);
         }
         catch(AccountNotFoundException e){
+            e.printStackTrace();
             account = null;
         }
         return account;

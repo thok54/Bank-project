@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.io.File;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CsvBankRepositoryTest {
@@ -15,15 +16,23 @@ public class CsvBankRepositoryTest {
     @Test
     public void findAllTest(){
         BankService bankServiceTest = new BankServiceImpl(new CsvBankRepository());
-        Bank bank = bankServiceTest.processBank(String.join(File.separator, "src", "test", "resources", "csv", "bankTest.csv"));
-        assertTrue("Wrong banks being processed", bank.getId() == 3789);
+        int id = -1;
+        try {
+            Bank bank = bankServiceTest.processBank(String.join(File.separator, "src", "test", "resources", "csv", "bankTest.csv"));
+            id = bank.getId();
+        }
+        catch (IndexOutOfBoundsException e){
+            System.out.println("No bank was processed");
+        }
+        {
+            assertEquals("Wrong banks being processed", 3789, id);}
     }
 
     @Test
     public void findTest(){
         BankService bankServiceTest = new BankServiceImpl(new CsvBankRepository());
         Bank bank = ((BankServiceImpl) bankServiceTest).findBank(20);
-        assertTrue("Using find on index out of bonds should return null", bank == null);
+        assertTrue("assertNull(bank)", bank == null);
 
     }
 

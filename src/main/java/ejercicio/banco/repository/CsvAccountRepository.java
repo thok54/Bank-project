@@ -68,8 +68,8 @@ public class CsvAccountRepository implements AccountRepository {
                     acc = new Account(userId, userName, money, iban);
                     accounts.add(acc);
                 }
-                catch (Exception e){
-
+                catch (NumberFormatException e){
+                    e.printStackTrace();
                 }
 
 
@@ -85,16 +85,11 @@ public class CsvAccountRepository implements AccountRepository {
         List<Account> all = null;
         all = findAll(FILENAME);
 
-        try {
             for (Account account : all) {
                 if (id == account.getId()) {
                     return account;
                 }
             }
-        }
-        catch (Exception e) {
-            throw new AccountNotFoundException("Account not found");
-        }
         return null;
     }
 
@@ -105,6 +100,7 @@ public class CsvAccountRepository implements AccountRepository {
         try {
             Files.write(Paths.get(FILENAME), account.toString().getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("Unable to read file " + FILENAME);
         }
     }
@@ -116,9 +112,14 @@ public class CsvAccountRepository implements AccountRepository {
         try {
             in = reader.read(FILENAME);
 
-        } catch (Exception e) {
-            in = null;
-            System.out.println("Could not update account");
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Failed to find file");
+            return;
+        }
+        catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            System.out.println("Account not in list");
             return;
         }
 
@@ -134,6 +135,7 @@ public class CsvAccountRepository implements AccountRepository {
         try {
             in = reader.read(FILENAME);
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
             in = null;
         }
 

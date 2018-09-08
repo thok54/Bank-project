@@ -39,11 +39,12 @@ public class PaymentServiceImpl implements PaymentService {
                         Account user = bestBank.getUsers().get(payment.getUserId() - 1);
                         user.setMoney(user.getMoney() - money);
                     } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
         }
-        catch(Exception e){}
+        catch(Exception e){e.printStackTrace();}
 
         //Writes accounts after payments
         fileWriter(String.join(File.separator, "src", "main", "resources", "csv", "AccountsAfterPayments.csv"), bestBank);
@@ -70,6 +71,7 @@ public class PaymentServiceImpl implements PaymentService {
 
 
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("Unable to read file " + file.toString());
         }
     }
@@ -83,6 +85,7 @@ public class PaymentServiceImpl implements PaymentService {
             payment = repository.find(n);
         }
         catch(Exception e){
+            e.printStackTrace();
             payment = null;
         }
         return payment;

@@ -13,14 +13,25 @@ import main.java.ejercicio.banco.service.BankService;
 import main.java.ejercicio.banco.service.BankServiceImpl;
 import main.java.ejercicio.banco.service.PaymentService;
 import main.java.ejercicio.banco.service.PaymentServiceImpl;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CsvPaymentRepositoryTest {
+
+    private PaymentService paymentService;
+
+    @Before
+    public void setup() {
+        this.paymentService = new PaymentServiceImpl(new CsvPaymentRepository());
+    }
+
 
     @Test
     public void findAllTest(){
@@ -33,16 +44,14 @@ public class CsvPaymentRepositoryTest {
         List<Account> accounts = accountServiceTest.processAccounts(String.join(File.separator, "src", "test", "resources", "csv", "accountsTest.csv"));
         testBank.setUsers(accounts);
 
-        PaymentService paymentServiceTest = new PaymentServiceImpl(new CsvPaymentRepository());
         String paymentFileTest = String.join(File.separator, "src", "test", "resources", "csv", "paymentTest.csv");
-        List<Payment> payments = paymentServiceTest.processPayments(paymentFileTest, testBank);
-        TestCase.assertTrue("Wrong payments being processed", payments.get(1).getAmount() == 87.25);
+        List<Payment> payments = paymentService.processPayments(paymentFileTest, testBank);
+        Assert.assertTrue("Not getting the right Amount", payments.get(1).getAmount() == 87.25);
     }
 
     @Test
     public void findTest(){
-        PaymentService paymentServiceTest = new PaymentServiceImpl(new CsvPaymentRepository());
-        Payment payment = ((PaymentServiceImpl) paymentServiceTest).findPayment(20);
+        Payment payment = ((PaymentServiceImpl) paymentService).findPayment(20);
         assertTrue("Using find on index out of bonds should return null", payment == null);
 
     }

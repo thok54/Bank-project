@@ -31,6 +31,7 @@ public class CsvPaymentRepository implements PaymentRepository {
         try {
             in = reader.read(filename);
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
             in = null;
         }
 
@@ -52,7 +53,9 @@ public class CsvPaymentRepository implements PaymentRepository {
                 pay = new Payment(paymentId, bankId, userId, amount);
                 payments.add(pay);
             }
-            catch (Exception e){};
+            catch (NumberFormatException e){
+                e.printStackTrace();
+            }
         }
 
         return payments;
@@ -77,6 +80,7 @@ public class CsvPaymentRepository implements PaymentRepository {
         try {
             Files.write(Paths.get(FILENAME), payment.toString().getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("Unable to read file " + FILENAME);
         }
     }
@@ -86,8 +90,14 @@ public class CsvPaymentRepository implements PaymentRepository {
         List<String> in = null;
         try {
             in = reader.read(FILENAME);
-        } catch (Exception e) {
-            System.out.println("Failed to update payment");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Failed to find file");
+            return;
+        }
+        catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            System.out.println("Payment not in list");
             return;
         }
 
@@ -103,6 +113,7 @@ public class CsvPaymentRepository implements PaymentRepository {
         try {
             in = reader.read(FILENAME);
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
             System.out.println("Failed to delete payment");
             return;
         }
