@@ -39,7 +39,7 @@ public class CsvAccountRepository implements AccountRepository {
 
         try {
             in = reader.read(filename);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return accounts;
         }
@@ -53,6 +53,7 @@ public class CsvAccountRepository implements AccountRepository {
             String userName;
             float money;
             String iban;
+            Account acc;
 
                 //tries to read account
                 try {
@@ -64,10 +65,13 @@ public class CsvAccountRepository implements AccountRepository {
                     System.out.println("User " + userId + " named " + userName + " has been processed");
 
                     // Creates a new account and adds it to the list
-                    Account acc = new Account(userId, userName, money, iban);
+                    acc = new Account(userId, userName, money, iban);
                     accounts.add(acc);
                 }
-                catch(Exception e){}
+                catch (Exception e){
+
+                }
+
 
             // Increments Id counter
             userId++;
@@ -81,12 +85,17 @@ public class CsvAccountRepository implements AccountRepository {
         List<Account> all = null;
         all = findAll(FILENAME);
 
-        for (Account account : all) {
-            if (id == account.getId()) {
-                return account;
+        try {
+            for (Account account : all) {
+                if (id == account.getId()) {
+                    return account;
+                }
             }
         }
-        throw new AccountNotFoundException("Account not found");
+        catch (Exception e) {
+            throw new AccountNotFoundException("Account not found");
+        }
+        return null;
     }
 
     @Override
@@ -107,8 +116,10 @@ public class CsvAccountRepository implements AccountRepository {
         try {
             in = reader.read(FILENAME);
 
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             in = null;
+            System.out.println("Could not update account");
+            return;
         }
 
         String line = in.get(id);

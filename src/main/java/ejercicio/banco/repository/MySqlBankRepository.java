@@ -8,27 +8,27 @@ import java.util.List;
 
 public class MySqlBankRepository implements BankRepository {
     @Override
-    public List<Bank> findAll(String filename) throws FileNotFoundException {
+    public List<Bank> findAll(String filename)  {
         return null;
     }
 
     @Override
-    public Bank find(int id) throws FileNotFoundException {
+    public Bank find(int id){
         return null;
     }
 
     @Override
-    public void store(Bank bank) throws IOException {
+    public void store(Bank bank)  {
 
     }
 
     @Override
-    public void update(int id, Bank bank) throws FileNotFoundException {
+    public void update(int id, Bank bank)  {
 
     }
 
     @Override
-    public void delete(int id) throws FileNotFoundException {
+    public void delete(int id)  {
 
     }
 }

@@ -1,9 +1,6 @@
 package test.java.ejercicio.banco.tester;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.List;
-
+import junit.framework.TestCase;
 import main.java.ejercicio.banco.dto.Account;
 import main.java.ejercicio.banco.dto.Bank;
 import main.java.ejercicio.banco.dto.Payment;
@@ -18,14 +15,16 @@ import main.java.ejercicio.banco.service.PaymentService;
 import main.java.ejercicio.banco.service.PaymentServiceImpl;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertTrue;
+import java.io.File;
+import java.util.List;
 
+import static org.junit.Assert.assertTrue;
 
-//Tests if PaymentServiceImpl is generating Payment properly from files
-public class PaymentServiceImplTest {
+public class CsvPaymentRepositoryTest {
 
     @Test
-    public void manage() {
+    public void findAllTest(){
+
         BankService bankServiceTest = new BankServiceImpl(new CsvBankRepository());
         String bankFileTest = String.join(File.separator, "src", "test", "resources", "csv", "bankTest.csv");
         Bank testBank = bankServiceTest.processBank(bankFileTest);
@@ -37,6 +36,15 @@ public class PaymentServiceImplTest {
         PaymentService paymentServiceTest = new PaymentServiceImpl(new CsvPaymentRepository());
         String paymentFileTest = String.join(File.separator, "src", "test", "resources", "csv", "paymentTest.csv");
         List<Payment> payments = paymentServiceTest.processPayments(paymentFileTest, testBank);
-        assertTrue("Not getting the right Amount", payments.get(1).getAmount() == 87.25);
+        TestCase.assertTrue("Wrong payments being processed", payments.get(1).getAmount() == 87.25);
     }
+
+    @Test
+    public void findTest(){
+        PaymentService paymentServiceTest = new PaymentServiceImpl(new CsvPaymentRepository());
+        Payment payment = ((PaymentServiceImpl) paymentServiceTest).findPayment(20);
+        assertTrue("Using find on index out of bonds should return null", payment == null);
+
+    }
+
 }
