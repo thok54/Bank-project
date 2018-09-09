@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.io.File;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
 
 public class CsvBankRepositoryTest {
 
@@ -32,7 +32,7 @@ public class CsvBankRepositoryTest {
     public void findTest(){
         BankService bankServiceTest = new BankServiceImpl(new CsvBankRepository());
         Bank bank = ((BankServiceImpl) bankServiceTest).findBank(20);
-        assertTrue("assertNull(bank)", bank == null);
+        assertNull(bank);
 
     }
 

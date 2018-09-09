@@ -88,8 +88,10 @@ public class CsvPaymentRepository implements PaymentRepository {
     @Override
     public void update(int id, Payment payment)  {
         List<String> in = null;
+        String line;
         try {
             in = reader.read(FILENAME);
+            line = in.get(id);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("Failed to find file");
@@ -98,10 +100,8 @@ public class CsvPaymentRepository implements PaymentRepository {
         catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
             System.out.println("Payment not in list");
-            return;
+            line = "ERROR";
         }
-
-        String line = in.get(id);
 
         //For now, we just print "Updating"
         System.out.println("Updating payment " + line + " to be " + payment);

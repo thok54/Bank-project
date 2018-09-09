@@ -32,8 +32,6 @@ public class CsvBankRepository implements BankRepository {
         } catch (FileNotFoundException e) {
             in = null;
         }
-
-       try {
            for (int x = 0; x < in.size(); x++) {
                String line = in.get(x);
                System.out.println(line);
@@ -52,13 +50,8 @@ public class CsvBankRepository implements BankRepository {
                    banks.add(bnk);
                } catch (NumberFormatException e) {
                    System.out.println(e);
-               } catch (NullPointerException e) {
-                   System.out.println(e);
                }
-
            }
-       }
-       catch (NullPointerException e){System.out.println(e);}
         return banks;
     }
 
@@ -89,8 +82,10 @@ public class CsvBankRepository implements BankRepository {
     @Override
     public void update(int id, Bank bank) {
         List<String> in = null;
+        String line;
         try {
             in = reader.read(FILENAME);
+            line = in.get(id);
         } catch (FileNotFoundException e) {
             System.out.println(e);
             System.out.println("Failed to find file");
@@ -99,10 +94,8 @@ public class CsvBankRepository implements BankRepository {
         catch (IndexOutOfBoundsException e) {
             System.out.println(e);
             System.out.println("Bank not in list");
-            return;
+            line = "ERROR";
         }
-
-        String line = in.get(id);
 
         //For now, we just print "Updating"
         System.out.println("Updating bank " + line + " to be " + bank);

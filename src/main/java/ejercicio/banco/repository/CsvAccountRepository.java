@@ -109,8 +109,10 @@ public class CsvAccountRepository implements AccountRepository {
     public void update(int id, Account account) {
 
         List<String> in = null;
+        String line;
         try {
             in = reader.read(FILENAME);
+            line = in.get(id);
 
         }catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -120,10 +122,8 @@ public class CsvAccountRepository implements AccountRepository {
         catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
             System.out.println("Account not in list");
-            return;
+            line = "ERROR";
         }
-
-        String line = in.get(id);
 
         //For now, we just print "Updating"
         System.out.println("Updating account " + line + " to be " + account);

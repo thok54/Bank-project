@@ -20,8 +20,7 @@ import org.junit.Test;
 import java.io.File;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
 
 public class CsvPaymentRepositoryTest {
 
@@ -46,13 +45,14 @@ public class CsvPaymentRepositoryTest {
 
         String paymentFileTest = String.join(File.separator, "src", "test", "resources", "csv", "paymentTest.csv");
         List<Payment> payments = paymentService.processPayments(paymentFileTest, testBank);
-        Assert.assertTrue("Not getting the right Amount", payments.get(1).getAmount() == 87.25);
+        //Assert.assertTrue("Not getting the right Amount", payments.get(1).getAmount() == 87.25);
+        Assert.assertEquals(payments.get(1).getAmount(), 87.25);
     }
 
     @Test
     public void findTest(){
         Payment payment = ((PaymentServiceImpl) paymentService).findPayment(20);
-        assertTrue("Using find on index out of bonds should return null", payment == null);
+        assertNull(payment);
 
     }
 

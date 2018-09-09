@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.io.File;
 import java.util.List;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class CsvAccountRepositoryTest {
@@ -24,7 +25,7 @@ public class CsvAccountRepositoryTest {
     public void findTest(){
         AccountService accountServiceTest = new AccountServiceImpl(new CsvAccountRepository());
         Account account = ((AccountServiceImpl) accountServiceTest).findAccount(20);
-        assertTrue("Using find on index out of bonds should return null", account == null);
+        assertNull(account);
 
     }
 
