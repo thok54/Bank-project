@@ -1,9 +1,7 @@
-package main.java.ejercicio.banco.repository;
+package ejercicio.banco.repository;
 
-import main.java.ejercicio.banco.dto.Account;
+import ejercicio.banco.dto.Account;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
 public interface AccountRepository {

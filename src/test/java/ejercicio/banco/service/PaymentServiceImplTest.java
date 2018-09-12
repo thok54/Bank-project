@@ -1,22 +1,15 @@
-package test.java.ejercicio.banco.tester;
+package ejercicio.banco.service;
+
+import ejercicio.banco.dto.Account;
+import ejercicio.banco.dto.Bank;
+import ejercicio.banco.dto.Payment;
+import ejercicio.banco.repository.CsvAccountRepository;
+import ejercicio.banco.repository.CsvBankRepository;
+import ejercicio.banco.repository.CsvPaymentRepository;
+import org.junit.Test;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.List;
-
-import main.java.ejercicio.banco.dto.Account;
-import main.java.ejercicio.banco.dto.Bank;
-import main.java.ejercicio.banco.dto.Payment;
-import main.java.ejercicio.banco.repository.CsvAccountRepository;
-import main.java.ejercicio.banco.repository.CsvBankRepository;
-import main.java.ejercicio.banco.repository.CsvPaymentRepository;
-import main.java.ejercicio.banco.service.AccountService;
-import main.java.ejercicio.banco.service.AccountServiceImpl;
-import main.java.ejercicio.banco.service.BankService;
-import main.java.ejercicio.banco.service.BankServiceImpl;
-import main.java.ejercicio.banco.service.PaymentService;
-import main.java.ejercicio.banco.service.PaymentServiceImpl;
-import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;
 

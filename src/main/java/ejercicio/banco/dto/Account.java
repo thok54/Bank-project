@@ -1,4 +1,4 @@
-package main.java.ejercicio.banco.dto;
+package ejercicio.banco.dto;
 
 public class Account {
 

@@ -1,4 +1,4 @@
-package main.java.ejercicio.banco.repository;
+package ejercicio.banco.repository;
 
 public class AccountNotFoundException extends RuntimeException {
 

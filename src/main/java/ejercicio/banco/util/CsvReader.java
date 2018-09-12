@@ -1,4 +1,4 @@
-package main.java.ejercicio.banco.util;
+package ejercicio.banco.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;

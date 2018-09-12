@@ -1,9 +1,9 @@
-package test.java.ejercicio.banco.tester;
+package ejercicio.banco.repository;
 
-import main.java.ejercicio.banco.dto.Account;
-import main.java.ejercicio.banco.repository.CsvAccountRepository;
-import main.java.ejercicio.banco.service.AccountService;
-import main.java.ejercicio.banco.service.AccountServiceImpl;
+import ejercicio.banco.dto.Account;
+import ejercicio.banco.repository.CsvAccountRepository;
+import ejercicio.banco.service.AccountService;
+import ejercicio.banco.service.AccountServiceImpl;
 import org.junit.Test;
 
 import java.io.File;
