@@ -1,5 +1,6 @@
 package main.java.ejercicio.banco.service;
 
+import main.java.ejercicio.banco.dto.Account;
 import main.java.ejercicio.banco.dto.Bank;
 import main.java.ejercicio.banco.dto.Payment;
 import main.java.ejercicio.banco.repository.PaymentRepository;
@@ -20,20 +21,30 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     // Process payment
-    public List<Payment> processPayments(String filename, Bank bestBank) throws FileNotFoundException {
+    public List<Payment> processPayments(String filename, Bank bestBank) {
         // Creates list of payments
         List<Payment> payments = repository.findAll(filename);
 
-        //Iterates through the list, processing payments
-        for (int i = 0; i < payments.size(); i++) {
+        try {
+            //Iterates through the list, processing payments
+            for (int i = 0; i < payments.size(); i++) {
 
-            // If our bank is involved in payment, resolves it
-            if (bestBank.getId() == payments.get(i).getBankId()) {
+                // If our bank is involved in payment, resolves it
+                if (bestBank.getId() == payments.get(i).getBankId()) {
 
-                // Modifies the money from the user after payment(assuming user is paying)
-                bestBank.getUsers().get(payments.get(i).getUserId() - 1).setMoney(bestBank.getUsers().get(payments.get(i).getUserId() - 1).getMoney() - payments.get(i).getAmount());
+                    try {
+                        // Modifies the money from the user after payment(assuming user is paying)
+                        Payment payment = payments.get(i);
+                        float money = payment.getAmount();
+                        Account user = bestBank.getUsers().get(payment.getUserId() - 1);
+                        user.setMoney(user.getMoney() - money);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
+        catch(Exception e){e.printStackTrace();}
 
         //Writes accounts after payments
         fileWriter(String.join(File.separator, "src", "main", "resources", "csv", "AccountsAfterPayments.csv"), bestBank);
@@ -60,8 +71,24 @@ public class PaymentServiceImpl implements PaymentService {
 
 
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("Unable to read file " + file.toString());
         }
+    }
+
+
+    // Find payment
+    public Payment findPayment(int n) {
+        // Creates list of Accounts
+        Payment payment = null;
+        try {
+            payment = repository.find(n);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            payment = null;
+        }
+        return payment;
     }
 
 }

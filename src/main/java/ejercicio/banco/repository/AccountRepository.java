@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface AccountRepository {
 
-    List<Account> findAll(String filename) throws FileNotFoundException;
+    List<Account> findAll(String filename);
 
-    Account find(int id) throws FileNotFoundException;
+    Account find(int id);
 
     //Prints storing
-    void store(Account account) throws IOException;
+    void store(Account account);
 
     //Prints updating
-    void update(int id, Account account) throws FileNotFoundException;
+    void update(int id, Account account);
 
     //Prints "deleting"
-    void delete(int id) throws FileNotFoundException;
+    void delete(int id);
 }

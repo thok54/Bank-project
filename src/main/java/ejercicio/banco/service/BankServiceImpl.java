@@ -14,8 +14,20 @@ public class BankServiceImpl implements BankService {
         this.repository = repository;
     }
 
-    public Bank processBank(String filename) throws FileNotFoundException {
+    public Bank processBank(String filename) throws IndexOutOfBoundsException{
+        Bank bank;
         List<Bank> banks = repository.findAll(filename);
-        return banks.get(0);
+        bank = banks.get(0);
+        return bank;
+    }
+
+
+
+    // Find bank
+    public Bank findBank(int n) {
+        // Creates list of Accounts
+        Bank bank = null;
+        bank = repository.find(n);
+        return bank;
     }
 }

@@ -1,7 +1,6 @@
 package test.java.ejercicio.banco.tester;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import main.java.ejercicio.banco.dto.Account;
@@ -17,7 +16,7 @@ import static org.junit.Assert.*;
 public class AccountServiceImplTest {
 
     @Test
-    public void manage() throws FileNotFoundException {
+    public void manage() {
 
         AccountService accountServiceTest = new AccountServiceImpl(new CsvAccountRepository());
         List<Account> accounts = accountServiceTest.processAccounts(String.join(File.separator, "src", "test", "resources", "csv", "accountsTest.csv"));
