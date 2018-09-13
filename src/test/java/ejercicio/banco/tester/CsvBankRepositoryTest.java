@@ -38,14 +38,40 @@ public class CsvBankRepositoryTest {
     }
 
     @Test
-    public void otherTests(){
+    public void storeBankTest(){
         BankService bankServiceTest = new BankServiceImpl(new CsvBankRepository());
         Bank bank = bankServiceTest.processBank(String.join(File.separator, "src", "test", "resources", "csv", "bankTest.csv"));
         int id = bank.getId();
 
 
         ((BankServiceImpl) bankServiceTest).storeBank(bank);
+
+        assertTrue("Bank should remain same", bank.getId()==id);
+        //assertEquals("These commands should not modify bank", bank.getId(), id);
+
+    }
+
+
+    @Test
+    public void updateBankTest(){
+        BankService bankServiceTest = new BankServiceImpl(new CsvBankRepository());
+        Bank bank = bankServiceTest.processBank(String.join(File.separator, "src", "test", "resources", "csv", "bankTest.csv"));
+        int id = bank.getId();
+
+
         ((BankServiceImpl) bankServiceTest).updateBank(0, bank);
+
+        assertTrue("Bank should remain same", bank.getId()==id);
+        //assertEquals("These commands should not modify bank", bank.getId(), id);
+
+    }
+
+    @Test
+    public void DeleteBankTest(){
+        BankService bankServiceTest = new BankServiceImpl(new CsvBankRepository());
+        Bank bank = bankServiceTest.processBank(String.join(File.separator, "src", "test", "resources", "csv", "bankTest.csv"));
+        int id = bank.getId();
+
         ((BankServiceImpl) bankServiceTest).deleteBank(0);
 
         assertTrue("Bank should remain same", bank.getId()==id);

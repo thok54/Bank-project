@@ -60,7 +60,7 @@ public class CsvPaymentRepositoryTest {
 
 
     @Test
-    public void otherTests(){
+    public void storePaymentTest(){
         BankService bankServiceTest = new BankServiceImpl(new CsvBankRepository());
         String bankFileTest = String.join(File.separator, "src", "test", "resources", "csv", "bankTest.csv");
         Bank testBank = bankServiceTest.processBank(bankFileTest);
@@ -77,7 +77,56 @@ public class CsvPaymentRepositoryTest {
         float money = payment.getAmount();
 
         ((PaymentServiceImpl) paymentService).storePayment(payment);
+
+        assertTrue("Payment should remain same", payment.getAmount()==money);
+        //assertEquals("These commands should not modify payments", payment.getAmount(), money);
+
+    }
+
+
+    @Test
+    public void updatePaymentTest(){
+        BankService bankServiceTest = new BankServiceImpl(new CsvBankRepository());
+        String bankFileTest = String.join(File.separator, "src", "test", "resources", "csv", "bankTest.csv");
+        Bank testBank = bankServiceTest.processBank(bankFileTest);
+
+        AccountService accountServiceTest = new AccountServiceImpl(new CsvAccountRepository());
+        List<Account> accounts = accountServiceTest.processAccounts(String.join(File.separator, "src", "test", "resources", "csv", "accountsTest.csv"));
+        testBank.setUsers(accounts);
+
+        String paymentFileTest = String.join(File.separator, "src", "test", "resources", "csv", "paymentTest.csv");
+        List<Payment> payments = paymentService.processPayments(paymentFileTest, testBank);
+
+
+        Payment payment = payments.get(0);
+        float money = payment.getAmount();
+
         ((PaymentServiceImpl) paymentService).updatePayment(0, payment);
+
+        assertTrue("Payment should remain same", payment.getAmount()==money);
+        //assertEquals("These commands should not modify payments", payment.getAmount(), money);
+
+    }
+
+
+
+    @Test
+    public void deletePaymentTest(){
+        BankService bankServiceTest = new BankServiceImpl(new CsvBankRepository());
+        String bankFileTest = String.join(File.separator, "src", "test", "resources", "csv", "bankTest.csv");
+        Bank testBank = bankServiceTest.processBank(bankFileTest);
+
+        AccountService accountServiceTest = new AccountServiceImpl(new CsvAccountRepository());
+        List<Account> accounts = accountServiceTest.processAccounts(String.join(File.separator, "src", "test", "resources", "csv", "accountsTest.csv"));
+        testBank.setUsers(accounts);
+
+        String paymentFileTest = String.join(File.separator, "src", "test", "resources", "csv", "paymentTest.csv");
+        List<Payment> payments = paymentService.processPayments(paymentFileTest, testBank);
+
+
+        Payment payment = payments.get(0);
+        float money = payment.getAmount();
+
         ((PaymentServiceImpl) paymentService).deletePayment(0);
 
         assertTrue("Payment should remain same", payment.getAmount()==money);

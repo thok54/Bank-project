@@ -32,7 +32,7 @@ public class CsvAccountRepositoryTest {
     }
 
     @Test
-    public void otherTests(){
+    public void storeAccountTest(){
         AccountService accountServiceTest = new AccountServiceImpl(new CsvAccountRepository());
         List<Account> accounts = accountServiceTest.processAccounts(String.join(File.separator, "src", "test", "resources", "csv", "accountsTest.csv"));
 
@@ -40,7 +40,35 @@ public class CsvAccountRepositoryTest {
         float money = account.getMoney();
 
         ((AccountServiceImpl) accountServiceTest).storeAccount(account);
+
+        assertTrue("Account should remain same", account.getMoney()==money);
+        //assertEquals("These commands should not modify accounts", account.getMoney(), money);
+
+    }
+
+    @Test
+    public void updateAccountTest(){
+        AccountService accountServiceTest = new AccountServiceImpl(new CsvAccountRepository());
+        List<Account> accounts = accountServiceTest.processAccounts(String.join(File.separator, "src", "test", "resources", "csv", "accountsTest.csv"));
+
+        Account account = accounts.get(0);
+        float money = account.getMoney();
+
         ((AccountServiceImpl) accountServiceTest).updateAccount(0, account);
+
+        assertTrue("Account should remain same", account.getMoney()==money);
+        //assertEquals("These commands should not modify accounts", account.getMoney(), money);
+    }
+
+
+    @Test
+    public void deleteAccountTest(){
+        AccountService accountServiceTest = new AccountServiceImpl(new CsvAccountRepository());
+        List<Account> accounts = accountServiceTest.processAccounts(String.join(File.separator, "src", "test", "resources", "csv", "accountsTest.csv"));
+
+        Account account = accounts.get(0);
+        float money = account.getMoney();
+
         ((AccountServiceImpl) accountServiceTest).deleteAccount(0);
 
         assertTrue("Account should remain same", account.getMoney()==money);
