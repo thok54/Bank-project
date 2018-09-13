@@ -30,4 +30,20 @@ public class BankServiceImpl implements BankService {
         bank = repository.find(n);
         return bank;
     }
+
+
+    //Store bank
+    public void storeBank(Bank bank){
+        repository.store(bank);
+    }
+
+    //update bank
+    public void updateBank(int id, Bank bank){
+        repository.update(id,bank);
+    }
+
+    //Delete bank
+    public void deleteBank(int id){
+        repository.delete(id);
+    }
 }

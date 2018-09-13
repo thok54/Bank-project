@@ -7,9 +7,11 @@ import main.java.ejercicio.banco.service.BankServiceImpl;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class CsvBankRepositoryTest {
 
@@ -24,8 +26,7 @@ public class CsvBankRepositoryTest {
         catch (IndexOutOfBoundsException e){
             System.out.println("No bank was processed");
         }
-        {
-            assertEquals("Wrong banks being processed", 3789, id);}
+            assertEquals("Wrong banks being processed", 3789, id);
     }
 
     @Test
@@ -33,6 +34,22 @@ public class CsvBankRepositoryTest {
         BankService bankServiceTest = new BankServiceImpl(new CsvBankRepository());
         Bank bank = ((BankServiceImpl) bankServiceTest).findBank(20);
         assertNull(bank);
+
+    }
+
+    @Test
+    public void otherTests(){
+        BankService bankServiceTest = new BankServiceImpl(new CsvBankRepository());
+        Bank bank = bankServiceTest.processBank(String.join(File.separator, "src", "test", "resources", "csv", "bankTest.csv"));
+        int id = bank.getId();
+
+
+        ((BankServiceImpl) bankServiceTest).storeBank(bank);
+        ((BankServiceImpl) bankServiceTest).updateBank(0, bank);
+        ((BankServiceImpl) bankServiceTest).deleteBank(0);
+
+        assertTrue("Bank should remain same", bank.getId()==id);
+        //assertEquals("These commands should not modify accounts", account.getMoney(), money);
 
     }
 

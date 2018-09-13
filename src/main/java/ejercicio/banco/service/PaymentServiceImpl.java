@@ -91,4 +91,22 @@ public class PaymentServiceImpl implements PaymentService {
         return payment;
     }
 
+
+
+
+    //Store payment
+    public void storePayment(Payment payment){
+        repository.store(payment);
+    }
+
+    //update payment
+    public void updatePayment(int id, Payment payment){
+        repository.update(id,payment);
+    }
+
+    //Delete payment
+    public void deletePayment(int id){
+        repository.delete(id);
+    }
+
 }
