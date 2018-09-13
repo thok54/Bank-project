@@ -49,7 +49,7 @@ public class CsvBankRepositoryTest {
         ((BankServiceImpl) bankServiceTest).deleteBank(0);
 
         assertTrue("Bank should remain same", bank.getId()==id);
-        //assertEquals("These commands should not modify accounts", account.getMoney(), money);
+        //assertEquals("These commands should not modify bank", bank.getId(), id);
 
     }
 

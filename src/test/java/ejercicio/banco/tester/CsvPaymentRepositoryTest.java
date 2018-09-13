@@ -81,7 +81,7 @@ public class CsvPaymentRepositoryTest {
         ((PaymentServiceImpl) paymentService).deletePayment(0);
 
         assertTrue("Payment should remain same", payment.getAmount()==money);
-        //assertEquals("These commands should not modify accounts", account.getMoney(), money);
+        //assertEquals("These commands should not modify payments", payment.getAmount(), money);
 
     }
 
