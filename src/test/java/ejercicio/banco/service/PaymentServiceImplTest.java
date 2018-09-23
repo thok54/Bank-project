@@ -1,7 +1,6 @@
-package test.java.ejercicio.banco.tester;
+package test.java.ejercicio.banco.service;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import main.java.ejercicio.banco.dto.Account;

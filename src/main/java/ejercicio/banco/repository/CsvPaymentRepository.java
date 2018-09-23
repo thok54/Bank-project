@@ -30,10 +30,6 @@ public class CsvPaymentRepository implements PaymentRepository {
         List<String> in = null;
         try {
             in = reader.read(filename);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            in = null;
-        }
 
 
         for (int x = 0; x < in.size(); x++) {
@@ -55,7 +51,14 @@ public class CsvPaymentRepository implements PaymentRepository {
             }
             catch (NumberFormatException e){
                 e.printStackTrace();
+                System.out.println("Unable to parse number "+line);
+                //throw e;
             }
+        }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("filename "+filename+" was not found");
         }
 
         return payments;
@@ -100,7 +103,7 @@ public class CsvPaymentRepository implements PaymentRepository {
         catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
             System.out.println("Payment not in list");
-            line = "ERROR";
+            return;
         }
 
         //For now, we just print "Updating"
