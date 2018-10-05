@@ -35,6 +35,15 @@ public class MainProcess {
         PaymentService paymentService;
 
         Scanner scann = new Scanner(System.in);
+        System.out.println("Do you wish to work with existing files or create random new ones?(type either old or new)");
+        //Waits for input
+        String type1 = scann.nextLine();
+        if (type1.equals("new")) {
+            System.out.println("Coming soon");
+        }
+
+
+        else {
         System.out.println("Do you wish to work with csv or sql?(type either csv or sql)");
 
         //Waits for input
@@ -105,6 +114,8 @@ public class MainProcess {
                 }
             }
         }
+
+    }
 
     }
 }

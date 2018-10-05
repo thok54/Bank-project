@@ -4,17 +4,28 @@ import main.java.ejercicio.banco.dto.Account;
 import main.java.ejercicio.banco.dto.Bank;
 import main.java.ejercicio.banco.dto.Payment;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 public class DataGeneratorFactory implements DataGenerator {
 
     @Override
-    public Object generate(Object object) {
-        Random rand = new Random();
-        int type = getDataType(object);
+    public Object generate(String object, String filename) {
+        Object item = getDataType(object);
+        randFileWriter(filename, object);
+        return object;
+    }
 
-        //Generates random bank
-        if(type==1){
+
+    //Creates an object based on the name of the string
+    public Object getDataType (String type){
+
+        Random rand = new Random();
+
+        if ("Bank".equalsIgnoreCase(type)) {
             int  n = rand.nextInt(9999) + 1;
             final String lexicon = "ABCDEFGHIJKLMNOPQRSTUVWXYZ12345674890";
             int nameLength = rand.nextInt(5)+5;
@@ -32,12 +43,11 @@ public class DataGeneratorFactory implements DataGenerator {
             String address = addressBuilder.toString();
 
             Bank randBank = new Bank(n, name, address);
-
             return randBank;
+
         }
 
-        //Generates random account
-        if(type == 2){
+        if ("Account".equalsIgnoreCase(type)) {
             int id = 0;
 
             float  money = rand.nextInt(99999);
@@ -57,12 +67,10 @@ public class DataGeneratorFactory implements DataGenerator {
             String iban = IBANBuilder.toString();
 
             Account randAccount = new Account(id, name, money, iban);
-
             return randAccount;
         }
 
-        //Generates random payment
-        if(type==3){
+        if ("Payment".equalsIgnoreCase(type)) {
             int id = rand.nextInt(9999);
             int userID = rand.nextInt(9999);
             int bankID = rand.nextInt(9999);
@@ -74,18 +82,20 @@ public class DataGeneratorFactory implements DataGenerator {
     }
 
 
-    //Checks the type of object and returns an int based on it. If neither of our objects, returns 0.
-    public int getDataType (Object object){
-        int n = 0;
-        if(object instanceof Bank) {
-            n = 1;
+
+
+    public void randFileWriter(String filename, Object object) {
+
+        // Access existing file or creates new one
+        File file = new File(filename);
+
+        // Tries to write in the file if it exists
+        try (BufferedWriter br = new BufferedWriter(new FileWriter(file))) {
+                br.write(object.toString());
+                br.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Unable to write in file " + file.toString());
         }
-        else if(object instanceof Account) {
-            n = 2;
-        }
-        else if(object instanceof Payment) {
-            n = 3;
-        }
-        return n;
     }
 }
