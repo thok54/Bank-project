@@ -3,7 +3,6 @@ package ejercicio.banco.service;
 import ejercicio.banco.dto.Bank;
 import ejercicio.banco.repository.BankRepository;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 public class BankServiceImpl implements BankService{

@@ -3,7 +3,6 @@ package ejercicio.banco.service;
 import ejercicio.banco.dto.Bank;
 import ejercicio.banco.dto.Payment;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 public interface PaymentService{

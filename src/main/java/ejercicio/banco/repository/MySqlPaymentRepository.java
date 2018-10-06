@@ -2,8 +2,6 @@ package ejercicio.banco.repository;
 
 import ejercicio.banco.dto.Payment;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
 public class MySqlPaymentRepository implements PaymentRepository {
