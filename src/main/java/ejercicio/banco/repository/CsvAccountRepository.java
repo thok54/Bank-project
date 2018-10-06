@@ -39,10 +39,6 @@ public class CsvAccountRepository implements AccountRepository {
 
         try {
             in = reader.read(filename);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return accounts;
-        }
 
         for (int x = 0; x < in.size(); x++) {
             String line = in.get(x);
@@ -70,11 +66,15 @@ public class CsvAccountRepository implements AccountRepository {
                 }
                 catch (NumberFormatException e){
                     e.printStackTrace();
+                    System.out.println("Unable to parse number "+line);
                 }
-
-
             // Increments Id counter
             userId++;
+        }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("filename "+filename+" was not found");
         }
         return accounts;
     }
@@ -122,7 +122,7 @@ public class CsvAccountRepository implements AccountRepository {
         catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
             System.out.println("Account not in list");
-            line = "ERROR";
+            return;
         }
 
         //For now, we just print "Updating"

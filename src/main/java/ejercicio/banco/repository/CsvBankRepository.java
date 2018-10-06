@@ -29,9 +29,7 @@ public class CsvBankRepository implements BankRepository {
         List<String> in = null;
         try {
             in = reader.read(filename);
-        } catch (FileNotFoundException e) {
-            in = null;
-        }
+
            for (int x = 0; x < in.size(); x++) {
                String line = in.get(x);
                System.out.println(line);
@@ -50,8 +48,14 @@ public class CsvBankRepository implements BankRepository {
                    banks.add(bnk);
                } catch (NumberFormatException e) {
                    System.out.println(e);
+                   System.out.println("Unable to parse number "+line);
                }
            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("filename "+filename+" was not found");
+        }
         return banks;
     }
 
@@ -94,7 +98,7 @@ public class CsvBankRepository implements BankRepository {
         catch (IndexOutOfBoundsException e) {
             System.out.println(e);
             System.out.println("Bank not in list");
-            line = "ERROR";
+            return;
         }
 
         //For now, we just print "Updating"

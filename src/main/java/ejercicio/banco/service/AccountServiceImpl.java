@@ -36,4 +36,17 @@ public class AccountServiceImpl implements AccountService {
         return account;
     }
 
+
+    public void storeAccount(Account acc){
+        repository.store(acc);
+    }
+
+    public void updateAccount(int id, Account acc){
+        repository.update(id,acc);
+    }
+
+    public void deleteAccount(int id){
+        repository.delete(id);
+    }
+
 }

@@ -90,4 +90,19 @@ public class PaymentServiceImpl implements PaymentService {
         return payment;
     }
 
+
+
+
+    public void storePayment(Payment payment){
+        repository.store(payment);
+    }
+
+    public void updatePayment(int id, Payment payment){
+        repository.update(id,payment);
+    }
+
+    public void deletePayment(int id){
+        repository.delete(id);
+    }
+
 }

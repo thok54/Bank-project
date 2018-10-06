@@ -59,4 +59,17 @@ public class Bank {
     }
 
 
+
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(id);
+        sb.append("; ");
+        sb.append(name);
+        sb.append("; ");
+        sb.append(address);
+
+        String line = sb.toString();
+        return line;
+    }
 }

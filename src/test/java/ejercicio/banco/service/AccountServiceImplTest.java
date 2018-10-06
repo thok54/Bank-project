@@ -1,13 +1,15 @@
-package ejercicio.banco.service;
-
-import ejercicio.banco.dto.Account;
-import ejercicio.banco.repository.CsvAccountRepository;
-import org.junit.Test;
+package test.java.ejercicio.banco.service;
 
 import java.io.File;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+import ejercicio.banco.dto.Account;
+import ejercicio.banco.repository.CsvAccountRepository;
+import ejercicio.banco.service.AccountService;
+import ejercicio.banco.service.AccountServiceImpl;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 
 //Tests if AccountServiceImpl is generating Accounts properly from files

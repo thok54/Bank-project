@@ -1,4 +1,7 @@
-package ejercicio.banco.service;
+package test.java.ejercicio.banco.service;
+
+import java.io.File;
+import java.util.List;
 
 import ejercicio.banco.dto.Account;
 import ejercicio.banco.dto.Bank;
@@ -6,10 +9,13 @@ import ejercicio.banco.dto.Payment;
 import ejercicio.banco.repository.CsvAccountRepository;
 import ejercicio.banco.repository.CsvBankRepository;
 import ejercicio.banco.repository.CsvPaymentRepository;
+import ejercicio.banco.service.AccountService;
+import ejercicio.banco.service.AccountServiceImpl;
+import ejercicio.banco.service.BankService;
+import ejercicio.banco.service.BankServiceImpl;
+import ejercicio.banco.service.PaymentService;
+import ejercicio.banco.service.PaymentServiceImpl;
 import org.junit.Test;
-
-import java.io.File;
-import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
 

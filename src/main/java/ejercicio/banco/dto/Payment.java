@@ -49,5 +49,19 @@ public class Payment {
         this.amount = amount;
     }
 
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(paymentId);
+        sb.append("; ");
+        sb.append(bankId);
+        sb.append("; ");
+        sb.append(userId);
+        sb.append("; ");
+        sb.append(amount);
+
+        String line = sb.toString();
+        return line;
+    }
 
 }

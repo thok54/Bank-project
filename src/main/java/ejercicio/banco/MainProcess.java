@@ -3,13 +3,24 @@ package ejercicio.banco;
 import ejercicio.banco.dto.Account;
 import ejercicio.banco.dto.Bank;
 import ejercicio.banco.dto.Payment;
-import ejercicio.banco.repository.*;
-import ejercicio.banco.service.*;
+import ejercicio.banco.repository.CsvAccountRepository;
+import ejercicio.banco.repository.CsvBankRepository;
+import ejercicio.banco.repository.CsvPaymentRepository;
+import ejercicio.banco.repository.MySqlAccountRepository;
+import ejercicio.banco.repository.MySqlBankRepository;
+import ejercicio.banco.repository.MySqlPaymentRepository;
+import ejercicio.banco.service.AccountService;
+import ejercicio.banco.service.AccountServiceImpl;
+import ejercicio.banco.service.BankService;
+import ejercicio.banco.service.BankServiceImpl;
+import ejercicio.banco.service.PaymentService;
+import ejercicio.banco.service.PaymentServiceImpl;
+
 
 import java.io.File;
+import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.Scanner;
 
 public class MainProcess {
 
@@ -24,6 +35,15 @@ public class MainProcess {
         PaymentService paymentService;
 
         Scanner scann = new Scanner(System.in);
+        System.out.println("Do you wish to work with existing files or create random new ones?(type either old or new)");
+        //Waits for input
+        String type1 = scann.nextLine();
+        if (type1.equals("new")) {
+            System.out.println("Coming soon");
+        }
+
+
+        else {
         System.out.println("Do you wish to work with csv or sql?(type either csv or sql)");
 
         //Waits for input
@@ -94,6 +114,8 @@ public class MainProcess {
                 }
             }
         }
+
+    }
 
     }
 }

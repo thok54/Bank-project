@@ -5,7 +5,7 @@ import ejercicio.banco.repository.BankRepository;
 
 import java.util.List;
 
-public class BankServiceImpl implements BankService {
+public class BankServiceImpl implements BankService{
 
     private BankRepository repository;
 
@@ -29,4 +29,18 @@ public class BankServiceImpl implements BankService {
         bank = repository.find(n);
         return bank;
     }
+
+
+    public void storeBank(Bank bank){
+        repository.store(bank);
+    }
+
+    public void updateBank(int id, Bank bank){
+        repository.update(id,bank);
+    }
+
+    public void deleteBank(int id){
+        repository.delete(id);
+    }
+
 }
