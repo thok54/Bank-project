@@ -1,6 +1,6 @@
 package test.java.ejercicio.banco.repository;
-import main.java.ejercicio.banco.dto.Payment;
-import main.java.ejercicio.banco.repository.CsvPaymentRepository;
+import ejercicio.banco.dto.Payment;
+import ejercicio.banco.repository.CsvPaymentRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

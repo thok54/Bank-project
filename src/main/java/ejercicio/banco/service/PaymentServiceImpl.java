@@ -1,9 +1,9 @@
-package main.java.ejercicio.banco.service;
+package ejercicio.banco.service;
 
-import main.java.ejercicio.banco.dto.Account;
-import main.java.ejercicio.banco.dto.Bank;
-import main.java.ejercicio.banco.dto.Payment;
-import main.java.ejercicio.banco.repository.PaymentRepository;
+import ejercicio.banco.dto.Account;
+import ejercicio.banco.dto.Bank;
+import ejercicio.banco.dto.Payment;
+import ejercicio.banco.repository.PaymentRepository;
 
 import java.io.BufferedWriter;
 import java.io.File;

@@ -1,8 +1,8 @@
-package main.java.ejercicio.banco.service;
+package ejercicio.banco.service;
 
-import main.java.ejercicio.banco.dto.Account;
-import main.java.ejercicio.banco.repository.AccountNotFoundException;
-import main.java.ejercicio.banco.repository.AccountRepository;
+import ejercicio.banco.dto.Account;
+import ejercicio.banco.repository.AccountNotFoundException;
+import ejercicio.banco.repository.AccountRepository;
 
 import java.util.List;
 

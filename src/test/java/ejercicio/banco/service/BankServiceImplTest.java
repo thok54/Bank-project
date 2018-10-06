@@ -2,10 +2,10 @@ package test.java.ejercicio.banco.service;
 
 import java.io.File;
 
-import main.java.ejercicio.banco.dto.Bank;
-import main.java.ejercicio.banco.repository.CsvBankRepository;
-import main.java.ejercicio.banco.service.BankService;
-import main.java.ejercicio.banco.service.BankServiceImpl;
+import ejercicio.banco.dto.Bank;
+import ejercicio.banco.repository.CsvBankRepository;
+import ejercicio.banco.service.BankService;
+import ejercicio.banco.service.BankServiceImpl;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

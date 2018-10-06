@@ -1,7 +1,7 @@
-package main.java.ejercicio.banco.service;
+package ejercicio.banco.service;
 
-import main.java.ejercicio.banco.dto.Bank;
-import main.java.ejercicio.banco.repository.BankRepository;
+import ejercicio.banco.dto.Bank;
+import ejercicio.banco.repository.BankRepository;
 
 import java.io.FileNotFoundException;
 import java.util.List;

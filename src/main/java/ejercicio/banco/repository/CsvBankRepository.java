@@ -1,7 +1,7 @@
-package main.java.ejercicio.banco.repository;
+package ejercicio.banco.repository;
 
-import main.java.ejercicio.banco.dto.Bank;
-import main.java.ejercicio.banco.util.CsvReader;
+import ejercicio.banco.dto.Bank;
+import ejercicio.banco.util.CsvReader;
 
 import java.io.File;
 import java.io.FileNotFoundException;

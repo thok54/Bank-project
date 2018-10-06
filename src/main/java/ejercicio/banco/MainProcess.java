@@ -1,20 +1,20 @@
-package main.java.ejercicio.banco;
+package ejercicio.banco;
 
-import main.java.ejercicio.banco.dto.Account;
-import main.java.ejercicio.banco.dto.Bank;
-import main.java.ejercicio.banco.dto.Payment;
-import main.java.ejercicio.banco.repository.CsvAccountRepository;
-import main.java.ejercicio.banco.repository.CsvBankRepository;
-import main.java.ejercicio.banco.repository.CsvPaymentRepository;
-import main.java.ejercicio.banco.repository.MySqlAccountRepository;
-import main.java.ejercicio.banco.repository.MySqlBankRepository;
-import main.java.ejercicio.banco.repository.MySqlPaymentRepository;
-import main.java.ejercicio.banco.service.AccountService;
-import main.java.ejercicio.banco.service.AccountServiceImpl;
-import main.java.ejercicio.banco.service.BankService;
-import main.java.ejercicio.banco.service.BankServiceImpl;
-import main.java.ejercicio.banco.service.PaymentService;
-import main.java.ejercicio.banco.service.PaymentServiceImpl;
+import ejercicio.banco.dto.Account;
+import ejercicio.banco.dto.Bank;
+import ejercicio.banco.dto.Payment;
+import ejercicio.banco.repository.CsvAccountRepository;
+import ejercicio.banco.repository.CsvBankRepository;
+import ejercicio.banco.repository.CsvPaymentRepository;
+import ejercicio.banco.repository.MySqlAccountRepository;
+import ejercicio.banco.repository.MySqlBankRepository;
+import ejercicio.banco.repository.MySqlPaymentRepository;
+import ejercicio.banco.service.AccountService;
+import ejercicio.banco.service.AccountServiceImpl;
+import ejercicio.banco.service.BankService;
+import ejercicio.banco.service.BankServiceImpl;
+import ejercicio.banco.service.PaymentService;
+import ejercicio.banco.service.PaymentServiceImpl;
 
 
 import java.io.File;

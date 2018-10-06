@@ -1,6 +1,6 @@
-package main.java.ejercicio.banco.service;
+package ejercicio.banco.service;
 
-import main.java.ejercicio.banco.dto.Bank;
+import ejercicio.banco.dto.Bank;
 
 
 public interface BankService {
