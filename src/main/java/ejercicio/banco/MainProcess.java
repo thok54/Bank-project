@@ -24,6 +24,7 @@ import java.util.List;
 
 public class MainProcess {
 
+
     // Read csv, process info, and write result in new csv
     public static void main(String[] args) throws FileNotFoundException {
         //This will identify wether to repeat process or not
@@ -40,82 +41,79 @@ public class MainProcess {
         String type1 = scann.nextLine();
         if (type1.equals("new")) {
             System.out.println("Coming soon");
+        } else {
+            System.out.println("Do you wish to work with csv or sql?(type either csv or sql)");
+
+            //Waits for input
+            String type = scann.nextLine();
+
+            //If using sql
+            if (type.equals("sql")) {
+
+                //Because sql repositories are not implemented yet, it will just terminate
+                System.out.println("You choosed sql, you choosed wrong");
+
+                bankService = new BankServiceImpl(new MySqlBankRepository());
+                accountService = new AccountServiceImpl(new MySqlAccountRepository());
+                paymentService = new PaymentServiceImpl(new MySqlPaymentRepository());
+            }
+
+            //If using csv
+            else {
+
+                bankService = new BankServiceImpl(new CsvBankRepository());
+                accountService = new AccountServiceImpl(new CsvAccountRepository());
+                paymentService = new PaymentServiceImpl(new CsvPaymentRepository());
+
+
+                // File names might change depending on file location
+                String bankFile = String.join(File.separator, "src", "main", "resources", "csv", "bank.csv");
+                String accountFile = String.join(File.separator, "src", "main", "resources", "csv", "accounts.csv");
+                String paymentFile = String.join(File.separator, "src", "main", "resources", "csv", "payments.csv");
+
+                // Creates the bank
+                Bank bestBank = bankService.processBank(bankFile);
+
+                // Creates account list with Account manager
+                List<Account> accounts = accountService.processAccounts(accountFile);
+
+                // Stores all the accounts into our bank before payments
+                bestBank.setUsers(accounts);
+
+
+                //Writes accounts before payments
+                paymentService.fileWriter(String.join(File.separator, "src", "main", "resources", "csv", "accountsBeforePayments.csv"), bestBank);
+
+            }
+
         }
+        //Todo ask for searching, make do again better try to use ordinal datatype
+        //This is the code that will be repeated if user wants
+        while (doAgain) {
+            //List<Payment> payments = paymentService.processPayments(paymentFile, bestBank);
 
 
-        else {
-        System.out.println("Do you wish to work with csv or sql?(type either csv or sql)");
-
-        //Waits for input
-        String type = scann.nextLine();
-
-        //If using sql
-        if (type.equals("sql")) {
-
-            //Because sql repositories are not implemented yet, it will just terminate
-            System.out.println("You choosed sql, you choosed wrong");
-
-            bankService = new BankServiceImpl(new MySqlBankRepository());
-            accountService = new AccountServiceImpl(new MySqlAccountRepository());
-            paymentService = new PaymentServiceImpl(new MySqlPaymentRepository());
-        }
-
-        //If using csv
-        else {
-
-            bankService = new BankServiceImpl(new CsvBankRepository());
-            accountService = new AccountServiceImpl(new CsvAccountRepository());
-            paymentService = new PaymentServiceImpl(new CsvPaymentRepository());
+            Scanner scan = new Scanner(System.in);
 
 
-            // File names might change depending on file location
-            String bankFile = String.join(File.separator, "src", "main", "resources", "csv", "bank.csv");
-            String accountFile = String.join(File.separator, "src", "main", "resources", "csv", "accounts.csv");
-            String paymentFile = String.join(File.separator, "src", "main", "resources", "csv", "payments.csv");
+            Boolean repeat = true;
+            while (repeat) {
 
-            // Creates the bank
-            Bank bestBank = bankService.processBank(bankFile);
+                System.out.println("Do you wish to continue?(y/n)");
 
-            // Creates account list with Account manager
-            List<Account> accounts = accountService.processAccounts(accountFile);
+                //Waits for input
+                String answer = scan.nextLine();
 
-            // Stores all the accounts into our bank before payments
-            bestBank.setUsers(accounts);
-
-
-            //Writes accounts before payments
-            paymentService.fileWriter(String.join(File.separator, "src", "main", "resources", "csv", "accountsBeforePayments.csv"), bestBank);
-
-
-            //This is the code that will be repeated if user wants
-            while (doAgain) {
-                List<Payment> payments = paymentService.processPayments(paymentFile, bestBank);
-
-
-                Scanner scan = new Scanner(System.in);
-
-
-                Boolean repeat = true;
-                while (repeat) {
-
-                    System.out.println("Do you wish to continue?(y/n)");
-
-                    //Waits for input
-                    String answer = scan.nextLine();
-
-                    //For comparing strings, use "equals()" rather than "=="
-                    if (answer.equals("y")) {
-                        doAgain = true;
-                        repeat = false;
-                    } else if (answer.equals("n")) {
-                        doAgain = false;
-                        repeat = false;
-                    }
+                //For comparing strings, use "equals()" rather than "=="
+                if (answer.equals("y")) {
+                    doAgain = true;
+                    repeat = false;
+                } else if (answer.equals("n")) {
+                    doAgain = false;
+                    repeat = false;
                 }
             }
         }
-
-    }
 
     }
 }

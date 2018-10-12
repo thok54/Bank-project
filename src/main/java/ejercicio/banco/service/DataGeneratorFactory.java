@@ -14,6 +14,10 @@ import java.util.Random;
 public class DataGeneratorFactory implements DataGenerator {
     Random rand = new Random();
 
+
+    //Todo: Make random names enums and Search engine, UniTests
+
+
     @Override
     public Object generate(DataType object, String filename) {
         Object item = getDataType(object);

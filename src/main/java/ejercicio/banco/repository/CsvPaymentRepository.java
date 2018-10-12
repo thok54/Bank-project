@@ -78,6 +78,20 @@ public class CsvPaymentRepository implements PaymentRepository {
     }
 
     @Override
+    public List<Payment> findById(String filename, int id) {
+        List<Payment> all = findAll(filename);
+        List<Payment> results = null;
+        for (Payment payment : all) {
+            if (payment.getBankId()== id) {
+                results.add(payment);
+            }
+        }
+        return results;
+    }
+
+
+
+    @Override
     public void store(Payment payment) {
         //Adds account to file
         try {
