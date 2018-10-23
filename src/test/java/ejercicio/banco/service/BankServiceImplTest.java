@@ -1,4 +1,4 @@
-package test.java.ejercicio.banco.service;
+package ejercicio.banco.service;
 
 import java.io.File;
 

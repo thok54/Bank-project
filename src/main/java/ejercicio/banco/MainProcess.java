@@ -2,6 +2,7 @@ package ejercicio.banco;
 
 import ejercicio.banco.dto.Account;
 import ejercicio.banco.dto.Bank;
+import ejercicio.banco.dto.DataType;
 import ejercicio.banco.dto.Payment;
 import ejercicio.banco.repository.CsvAccountRepository;
 import ejercicio.banco.repository.CsvBankRepository;
@@ -9,10 +10,12 @@ import ejercicio.banco.repository.CsvPaymentRepository;
 import ejercicio.banco.repository.MySqlAccountRepository;
 import ejercicio.banco.repository.MySqlBankRepository;
 import ejercicio.banco.repository.MySqlPaymentRepository;
+import ejercicio.banco.search.ToolSearchEngine;
 import ejercicio.banco.service.AccountService;
 import ejercicio.banco.service.AccountServiceImpl;
 import ejercicio.banco.service.BankService;
 import ejercicio.banco.service.BankServiceImpl;
+import ejercicio.banco.service.DataGeneratorFactory;
 import ejercicio.banco.service.PaymentService;
 import ejercicio.banco.service.PaymentServiceImpl;
 
@@ -22,6 +25,10 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import static ejercicio.banco.dto.DataType.ACCOUNT;
+import static ejercicio.banco.dto.DataType.BANK;
+import static ejercicio.banco.dto.DataType.PAYMENT;
+
 public class MainProcess {
 
 
@@ -30,6 +37,8 @@ public class MainProcess {
         //This will identify wether to repeat process or not
         Boolean doAgain = true;
 
+        //This is the code that will be repeated if user wants
+        while (doAgain) {
 
         BankService bankService;
         AccountService accountService;
@@ -40,7 +49,17 @@ public class MainProcess {
         //Waits for input
         String type1 = scann.nextLine();
         if (type1.equals("new")) {
-            System.out.println("Coming soon");
+            // File names might change depending on file location
+            String randBankFile = String.join(File.separator, "src", "main", "resources", "csv", "randomBank.csv");
+            String randAccountFile = String.join(File.separator, "src", "main", "resources", "csv", "randomAccounts.csv");
+            String randPaymentFile = String.join(File.separator, "src", "main", "resources", "csv", "randomPayments.csv");
+
+            //TODO: Random data generation
+            DataGeneratorFactory factory = new DataGeneratorFactory();
+            factory.generate(BANK,randBankFile);
+            factory.generate(ACCOUNT,randAccountFile);
+            factory.generate(PAYMENT,randPaymentFile);
+
         } else {
             System.out.println("Do you wish to work with csv or sql?(type either csv or sql)");
 
@@ -84,18 +103,40 @@ public class MainProcess {
                 //Writes accounts before payments
                 paymentService.fileWriter(String.join(File.separator, "src", "main", "resources", "csv", "accountsBeforePayments.csv"), bestBank);
 
+                //Process payments
+                List<Payment> payments = paymentService.processPayments(paymentFile, bestBank);
             }
 
         }
-        //Todo ask for searching, make do again better try to use ordinal datatype
-        //This is the code that will be repeated if user wants
-        while (doAgain) {
-            //List<Payment> payments = paymentService.processPayments(paymentFile, bestBank);
+        //Ask for search
+            Scanner searchQuestion = new Scanner(System.in);
+            System.out.println("Do you wish to search anything?(y/n)");
+            String searchQanswer = searchQuestion.nextLine();
+            if (searchQanswer.equals("y")) {
 
+                Scanner typeParameter = new Scanner(System.in);
+                System.out.println("Are you looking for a bank, an account, or a payment?");
+                DataType dType = DataType.fromValue(typeParameter.nextLine());
+
+                if(dType != null) {
+                    Scanner searchParameter = new Scanner(System.in);
+                    System.out.println("Write a name to search");
+                    String searchString = searchParameter.nextLine();
+
+
+                    Scanner searchFile = new Scanner(System.in);
+                    System.out.println("Write a file to search from");
+                    String searchFileName = searchFile.nextLine();
+                    ToolSearchEngine searchEngine = new ToolSearchEngine();
+                    //Prints search result
+                    System.out.println(searchEngine.search(dType,searchString,searchFileName));
+                }
+                else{
+                    System.out.println("Could not identify search data type");
+                }
+            }
 
             Scanner scan = new Scanner(System.in);
-
-
             Boolean repeat = true;
             while (repeat) {
 

@@ -2,7 +2,7 @@ package ejercicio.banco.dto;
 
 import java.util.List;
 
-public class Bank {
+public class Bank implements InternalDto {
 
     private int id;
     private String name;

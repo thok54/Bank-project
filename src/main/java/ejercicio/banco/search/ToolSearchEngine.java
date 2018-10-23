@@ -15,7 +15,10 @@ import ejercicio.banco.service.PaymentService;
 import ejercicio.banco.service.PaymentServiceImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+//TODO: Make everything return InternalDto
 
 public class ToolSearchEngine implements SearchEngine{
     @Override
@@ -26,17 +29,17 @@ public class ToolSearchEngine implements SearchEngine{
                 //Searches bank name
                 BankService bankService = new BankServiceImpl(new CsvBankRepository());
                 List<Bank> banks = ((BankServiceImpl) bankService).findBanks(file, stuff);
-                return banks;
+                return Collections.singletonList(banks);
             case ACCOUNT:
                 //Searchers user name
                 AccountService accountService = new AccountServiceImpl(new CsvAccountRepository());
                 List<Account> accounts = ((AccountServiceImpl) accountService).findAccounts(file, stuff);
-                return accounts;
+                return Collections.singletonList(accounts);
             case PAYMENT:
                 //Searches payment ID
                 PaymentService paymentService = new PaymentServiceImpl(new CsvPaymentRepository());
                 List<Payment> payments = ((PaymentServiceImpl) paymentService).findPayments(file, stuff);
-                return  payments;
+                return Collections.singletonList(payments);
         }
         return new ArrayList<>();
     }

@@ -1,7 +1,9 @@
 package ejercicio.banco.service;
 
 import ejercicio.banco.dto.Account;
+import ejercicio.banco.dto.AccountName;
 import ejercicio.banco.dto.Bank;
+import ejercicio.banco.dto.BankName;
 import ejercicio.banco.dto.DataType;
 import ejercicio.banco.dto.Payment;
 
@@ -15,7 +17,7 @@ public class DataGeneratorFactory implements DataGenerator {
     Random rand = new Random();
 
 
-    //Todo: Make random names enums and Search engine, UniTests
+    //Todo: UniTests
 
 
     @Override
@@ -48,16 +50,19 @@ public class DataGeneratorFactory implements DataGenerator {
         return randPayment;
     }
 
+
     private Account getAccount() {
         int id = rand.nextInt(10);
         float money = rand.nextInt(99999);
         final String lexicon = "ABCDEFGHIJKLMNOPQRSTUVWXYZ12345674890";
-        int nameLength = rand.nextInt(5) + 5;
+        /*int nameLength = rand.nextInt(5) + 5;
         StringBuilder nameBuilder = new StringBuilder();
         for (int i = 0; i < nameLength; i++) {
             nameBuilder.append(lexicon.charAt(rand.nextInt(lexicon.length())));
         }
-        String name = nameBuilder.toString();
+        String name = nameBuilder.toString();*/
+        AccountName randName = AccountName.values()[rand.nextInt(AccountName.values().length)];
+        String name = randName.toString();
 
         int IBANLength = rand.nextInt(5) + 5;
         StringBuilder IBANBuilder = new StringBuilder();
@@ -70,15 +75,20 @@ public class DataGeneratorFactory implements DataGenerator {
         return randAccount;
     }
 
+
+
     private Bank getBank() {
         int id = rand.nextInt(10);
+
+        BankName randName = BankName.values()[rand.nextInt(BankName.values().length)];
+        String name = randName.toString();
+
         final String lexicon = "ABCDEFGHIJKLMNOPQRSTUVWXYZ12345674890";
-        int nameLength = rand.nextInt(5) + 5;
+       /* int nameLength = rand.nextInt(5) + 5;
         StringBuilder nameBuilder = new StringBuilder();
         for (int i = 0; i < nameLength; i++) {
             nameBuilder.append(lexicon.charAt(rand.nextInt(lexicon.length())));
-        }
-        String name = nameBuilder.toString();
+        }*/
 
         int addressLength = rand.nextInt(5) + 10;
         StringBuilder addressBuilder = new StringBuilder();
