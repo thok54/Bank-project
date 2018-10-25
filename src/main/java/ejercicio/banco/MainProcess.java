@@ -54,7 +54,6 @@ public class MainProcess {
             String randAccountFile = String.join(File.separator, "src", "main", "resources", "csv", "randomAccounts.csv");
             String randPaymentFile = String.join(File.separator, "src", "main", "resources", "csv", "randomPayments.csv");
 
-            //TODO: Random data generation
             DataGeneratorFactory factory = new DataGeneratorFactory();
             factory.generate(BANK,randBankFile);
             factory.generate(ACCOUNT,randAccountFile);
@@ -123,13 +122,9 @@ public class MainProcess {
                     System.out.println("Write a name to search");
                     String searchString = searchParameter.nextLine();
 
-
-                    Scanner searchFile = new Scanner(System.in);
-                    System.out.println("Write a file to search from");
-                    String searchFileName = searchFile.nextLine();
                     ToolSearchEngine searchEngine = new ToolSearchEngine();
                     //Prints search result
-                    System.out.println(searchEngine.search(dType,searchString,searchFileName));
+                    System.out.println(searchEngine.search(dType,searchString));
                 }
                 else{
                     System.out.println("Could not identify search data type");

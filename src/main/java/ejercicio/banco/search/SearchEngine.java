@@ -5,5 +5,5 @@ import ejercicio.banco.dto.DataType;
 import java.util.List;
 
 public interface SearchEngine {
-    List<Object> search(DataType type, String stuff, String file);
+    List<Object> search(DataType type, String stuff);
 }
