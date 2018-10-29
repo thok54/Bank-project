@@ -21,6 +21,8 @@ import java.util.List;
 
 //TODO: Make everything return InternalDto
 
+//TODO: Searcher is returning everything from file
+
 public class ToolSearchEngine implements SearchEngine{
     @Override
     public List<Object> search(DataType type, String stuff) {
