@@ -93,6 +93,17 @@ public class CsvAccountRepository implements AccountRepository {
         return null;
     }
 
+    public List<Account> findByName(String filename, String name) {
+        List<Account> all = findAll(filename);
+        List<Account> results = null;
+        for (Account account : all) {
+            if (account.getName().contains(name)) {
+                results.add(account);
+            }
+        }
+        return results;
+    }
+
     @Override
     public void store(Account account){
 

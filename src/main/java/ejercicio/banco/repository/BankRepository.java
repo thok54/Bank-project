@@ -9,6 +9,8 @@ public interface BankRepository {
 
     Bank find(int id);
 
+    public List<Bank> findByName(String filename, String name);
+
     //Prints storing
     void store(Bank bank);
 

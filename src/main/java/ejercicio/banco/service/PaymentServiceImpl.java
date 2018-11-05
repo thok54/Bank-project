@@ -91,6 +91,13 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
 
+    // Find payments by id
+    public List<Payment> findPayments(String filename, String name) {
+        int id = Integer.parseInt(name);
+        return repository.findById(filename, id);
+    }
+
+
 
 
     public void storePayment(Payment payment){

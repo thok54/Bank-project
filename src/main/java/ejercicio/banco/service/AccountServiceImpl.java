@@ -36,6 +36,11 @@ public class AccountServiceImpl implements AccountService {
         return account;
     }
 
+    // Find accounts by string
+    public List<Account> findAccounts(String filename, String name) {
+        return repository.findByName(filename, name);
+    }
+
 
     public void storeAccount(Account acc){
         repository.store(acc);

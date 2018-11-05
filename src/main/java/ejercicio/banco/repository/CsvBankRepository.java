@@ -72,6 +72,19 @@ public class CsvBankRepository implements BankRepository {
         return null;
     }
 
+    public List<Bank> findByName(String filename, String name) {
+        List<Bank> all = findAll(filename);
+        List<Bank> results = null;
+        for (Bank bank : all) {
+            if (bank.getName().contains(name)) {
+                results.add(bank);
+            }
+        }
+        return results;
+    }
+
+
+
     @Override
     public void store(Bank bank) {
         //Adds account to file

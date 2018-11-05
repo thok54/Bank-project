@@ -16,6 +16,11 @@ public class MySqlPaymentRepository implements PaymentRepository {
     }
 
     @Override
+    public List<Payment> findById(String filename, int id) {
+        return null;
+    }
+
+    @Override
     public void store(Payment payment)  {
 
     }

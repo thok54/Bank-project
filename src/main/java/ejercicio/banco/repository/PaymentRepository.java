@@ -9,6 +9,8 @@ public interface PaymentRepository {
 
     Payment find(int id);
 
+    List<Payment> findById(String filename, int id);
+
     //Prints storing
     void store(Payment payment);
 

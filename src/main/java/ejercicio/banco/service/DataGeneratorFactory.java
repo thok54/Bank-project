@@ -1,7 +1,9 @@
 package ejercicio.banco.service;
 
 import ejercicio.banco.dto.Account;
+import ejercicio.banco.dto.AccountName;
 import ejercicio.banco.dto.Bank;
+import ejercicio.banco.dto.BankName;
 import ejercicio.banco.dto.DataType;
 import ejercicio.banco.dto.Payment;
 
@@ -11,49 +13,55 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
+import static ejercicio.banco.dto.DataType.ACCOUNT;
+import static ejercicio.banco.dto.DataType.BANK;
+import static ejercicio.banco.dto.DataType.PAYMENT;
+
 public class DataGeneratorFactory implements DataGenerator {
     Random rand = new Random();
 
+
+    //Todo: UniTests
+
+
     @Override
     public Object generate(DataType object, String filename) {
-        Object item = getDataType(object);
-        randFileWriter(filename, object);
+        Object item = getDataType(object, filename);
         return object;
     }
 
 
     //Creates an object based on the name of the string
-    public Object getDataType (DataType type){
+    public Object getDataType (DataType type, String filename){
         switch (type) {
             case BANK:
-                return getBank();
+                return getBank(filename);
             case ACCOUNT:
-                return getAccount();
+                return getAccount(filename);
             case PAYMENT:
-                return getPayment();
+                return getPayment(filename);
         }
         return null;
     }
 
-    private Payment getPayment() {
+    private Payment getPayment(String filename) {
         int id = rand.nextInt(10);
         int userID = rand.nextInt(10);
         int bankID = rand.nextInt(10);
         float money = rand.nextInt(99999);
         Payment randPayment = new Payment(id, userID, bankID, money);
+        randPaymentWriter(filename, randPayment);
         return randPayment;
     }
 
-    private Account getAccount() {
+
+    private Account getAccount(String filename) {
         int id = rand.nextInt(10);
         float money = rand.nextInt(99999);
         final String lexicon = "ABCDEFGHIJKLMNOPQRSTUVWXYZ12345674890";
-        int nameLength = rand.nextInt(5) + 5;
-        StringBuilder nameBuilder = new StringBuilder();
-        for (int i = 0; i < nameLength; i++) {
-            nameBuilder.append(lexicon.charAt(rand.nextInt(lexicon.length())));
-        }
-        String name = nameBuilder.toString();
+
+        AccountName randName = AccountName.values()[rand.nextInt(AccountName.values().length)];
+        String name = randName.toString();
 
         int IBANLength = rand.nextInt(5) + 5;
         StringBuilder IBANBuilder = new StringBuilder();
@@ -63,18 +71,19 @@ public class DataGeneratorFactory implements DataGenerator {
         String iban = IBANBuilder.toString();
 
         Account randAccount = new Account(id, name, money, iban);
+        randAccountWriter(filename,randAccount);
         return randAccount;
     }
 
-    private Bank getBank() {
+
+
+    private Bank getBank(String filename) {
         int id = rand.nextInt(10);
+
+        BankName randName = BankName.values()[rand.nextInt(BankName.values().length)];
+        String name = randName.toString();
+
         final String lexicon = "ABCDEFGHIJKLMNOPQRSTUVWXYZ12345674890";
-        int nameLength = rand.nextInt(5) + 5;
-        StringBuilder nameBuilder = new StringBuilder();
-        for (int i = 0; i < nameLength; i++) {
-            nameBuilder.append(lexicon.charAt(rand.nextInt(lexicon.length())));
-        }
-        String name = nameBuilder.toString();
 
         int addressLength = rand.nextInt(5) + 10;
         StringBuilder addressBuilder = new StringBuilder();
@@ -84,19 +93,48 @@ public class DataGeneratorFactory implements DataGenerator {
         String address = addressBuilder.toString();
 
         Bank randBank = new Bank(id, name, address);
+        randBankWriter(filename,randBank);
         return randBank;
     }
 
 
-    public void randFileWriter(String filename, Object object) {
 
+    public void randBankWriter(String filename, Bank bank) {
         // Access existing file or creates new one
         File file = new File(filename);
 
         // Tries to write in the file if it exists
         try (BufferedWriter br = new BufferedWriter(new FileWriter(file))) {
-                br.write(object.toString());
-                br.newLine();
+            br.write(bank.toString());
+            br.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Unable to write in file " + file.toString());
+        }
+    }
+
+    public void randAccountWriter(String filename, Account account) {
+    // Access existing file or creates new one
+        File file = new File(filename);
+
+        // Tries to write in the file if it exists
+        try (BufferedWriter br = new BufferedWriter(new FileWriter(file))) {
+            br.write(account.toString());
+            br.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Unable to write in file " + file.toString());
+        }
+    }
+
+    public void randPaymentWriter(String filename, Payment payment) {
+        // Access existing file or creates new one
+        File file = new File(filename);
+
+        // Tries to write in the file if it exists
+        try (BufferedWriter br = new BufferedWriter(new FileWriter(file))) {
+            br.write(payment.toString());
+            br.newLine();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Unable to write in file " + file.toString());

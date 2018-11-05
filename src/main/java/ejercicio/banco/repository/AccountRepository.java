@@ -10,6 +10,8 @@ public interface AccountRepository {
 
     Account find(int id);
 
+    public List<Account> findByName(String filename, String name);
+
     //Prints storing
     void store(Account account);
 

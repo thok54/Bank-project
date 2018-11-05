@@ -1,6 +1,6 @@
 package ejercicio.banco.dto;
 
-public class Account {
+public class Account implements InternalDto {
 
     private int id;
     private String name;

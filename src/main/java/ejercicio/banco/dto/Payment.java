@@ -1,6 +1,6 @@
 package ejercicio.banco.dto;
 
-public class Payment {
+public class Payment implements InternalDto {
 
     private int paymentId;
     private int bankId;

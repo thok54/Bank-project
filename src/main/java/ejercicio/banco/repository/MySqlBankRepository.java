@@ -16,6 +16,12 @@ public class MySqlBankRepository implements BankRepository {
     }
 
     @Override
+    public List<Bank> findByName(String filename, String name) {
+        return null;
+    }
+
+
+    @Override
     public void store(Bank bank)  {
 
     }
