@@ -1,25 +1,78 @@
 package ejercicio.banco.service;
 
-import java.io.File;
+import ejercicio.banco.dto.Account;
+import ejercicio.banco.repository.AccountNotFoundException;
+import ejercicio.banco.repository.CsvAccountRepository;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.Arrays;
 import java.util.List;
 
-import ejercicio.banco.dto.Account;
-import ejercicio.banco.repository.CsvAccountRepository;
-import ejercicio.banco.service.AccountService;
-import ejercicio.banco.service.AccountServiceImpl;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import static org.junit.Assert.*;
-
-
-//Tests if AccountServiceImpl is generating Accounts properly from files
+@RunWith(MockitoJUnitRunner.class)
 public class AccountServiceImplTest {
 
-    @Test
-    public void manage() {
+    private static final String FILE_NAME = "file-name-test";
+    private static final int ACCOUNT_ID = 10876;
+    private static final int INVALID_ACCOUNT_ID = -123;
 
-        AccountService accountServiceTest = new AccountServiceImpl(new CsvAccountRepository());
-        List<Account> accounts = accountServiceTest.processAccounts(String.join(File.separator, "src", "test", "resources", "csv", "accountsTest.csv"));
-        assertTrue("Not getting the right Address", accounts.get(1).getMoney() == 0.00);
+    @Mock
+    private CsvAccountRepository repository;
+
+    @InjectMocks
+    private AccountServiceImpl accountService;
+
+    @Test
+    public void testProcessAccountsCallsFindAllFromRepository() {
+        List<Account> accounts = accountService.processAccounts(FILE_NAME);
+
+        verify(repository).findAll(FILE_NAME);
+    }
+
+    @Test
+    public void testProcessAccountsReturnsCorrectList() {
+        // Given
+        Account expectedAccount = new Account(10876);
+        when(repository.findAll(FILE_NAME)).thenReturn(Arrays.asList(expectedAccount));
+
+        // When
+        List<Account> accounts = accountService.processAccounts(FILE_NAME);
+
+        // Then
+        verify(repository).findAll(FILE_NAME);
+
+        assertNotNull(accounts);
+        assertEquals(ACCOUNT_ID, accounts.get(0).getId());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testProcessAccountsWithNullFilenameThrowsIllegalArgumentException() {
+        accountService.processAccounts(null);
+    }
+
+    @Test
+    public void testFindAccountCallsFindFromRepository() {
+        accountService.findAccount(ACCOUNT_ID);
+
+        verify(repository).find(ACCOUNT_ID);
+    }
+
+    @Test
+    public void testFindAccountReturnsNullIfAccountNotFoundExceptionIsThrown() {
+        // TODO: Search how to assert message in thrown exceptions. Tip: Rules
+        when(repository.find(INVALID_ACCOUNT_ID)).thenThrow(new AccountNotFoundException(""));
+
+        Account account = accountService.findAccount(INVALID_ACCOUNT_ID);
+
+        assertNull(account);
     }
 }

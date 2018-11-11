@@ -4,6 +4,7 @@ import ejercicio.banco.dto.Account;
 import ejercicio.banco.repository.AccountNotFoundException;
 import ejercicio.banco.repository.AccountRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,19 +16,21 @@ public class AccountServiceImpl implements AccountService {
         this.repository = repository;
     }
 
-    // Process user
+    @Override
     public List<Account> processAccounts(String filename) {
-        // Creates list of Accounts
-        List<Account> accounts = repository.findAll(filename);
-        return accounts;
+        if (filename == null) {
+            throw new IllegalArgumentException("Filename must not be null");
+        }
+
+        return repository.findAll(filename);
     }
 
     // Find user
-    public Account findAccount(int n) {
+    public Account findAccount(int accountId) {
         // Creates list of Accounts
         Account account = null;
         try {
-            account = repository.find(n);
+            account = repository.find(accountId);
         }
         catch(AccountNotFoundException e){
             e.printStackTrace();
