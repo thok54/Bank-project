@@ -7,8 +7,10 @@ public class Account implements InternalDto {
     private float money;
     private String iban;
 
+    public Account(int id){
+        this.id = id;
+    }
 
-    //Constructor
     public Account(int id, String name, float money, String iban) {
         this.id = id;
         this.name = name;
@@ -17,7 +19,6 @@ public class Account implements InternalDto {
     }
 
 
-    //Getters and Setters
     public int getId() {
         return id;
     }
