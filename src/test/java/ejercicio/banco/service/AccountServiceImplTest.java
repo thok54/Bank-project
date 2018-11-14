@@ -24,6 +24,7 @@ public class AccountServiceImplTest {
     private static final String FILE_NAME = "file-name-test";
     private static final int ACCOUNT_ID = 10876;
     private static final int INVALID_ACCOUNT_ID = -123;
+    Account expectedAccount = new Account(10876);
 
     @Mock
     private CsvAccountRepository repository;
@@ -41,7 +42,6 @@ public class AccountServiceImplTest {
     @Test
     public void testProcessAccountsReturnsCorrectList() {
         // Given
-        Account expectedAccount = new Account(10876);
         when(repository.findAll(FILE_NAME)).thenReturn(Arrays.asList(expectedAccount));
 
         // When
@@ -74,5 +74,34 @@ public class AccountServiceImplTest {
         Account account = accountService.findAccount(INVALID_ACCOUNT_ID);
 
         assertNull(account);
+    }
+
+
+    @Test
+    public void testFindAccountsCallsFindFromRepository() {
+        accountService.findAccounts(FILE_NAME, "NAME");
+
+        verify(repository).findByName(FILE_NAME, "NAME");
+    }
+
+    @Test
+    public void testStoreAccountCallsFindFromRepository() {
+        accountService.storeAccount(expectedAccount);
+
+        verify(repository).store(expectedAccount);
+    }
+
+    @Test
+    public void testUpdateAccountCallsFindFromRepository() {
+        accountService.updateAccount(ACCOUNT_ID,expectedAccount);
+
+        verify(repository).update(ACCOUNT_ID,expectedAccount);
+    }
+
+    @Test
+    public void testUpdateDeleteAccountCallsFindFromRepository() {
+        accountService.deleteAccount(ACCOUNT_ID);
+
+        verify(repository).delete(ACCOUNT_ID);
     }
 }

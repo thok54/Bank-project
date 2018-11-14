@@ -24,19 +24,9 @@ public class CsvAccountRepository implements AccountRepository {
 
     @Override
     public List<Account> findAll(String filename) {
-
-
-        // Creates list of Accounts
         List<Account> accounts = new ArrayList<Account>();
-
-        // Creates an user ID starting at 1, auto-incrementing every new user
         int userId = 1;
-
         List<String> in = null;
-
-
-        //Tries to read file. If file not found, returns an empty account list
-
         try {
             in = reader.read(filename);
 
@@ -44,23 +34,17 @@ public class CsvAccountRepository implements AccountRepository {
             String line = in.get(x);
             System.out.println(line);
 
-            // Assuming that the info is separated by "; " ,splits it
-                String[] parts = line.split(";");
+            String[] parts = line.split(";");
             String userName;
             float money;
             String iban;
             Account acc;
 
-                //tries to read account
                 try {
                     userName = parts[0];
                     money = Float.valueOf(parts[1]);
                     iban = parts[2];
-
-                    //Prints user into console
                     System.out.println("User " + userId + " named " + userName + " has been processed");
-
-                    // Creates a new account and adds it to the list
                     acc = new Account(userId, userName, money, iban);
                     accounts.add(acc);
                 }
@@ -68,10 +52,8 @@ public class CsvAccountRepository implements AccountRepository {
                     e.printStackTrace();
                     System.out.println("Unable to parse number "+line);
                 }
-            // Increments Id counter
             userId++;
-        }
-
+         }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             throw new IllegalArgumentException("filename "+filename+" was not found");

@@ -14,8 +14,14 @@ public class BankServiceImpl implements BankService{
     }
 
     public Bank processBank(String filename) throws IndexOutOfBoundsException{
+        if (filename == null) {
+            throw new IllegalArgumentException("Filename must not be null");
+        }
         Bank bank;
         List<Bank> banks = repository.findAll(filename);
+        if(banks.size() < 1){
+            return null;
+        }
         bank = banks.get(0);
         return bank;
     }

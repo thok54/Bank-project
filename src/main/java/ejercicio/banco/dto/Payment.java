@@ -7,6 +7,10 @@ public class Payment implements InternalDto {
     private int userId;
     private float amount;
 
+    public Payment(int id){
+        this.paymentId = id;
+    }
+
     //Constructor
     public Payment(int paymentId, int bankId, int userId, float amount) {
         this.paymentId = paymentId;

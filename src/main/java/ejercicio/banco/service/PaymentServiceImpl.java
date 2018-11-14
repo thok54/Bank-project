@@ -19,20 +19,19 @@ public class PaymentServiceImpl implements PaymentService {
         this.repository = repository;
     }
 
-    // Process payment
     public List<Payment> processPayments(String filename, Bank bestBank) {
-        // Creates list of payments
+        if (filename == null) {
+            throw new IllegalArgumentException("Filename must not be null");
+        }
         List<Payment> payments = repository.findAll(filename);
 
+        if(payments.size() < 1){
+            return null;
+        }
         try {
-            //Iterates through the list, processing payments
             for (int i = 0; i < payments.size(); i++) {
-
-                // If our bank is involved in payment, resolves it
                 if (bestBank.getId() == payments.get(i).getBankId()) {
-
                     try {
-                        // Modifies the money from the user after payment(assuming user is paying)
                         Payment payment = payments.get(i);
                         float money = payment.getAmount();
                         Account user = bestBank.getUsers().get(payment.getUserId() - 1);
@@ -44,26 +43,26 @@ public class PaymentServiceImpl implements PaymentService {
             }
         }
         catch(Exception e){e.printStackTrace();}
-
-        //Writes accounts after payments
-        fileWriter(String.join(File.separator, "src", "main", "resources", "csv", "AccountsAfterPayments.csv"), bestBank);
-
+        if(bestBank != null) {
+            fileWriter(String.join(File.separator, "src", "main", "resources", "csv", "AccountsAfterPayments.csv"), bestBank);
+        }
         return payments;
     }
 
 
     // File writer helper method.
     public void fileWriter(String filename, Bank bestBank) {
-
-        // Creates a file with specified name
+        if (filename == null) {
+            throw new IllegalArgumentException("Filename must not be null");
+        }
         File file = new File(filename);
 
-        // Tries to write in the file...
+        if(bestBank.getUsers()==null){
+            System.out.println("Unable to read from Bank with no users");
+            return;
+        }
         try (BufferedWriter br = new BufferedWriter(new FileWriter(file))) {
-
-            // ...for every user in our bank...
             for (int i = 0; i < bestBank.getUsers().size(); i++) {
-
                 br.write(bestBank.getUsers().get(i).toString());
                 br.newLine();
             }

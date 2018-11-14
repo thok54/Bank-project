@@ -10,6 +10,10 @@ public class Bank implements InternalDto {
     private List<Account> users;
 
 
+    public Bank(int id){
+        this.id = id;
+    }
+
     //Constructor (When a bank is created for the first time, it does so without users)
     public Bank(int id, String name, String address) {
         this.id = id;

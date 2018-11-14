@@ -24,7 +24,6 @@ public class CsvBankRepository implements BankRepository {
 
     @Override
     public List<Bank> findAll(String filename) {
-        // Creates list of Banks
         List<Bank> banks = new ArrayList<Bank>();
         List<String> in = null;
         try {
@@ -34,16 +33,13 @@ public class CsvBankRepository implements BankRepository {
                String line = in.get(x);
                System.out.println(line);
 
-               // Assuming that the info is separated by "; " ,splits it
                try {
                    String[] parts = line.split(";");
                    int bankId = Integer.parseInt(parts[0]);
                    String bankName = parts[1];
                    String bankAddress = parts[2];
 
-                   //Prints bank info in concolse
                    System.out.println("Our bank " + bankName + " has been processed");
-                   // Creates a new bank
                    Bank bnk = new Bank(bankId, bankName, bankAddress);
                    banks.add(bnk);
                } catch (NumberFormatException e) {

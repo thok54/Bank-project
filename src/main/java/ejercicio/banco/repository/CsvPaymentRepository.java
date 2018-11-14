@@ -24,13 +24,10 @@ public class CsvPaymentRepository implements PaymentRepository {
 
     @Override
     public List<Payment> findAll(String filename){
-        // Creates list of payments
         List<Payment> payments = new ArrayList<Payment>();
-
         List<String> in = null;
         try {
             in = reader.read(filename);
-
 
         for (int x = 0; x < in.size(); x++) {
             String line = in.get(x);
@@ -38,29 +35,24 @@ public class CsvPaymentRepository implements PaymentRepository {
             Payment pay;
 
             try {
-                // Assuming that the info is separated by "; " ,splits it
                 String[] parts = line.split(";");
                 int paymentId = Integer.parseInt(parts[0]);
                 int bankId = Integer.parseInt(parts[1]);
                 int userId = Integer.parseInt(parts[2]);
                 float amount = Float.valueOf(parts[3]);
                 System.out.println("Processing payment " + paymentId + " of" + amount + "$");
-                // Creates a new payment and adds it to the list
                 pay = new Payment(paymentId, bankId, userId, amount);
                 payments.add(pay);
             }
             catch (NumberFormatException e){
                 e.printStackTrace();
                 System.out.println("Unable to parse number "+line);
-                //throw e;
             }
         }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             throw new IllegalArgumentException("filename "+filename+" was not found");
         }
-
         return payments;
     }
 

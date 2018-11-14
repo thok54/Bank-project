@@ -21,7 +21,7 @@ public class DataGeneratorFactory implements DataGenerator {
     Random rand = new Random();
 
 
-    //Todo: UniTests
+    //Todo: UniTests (check values not null)
 
 
     @Override
