@@ -1,13 +1,9 @@
 package ejercicio.banco.service;
 
-import java.io.File;
 import java.util.Arrays;
-import java.util.List;
 
 import ejercicio.banco.dto.Bank;
 import ejercicio.banco.repository.CsvBankRepository;
-import ejercicio.banco.service.BankService;
-import ejercicio.banco.service.BankServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -16,24 +12,22 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 
 @RunWith(MockitoJUnitRunner.class)
 public class BankServiceImplTest {
 
     private static final String FILE_NAME = "file-name-test";
+    private static final String BANK_NAME = "name";
     private static final int BANK_ID = 10876;
-    Bank expectedBank = new Bank(10876);
+    private Bank expectedBank = new Bank(10876);
 
     @Mock
     private CsvBankRepository repository;
 
     @InjectMocks
     private BankServiceImpl bankService;
-
 
 
     @Test
@@ -73,9 +67,9 @@ public class BankServiceImplTest {
 
     @Test
     public void testFindBanksCallsFindFromRepository() {
-        bankService.findBanks(FILE_NAME, "NAME");
+        bankService.findBanks(FILE_NAME, BANK_NAME);
 
-        verify(repository).findByName(FILE_NAME, "NAME");
+        verify(repository).findByName(FILE_NAME, BANK_NAME);
     }
 
     @Test
@@ -87,13 +81,13 @@ public class BankServiceImplTest {
 
     @Test
     public void testUpdateBankCallsFindFromRepository() {
-        bankService.updateBank(BANK_ID,expectedBank);
+        bankService.updateBank(BANK_ID, expectedBank);
 
-        verify(repository).update(BANK_ID,expectedBank);
+        verify(repository).update(BANK_ID, expectedBank);
     }
 
     @Test
-    public void testUpdateDeleteBankCallsFindFromRepository() {
+    public void testDeleteBankCallsFindFromRepository() {
         bankService.deleteBank(BANK_ID);
 
         verify(repository).delete(BANK_ID);

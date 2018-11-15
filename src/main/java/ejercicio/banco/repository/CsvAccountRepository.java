@@ -30,15 +30,15 @@ public class CsvAccountRepository implements AccountRepository {
         try {
             in = reader.read(filename);
 
-        for (int x = 0; x < in.size(); x++) {
-            String line = in.get(x);
-            System.out.println(line);
+            for (int x = 0; x < in.size(); x++) {
+                String line = in.get(x);
+                System.out.println(line);
 
-            String[] parts = line.split(";");
-            String userName;
-            float money;
-            String iban;
-            Account acc;
+                String[] parts = line.split(";");
+                String userName;
+                float money;
+                String iban;
+                Account acc;
 
                 try {
                     userName = parts[0];
@@ -47,31 +47,30 @@ public class CsvAccountRepository implements AccountRepository {
                     System.out.println("User " + userId + " named " + userName + " has been processed");
                     acc = new Account(userId, userName, money, iban);
                     accounts.add(acc);
-                }
-                catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     e.printStackTrace();
-                    System.out.println("Unable to parse number "+line);
+                    System.out.println("Unable to parse number " + line);
                 }
-            userId++;
-         }
+                userId++;
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("filename "+filename+" was not found");
+            throw new IllegalArgumentException("filename " + filename + " was not found");
         }
         return accounts;
     }
 
 
     @Override
-    public Account find(int id) throws AccountNotFoundException{
+    public Account find(int id) throws AccountNotFoundException {
         List<Account> all = null;
         all = findAll(FILENAME);
 
-            for (Account account : all) {
-                if (id == account.getId()) {
-                    return account;
-                }
+        for (Account account : all) {
+            if (id == account.getId()) {
+                return account;
             }
+        }
         return null;
     }
 
@@ -87,7 +86,7 @@ public class CsvAccountRepository implements AccountRepository {
     }
 
     @Override
-    public void store(Account account){
+    public void store(Account account) {
 
         //Adds account to file
         try {
@@ -107,12 +106,11 @@ public class CsvAccountRepository implements AccountRepository {
             in = reader.read(FILENAME);
             line = in.get(id);
 
-        }catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("Failed to find file");
             return;
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
             System.out.println("Account not in list");
             return;

@@ -5,7 +5,7 @@ import ejercicio.banco.repository.BankRepository;
 
 import java.util.List;
 
-public class BankServiceImpl implements BankService{
+public class BankServiceImpl implements BankService {
 
     private BankRepository repository;
 
@@ -13,19 +13,20 @@ public class BankServiceImpl implements BankService{
         this.repository = repository;
     }
 
-    public Bank processBank(String filename) throws IndexOutOfBoundsException{
+    public Bank processBank(String filename) throws IndexOutOfBoundsException {
         if (filename == null) {
             throw new IllegalArgumentException("Filename must not be null");
         }
         Bank bank;
         List<Bank> banks = repository.findAll(filename);
-        if(banks.size() < 1){
-            return null;
+        try {
+            bank = banks.get(0);
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            bank = null;
         }
-        bank = banks.get(0);
         return bank;
     }
-
 
 
     // Find bank
@@ -41,15 +42,15 @@ public class BankServiceImpl implements BankService{
     }
 
 
-    public void storeBank(Bank bank){
+    public void storeBank(Bank bank) {
         repository.store(bank);
     }
 
-    public void updateBank(int id, Bank bank){
-        repository.update(id,bank);
+    public void updateBank(int id, Bank bank) {
+        repository.update(id, bank);
     }
 
-    public void deleteBank(int id){
+    public void deleteBank(int id) {
         repository.delete(id);
     }
 

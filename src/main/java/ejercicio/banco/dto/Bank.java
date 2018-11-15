@@ -10,7 +10,7 @@ public class Bank implements InternalDto {
     private List<Account> users;
 
 
-    public Bank(int id){
+    public Bank(int id) {
         this.id = id;
     }
 
@@ -61,7 +61,6 @@ public class Bank implements InternalDto {
     public void setUsers(List<Account> users) {
         this.users = users;
     }
-
 
 
     public String toString() {

@@ -5,7 +5,7 @@ import ejercicio.banco.dto.Payment;
 
 import java.util.List;
 
-public interface PaymentService{
+public interface PaymentService {
 
     public List<Payment> processPayments(String filename, Bank bestBank);
 

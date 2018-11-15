@@ -7,7 +7,7 @@ public class Account implements InternalDto {
     private float money;
     private String iban;
 
-    public Account(int id){
+    public Account(int id) {
         this.id = id;
     }
 

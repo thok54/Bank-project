@@ -31,8 +31,7 @@ public class AccountServiceImpl implements AccountService {
         Account account = null;
         try {
             account = repository.find(accountId);
-        }
-        catch(AccountNotFoundException e){
+        } catch (AccountNotFoundException e) {
             e.printStackTrace();
             account = null;
         }
@@ -45,15 +44,15 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
-    public void storeAccount(Account acc){
+    public void storeAccount(Account acc) {
         repository.store(acc);
     }
 
-    public void updateAccount(int id, Account acc){
-        repository.update(id,acc);
+    public void updateAccount(int id, Account acc) {
+        repository.update(id, acc);
     }
 
-    public void deleteAccount(int id){
+    public void deleteAccount(int id) {
         repository.delete(id);
     }
 

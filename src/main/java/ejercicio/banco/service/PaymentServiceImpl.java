@@ -25,9 +25,6 @@ public class PaymentServiceImpl implements PaymentService {
         }
         List<Payment> payments = repository.findAll(filename);
 
-        if(payments.size() < 1){
-            return null;
-        }
         try {
             for (int i = 0; i < payments.size(); i++) {
                 if (bestBank.getId() == payments.get(i).getBankId()) {
@@ -41,9 +38,10 @@ public class PaymentServiceImpl implements PaymentService {
                     }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch(Exception e){e.printStackTrace();}
-        if(bestBank != null) {
+        if (bestBank != null) {
             fileWriter(String.join(File.separator, "src", "main", "resources", "csv", "AccountsAfterPayments.csv"), bestBank);
         }
         return payments;
@@ -57,7 +55,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
         File file = new File(filename);
 
-        if(bestBank.getUsers()==null){
+        if (bestBank.getUsers() == null) {
             System.out.println("Unable to read from Bank with no users");
             return;
         }
@@ -81,8 +79,7 @@ public class PaymentServiceImpl implements PaymentService {
         Payment payment = null;
         try {
             payment = repository.find(n);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             payment = null;
         }
@@ -97,17 +94,15 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
 
-
-
-    public void storePayment(Payment payment){
+    public void storePayment(Payment payment) {
         repository.store(payment);
     }
 
-    public void updatePayment(int id, Payment payment){
-        repository.update(id,payment);
+    public void updatePayment(int id, Payment payment) {
+        repository.update(id, payment);
     }
 
-    public void deletePayment(int id){
+    public void deletePayment(int id) {
         repository.delete(id);
     }
 

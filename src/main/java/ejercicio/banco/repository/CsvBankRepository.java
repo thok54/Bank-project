@@ -29,28 +29,28 @@ public class CsvBankRepository implements BankRepository {
         try {
             in = reader.read(filename);
 
-           for (int x = 0; x < in.size(); x++) {
-               String line = in.get(x);
-               System.out.println(line);
+            for (int x = 0; x < in.size(); x++) {
+                String line = in.get(x);
+                System.out.println(line);
 
-               try {
-                   String[] parts = line.split(";");
-                   int bankId = Integer.parseInt(parts[0]);
-                   String bankName = parts[1];
-                   String bankAddress = parts[2];
+                try {
+                    String[] parts = line.split(";");
+                    int bankId = Integer.parseInt(parts[0]);
+                    String bankName = parts[1];
+                    String bankAddress = parts[2];
 
-                   System.out.println("Our bank " + bankName + " has been processed");
-                   Bank bnk = new Bank(bankId, bankName, bankAddress);
-                   banks.add(bnk);
-               } catch (NumberFormatException e) {
-                   System.out.println(e);
-                   System.out.println("Unable to parse number "+line);
-               }
-           }
+                    System.out.println("Our bank " + bankName + " has been processed");
+                    Bank bnk = new Bank(bankId, bankName, bankAddress);
+                    banks.add(bnk);
+                } catch (NumberFormatException e) {
+                    System.out.println(e);
+                    System.out.println("Unable to parse number " + line);
+                }
+            }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("filename "+filename+" was not found");
+            throw new IllegalArgumentException("filename " + filename + " was not found");
         }
         return banks;
     }
@@ -80,7 +80,6 @@ public class CsvBankRepository implements BankRepository {
     }
 
 
-
     @Override
     public void store(Bank bank) {
         //Adds account to file
@@ -103,8 +102,7 @@ public class CsvBankRepository implements BankRepository {
             System.out.println(e);
             System.out.println("Failed to find file");
             return;
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             System.out.println(e);
             System.out.println("Bank not in list");
             return;
@@ -115,7 +113,7 @@ public class CsvBankRepository implements BankRepository {
     }
 
     @Override
-    public void delete(int id)  {
+    public void delete(int id) {
         List<String> in = null;
         try {
             in = reader.read(FILENAME);

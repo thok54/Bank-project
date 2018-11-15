@@ -13,26 +13,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
-import static ejercicio.banco.dto.DataType.ACCOUNT;
-import static ejercicio.banco.dto.DataType.BANK;
-import static ejercicio.banco.dto.DataType.PAYMENT;
-
 public class DataGeneratorFactory implements DataGenerator {
     Random rand = new Random();
-
-
-    //Todo: UniTests (check values not null)
-
 
     @Override
     public Object generate(DataType object, String filename) {
         Object item = getDataType(object, filename);
-        return object;
+        return item;
     }
 
-
-    //Creates an object based on the name of the string
-    public Object getDataType (DataType type, String filename){
+    public Object getDataType(DataType type, String filename) {
         switch (type) {
             case BANK:
                 return getBank(filename);
@@ -71,10 +61,9 @@ public class DataGeneratorFactory implements DataGenerator {
         String iban = IBANBuilder.toString();
 
         Account randAccount = new Account(id, name, money, iban);
-        randAccountWriter(filename,randAccount);
+        randAccountWriter(filename, randAccount);
         return randAccount;
     }
-
 
 
     private Bank getBank(String filename) {
@@ -93,10 +82,9 @@ public class DataGeneratorFactory implements DataGenerator {
         String address = addressBuilder.toString();
 
         Bank randBank = new Bank(id, name, address);
-        randBankWriter(filename,randBank);
+        randBankWriter(filename, randBank);
         return randBank;
     }
-
 
 
     public void randBankWriter(String filename, Bank bank) {
@@ -114,7 +102,7 @@ public class DataGeneratorFactory implements DataGenerator {
     }
 
     public void randAccountWriter(String filename, Account account) {
-    // Access existing file or creates new one
+        // Access existing file or creates new one
         File file = new File(filename);
 
         // Tries to write in the file if it exists
