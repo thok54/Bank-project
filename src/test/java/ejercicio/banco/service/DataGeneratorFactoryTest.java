@@ -1,36 +1,85 @@
 package ejercicio.banco.service;
 
-import ejercicio.banco.dto.DataType;
+import ejercicio.banco.dto.Account;
+import ejercicio.banco.dto.Bank;
+import ejercicio.banco.dto.InternalDto;
+import ejercicio.banco.dto.Payment;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.io.File;
 
 import static ejercicio.banco.dto.DataType.ACCOUNT;
 import static ejercicio.banco.dto.DataType.BANK;
 import static ejercicio.banco.dto.DataType.PAYMENT;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DataGeneratorFactoryTest {
 
-    private static final String FILE_NAME = "file-name-test";
-
-    @Mock
-    private DataGeneratorFactory factory;
-
-    @InjectMocks
+    private static final String BANK_FILE = String.join(File.separator, "src", "test", "resources", "csv", "bank-file-test");
+    private static final String ACCOUNT_FILE = String.join(File.separator, "src", "test", "resources", "csv", "account-file-test");
+    private static final String PAYMENT_FILE = String.join(File.separator, "src", "test", "resources", "csv", "payment-file-test");
+    private DataGeneratorFactory factory = new DataGeneratorFactory();
+    private Bank expectedBank = new Bank(108);
+    private Account expectedAccount = new Account(10876);
+    private Payment expectedPayment = new Payment(24876);
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
-    public void testGenerateCallsGetDataType() {
-        factory.generate(BANK, FILE_NAME);
-        //TODO: Something smells fishy here, does not pass test
-        verify(factory).getDataType(BANK, FILE_NAME);
+    public void testGenerateReturnsItem() {
+        InternalDto bank = factory.generate(BANK, BANK_FILE);
+        assertNotNull(bank);
+    }
+
+    @Test
+    public void testGenerateThrowsExceptionWhenNullFile() {
+        expectedEx.expect(IllegalArgumentException.class);
+        factory.generate(BANK, null);
+        expectedEx.expectMessage("Filename must not be null");
+    }
+
+    @Test
+    public void testGenerateThrowsExceptionWhenNullDataType() {
+        expectedEx.expect(IllegalArgumentException.class);
+        factory.generate(null, BANK_FILE);
+        expectedEx.expectMessage("Datatype must not be null");
+    }
+
+    @Test
+    public void testGetDataTypeThrowsExceptionWhenNullFile() {
+        expectedEx.expect(IllegalArgumentException.class);
+        factory.getDataType(null, null);
+        expectedEx.expectMessage("Filename must not be null");
+    }
+
+    @Test
+    public void testGetDataTypeThrowsExceptionWhenNullDataType() {
+        expectedEx.expect(IllegalArgumentException.class);
+        factory.getDataType(null, BANK_FILE);
+        expectedEx.expectMessage("Datatype must not be null");
+    }
+
+    @Test
+    public void testGetBankReturnsBank() {
+        InternalDto bank = factory.getDataType(BANK, BANK_FILE);
+        assertNotNull(bank);
+    }
+
+    @Test
+    public void testGetAccountReturnsAccount() {
+        InternalDto account = factory.getDataType(ACCOUNT, ACCOUNT_FILE);
+        assertNotNull(account);
+    }
+
+    @Test
+    public void testGetPaymentReturnsPayment() {
+        InternalDto payment = factory.getDataType(PAYMENT, PAYMENT_FILE);
+        assertNotNull(payment);
     }
 }
