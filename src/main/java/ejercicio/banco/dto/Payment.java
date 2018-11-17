@@ -11,7 +11,6 @@ public class Payment implements InternalDto {
         this.paymentId = id;
     }
 
-    //Constructor
     public Payment(int paymentId, int bankId, int userId, float amount) {
         this.paymentId = paymentId;
         this.bankId = bankId;
@@ -19,8 +18,6 @@ public class Payment implements InternalDto {
         this.amount = amount;
     }
 
-
-    //Getters and Setters
     public int getPaymentId() {
         return paymentId;
     }

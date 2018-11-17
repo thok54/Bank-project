@@ -15,7 +15,6 @@ import java.util.List;
 public class CsvAccountRepository implements AccountRepository {
 
     private static final String FILENAME = String.join(File.separator, "src", "main", "resources", "csv", "accounts.csv");
-
     private CsvReader reader;
 
     public CsvAccountRepository() {
@@ -26,7 +25,7 @@ public class CsvAccountRepository implements AccountRepository {
     public List<Account> findAll(String filename) {
         List<Account> accounts = new ArrayList<Account>();
         int userId = 1;
-        List<String> in = null;
+        List<String> in = new ArrayList<String>();
         try {
             in = reader.read(filename);
 
@@ -41,9 +40,9 @@ public class CsvAccountRepository implements AccountRepository {
                 Account acc;
 
                 try {
-                    userName = parts[0];
-                    money = Float.valueOf(parts[1]);
-                    iban = parts[2];
+                    userName = parts[1];
+                    money = Float.valueOf(parts[2]);
+                    iban = parts[3];
                     System.out.println("User " + userId + " named " + userName + " has been processed");
                     acc = new Account(userId, userName, money, iban);
                     accounts.add(acc);
@@ -76,7 +75,7 @@ public class CsvAccountRepository implements AccountRepository {
 
     public List<Account> findByName(String filename, String name) {
         List<Account> all = findAll(filename);
-        List<Account> results = null;
+        List<Account> results = new ArrayList<>();
         for (Account account : all) {
             if (account.getName().contains(name)) {
                 results.add(account);
@@ -87,8 +86,6 @@ public class CsvAccountRepository implements AccountRepository {
 
     @Override
     public void store(Account account) {
-
-        //Adds account to file
         try {
             Files.write(Paths.get(FILENAME), account.toString().getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
@@ -115,8 +112,6 @@ public class CsvAccountRepository implements AccountRepository {
             System.out.println("Account not in list");
             return;
         }
-
-        //For now, we just print "Updating"
         System.out.println("Updating account " + line + " to be " + account);
     }
 
@@ -131,8 +126,6 @@ public class CsvAccountRepository implements AccountRepository {
         }
 
         String line = in.get(id);
-
-        //For now, we just print "deleting"
         System.out.println("Deleting account " + line);
     }
 }

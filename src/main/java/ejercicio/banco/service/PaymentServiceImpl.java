@@ -48,7 +48,6 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
 
-    // File writer helper method.
     public void fileWriter(String filename, Bank bestBank) {
         if (filename == null) {
             throw new IllegalArgumentException("Filename must not be null");
@@ -64,8 +63,6 @@ public class PaymentServiceImpl implements PaymentService {
                 br.write(bestBank.getUsers().get(i).toString());
                 br.newLine();
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Unable to read file " + file.toString());
@@ -73,9 +70,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
 
-    // Find payment
     public Payment findPayment(int n) {
-        // Creates list of Accounts
         Payment payment = null;
         try {
             payment = repository.find(n);
@@ -86,13 +81,10 @@ public class PaymentServiceImpl implements PaymentService {
         return payment;
     }
 
-
-    // Find payments by id
     public List<Payment> findPayments(String filename, String name) {
         int id = Integer.parseInt(name);
         return repository.findById(filename, id);
     }
-
 
     public void storePayment(Payment payment) {
         repository.store(payment);

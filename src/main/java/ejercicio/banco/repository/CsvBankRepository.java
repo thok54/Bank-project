@@ -15,7 +15,6 @@ import java.util.List;
 public class CsvBankRepository implements BankRepository {
 
     private static final String FILENAME = String.join(File.separator, "src", "main", "resources", "csv", "bank.csv");
-
     private CsvReader reader;
 
     public CsvBankRepository() {
@@ -25,7 +24,7 @@ public class CsvBankRepository implements BankRepository {
     @Override
     public List<Bank> findAll(String filename) {
         List<Bank> banks = new ArrayList<Bank>();
-        List<String> in = null;
+        List<String> in = new ArrayList<String>();
         try {
             in = reader.read(filename);
 
@@ -47,7 +46,6 @@ public class CsvBankRepository implements BankRepository {
                     System.out.println("Unable to parse number " + line);
                 }
             }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             throw new IllegalArgumentException("filename " + filename + " was not found");
@@ -64,13 +62,12 @@ public class CsvBankRepository implements BankRepository {
                 return bank;
             }
         }
-        //Method requires a return statement
         return null;
     }
 
     public List<Bank> findByName(String filename, String name) {
         List<Bank> all = findAll(filename);
-        List<Bank> results = null;
+        List<Bank> results = new ArrayList<>();
         for (Bank bank : all) {
             if (bank.getName().contains(name)) {
                 results.add(bank);
@@ -82,7 +79,6 @@ public class CsvBankRepository implements BankRepository {
 
     @Override
     public void store(Bank bank) {
-        //Adds account to file
         try {
             Files.write(Paths.get(FILENAME), bank.toString().getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
@@ -107,8 +103,6 @@ public class CsvBankRepository implements BankRepository {
             System.out.println("Bank not in list");
             return;
         }
-
-        //For now, we just print "Updating"
         System.out.println("Updating bank " + line + " to be " + bank);
     }
 
@@ -122,10 +116,7 @@ public class CsvBankRepository implements BankRepository {
             System.out.println("Failed to delete");
             return;
         }
-
         String line = in.get(id);
-
-        //For now, we just print "deleting"
         System.out.println("Deleting bank " + line);
     }
 }

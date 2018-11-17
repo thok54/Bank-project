@@ -28,15 +28,12 @@ public class BankServiceImpl implements BankService {
         return bank;
     }
 
-
-    // Find bank
     public Bank findBank(int n) {
         Bank bank = null;
         bank = repository.find(n);
         return bank;
     }
 
-    // Find banks by string
     public List<Bank> findBanks(String filename, String name) {
         return repository.findByName(filename, name);
     }

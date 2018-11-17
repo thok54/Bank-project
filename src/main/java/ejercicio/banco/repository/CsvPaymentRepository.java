@@ -25,7 +25,7 @@ public class CsvPaymentRepository implements PaymentRepository {
     @Override
     public List<Payment> findAll(String filename) {
         List<Payment> payments = new ArrayList<Payment>();
-        List<String> in = null;
+        List<String> in = new ArrayList<String>();
         try {
             in = reader.read(filename);
 
@@ -35,7 +35,7 @@ public class CsvPaymentRepository implements PaymentRepository {
                 Payment pay;
 
                 try {
-                    String[] parts = line.split(";");
+                    String[] parts = line.split("; ");
                     int paymentId = Integer.parseInt(parts[0]);
                     int bankId = Integer.parseInt(parts[1]);
                     int userId = Integer.parseInt(parts[2]);
@@ -64,14 +64,13 @@ public class CsvPaymentRepository implements PaymentRepository {
                 return payment;
             }
         }
-        //Method requires a return statement
         return null;
     }
 
     @Override
     public List<Payment> findById(String filename, int id) {
         List<Payment> all = findAll(filename);
-        List<Payment> results = null;
+        List<Payment> results = new ArrayList<>();
         for (Payment payment : all) {
             if (payment.getBankId() == id) {
                 results.add(payment);
@@ -83,7 +82,6 @@ public class CsvPaymentRepository implements PaymentRepository {
 
     @Override
     public void store(Payment payment) {
-        //Adds account to file
         try {
             Files.write(Paths.get(FILENAME), payment.toString().getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
@@ -108,8 +106,6 @@ public class CsvPaymentRepository implements PaymentRepository {
             System.out.println("Payment not in list");
             return;
         }
-
-        //For now, we just print "Updating"
         System.out.println("Updating payment " + line + " to be " + payment);
     }
 
@@ -123,10 +119,7 @@ public class CsvPaymentRepository implements PaymentRepository {
             System.out.println("Failed to delete payment");
             return;
         }
-
         String line = in.get(id);
-
-        //For now, we just print "deleting"
         System.out.println("Deleting payment " + line);
     }
 }

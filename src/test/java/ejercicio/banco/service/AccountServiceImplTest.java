@@ -66,7 +66,6 @@ public class AccountServiceImplTest {
     @Test
     public void testFindAccountCallsFindFromRepository() {
         accountService.findAccount(ACCOUNT_ID);
-
         verify(repository).find(ACCOUNT_ID);
     }
 

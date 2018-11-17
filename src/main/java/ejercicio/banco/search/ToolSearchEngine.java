@@ -25,10 +25,16 @@ import java.util.List;
 //TODO: Searcher is returning everything from file
 
 public class ToolSearchEngine implements SearchEngine {
+
     @Override
     public List<Object> search(DataType type, String stuff) {
         String file;
-
+        if (type == null) {
+            throw new IllegalArgumentException("Type must not be null");
+        }
+        if (stuff == null) {
+            throw new NullPointerException("Searching Null String");
+        }
         switch (type) {
             case BANK:
                 file = String.join(File.separator, "src", "main", "resources", "csv", "randomBank.csv");
