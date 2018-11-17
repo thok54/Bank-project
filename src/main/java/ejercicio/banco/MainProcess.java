@@ -42,7 +42,6 @@ public class MainProcess {
 
             Scanner scann = new Scanner(System.in);
             System.out.println("Do you wish to work with existing files or create random new ones?(type either old or new)");
-            //Waits for input
             String type1 = scann.nextLine();
             if (type1.equals("new")) {
                 // File names might change depending on file location

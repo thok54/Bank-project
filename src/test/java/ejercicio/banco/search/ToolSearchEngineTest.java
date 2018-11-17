@@ -47,26 +47,22 @@ public class ToolSearchEngineTest {
     @Test
     public void testSearchThrowsExceptionWhenDataTypeIsNull() {
         expectedEx.expect(IllegalArgumentException.class);
-        searchEngine.search(null, null);
+        searchEngine.search(null, BANK_NAME);
         expectedEx.expectMessage("Type must not be null");
     }
 
     @Test
     public void testSearchThrowsExceptionWhenStuffIsNull() {
-        expectedEx.expect(NullPointerException.class);
+        expectedEx.expect(IllegalArgumentException.class);
         searchEngine.search(BANK, null);
         expectedEx.expectMessage("Searching Null String");
     }
-
-    //TODO: Seems like when returning Collections, the size of the array increases
 
     @Test
     public void testSearchReturnsEmptyArrayWhenStuffDoesNotMatch() {
         List<Object> results =  searchEngine.search(BANK, INVALID_NAME);
         assertEquals(1,results.size());
     }
-
-    //TODO: None of the verify tests seem to work
 
     @Test
     public void testSearchCallsFindBanksWhenDataTypeIsBank() {

@@ -22,9 +22,17 @@ import java.util.List;
 
 //TODO: Returning Internal dto causes Collections to no longer work
 
-//TODO: Searcher is returning everything from file
-
 public class ToolSearchEngine implements SearchEngine {
+
+    private BankService bankService;
+    private AccountService accountService;
+    private PaymentService paymentService;
+
+    public ToolSearchEngine() {
+        this.bankService = new BankServiceImpl(new CsvBankRepository());
+        this.accountService = new AccountServiceImpl(new CsvAccountRepository());
+        this.paymentService = new PaymentServiceImpl(new CsvPaymentRepository());
+    }
 
     @Override
     public List<Object> search(DataType type, String stuff) {
@@ -33,22 +41,19 @@ public class ToolSearchEngine implements SearchEngine {
             throw new IllegalArgumentException("Type must not be null");
         }
         if (stuff == null) {
-            throw new NullPointerException("Searching Null String");
+            throw new IllegalArgumentException("Searching Null String");
         }
         switch (type) {
             case BANK:
                 file = String.join(File.separator, "src", "main", "resources", "csv", "randomBank.csv");
-                BankService bankService = new BankServiceImpl(new CsvBankRepository());
                 List<Bank> banks = ((BankServiceImpl) bankService).findBanks(file, stuff);
                 return Collections.singletonList(banks);
             case ACCOUNT:
                 file = String.join(File.separator, "src", "main", "resources", "csv", "randomAccounts.csv");
-                AccountService accountService = new AccountServiceImpl(new CsvAccountRepository());
                 List<Account> accounts = ((AccountServiceImpl) accountService).findAccounts(file, stuff);
                 return Collections.singletonList(accounts);
             case PAYMENT:
                 file = String.join(File.separator, "src", "main", "resources", "csv", "randomPayments.csv");
-                PaymentService paymentService = new PaymentServiceImpl(new CsvPaymentRepository());
                 List<Payment> payments = ((PaymentServiceImpl) paymentService).findPayments(file, stuff);
                 return Collections.singletonList(payments);
         }
