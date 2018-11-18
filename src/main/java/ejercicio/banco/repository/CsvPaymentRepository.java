@@ -79,7 +79,6 @@ public class CsvPaymentRepository implements PaymentRepository {
         return results;
     }
 
-
     @Override
     public void store(Payment payment) {
         try {

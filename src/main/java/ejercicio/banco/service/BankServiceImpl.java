@@ -33,7 +33,7 @@ public class BankServiceImpl implements BankService {
         bank = repository.find(n);
         return bank;
     }
-
+  
     public List<Bank> findBanks(String filename, String name) {
         return repository.findByName(filename, name);
     }

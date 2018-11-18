@@ -14,8 +14,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
+import static ejercicio.banco.dto.DataType.ACCOUNT;
+import static ejercicio.banco.dto.DataType.BANK;
+import static ejercicio.banco.dto.DataType.PAYMENT;
+
 public class DataGeneratorFactory implements DataGenerator {
     Random rand = new Random();
+
+
+    //Todo: UniTests
+
 
     @Override
     public InternalDto generate(DataType object, String filename) {
@@ -48,7 +56,7 @@ public class DataGeneratorFactory implements DataGenerator {
         }
         return null;
     }
-
+  
     private Bank getBank(String filename) {
         int id = rand.nextInt(10);
 
@@ -62,13 +70,13 @@ public class DataGeneratorFactory implements DataGenerator {
         for (int i = 0; i < addressLength; i++) {
             addressBuilder.append(lexicon.charAt(rand.nextInt(lexicon.length())));
         }
+      
         String address = addressBuilder.toString();
 
         Bank randBank = new Bank(id, name, address);
         randBankWriter(filename, randBank);
         return randBank;
     }
-
     private Account getAccount(String filename) {
         int id = rand.nextInt(10);
         float money = rand.nextInt(99999);
@@ -113,6 +121,7 @@ public class DataGeneratorFactory implements DataGenerator {
     }
 
     private void randAccountWriter(String filename, Account account) {
+
         File file = new File(filename);
         try (BufferedWriter br = new BufferedWriter(new FileWriter(file))) {
             br.write(account.toString());

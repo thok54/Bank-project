@@ -10,7 +10,7 @@ public interface BankRepository {
     Bank find(int id);
 
     List<Bank> findByName(String filename, String name);
-
+  
     void store(Bank bank);
 
     void update(int id, Bank bank);

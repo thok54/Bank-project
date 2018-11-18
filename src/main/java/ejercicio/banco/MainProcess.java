@@ -126,6 +126,7 @@ public class MainProcess {
                 System.out.println("Do you wish to continue?(y/n)");
                 //Waits for input
                 String answer = scan.nextLine();
+              
                 if (answer.equals("y")) {
                     doAgain = true;
                     repeat = false;
