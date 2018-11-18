@@ -31,102 +31,90 @@ import static ejercicio.banco.dto.DataType.PAYMENT;
 
 public class MainProcess {
 
-
-    // Read csv, process info, and write result in new csv
-    public static void main(String[] args) throws FileNotFoundException {
-        //This will identify wether to repeat process or not
+    public static void main(String[] args) {
         Boolean doAgain = true;
 
-        //This is the code that will be repeated if user wants
         while (doAgain) {
 
-        BankService bankService;
-        AccountService accountService;
-        PaymentService paymentService;
+            BankService bankService;
+            AccountService accountService;
+            PaymentService paymentService;
 
-        Scanner scann = new Scanner(System.in);
-        System.out.println("Do you wish to work with existing files or create random new ones?(type either old or new)");
-        //Waits for input
-        String type1 = scann.nextLine();
-        if (type1.equals("new")) {
-            // File names might change depending on file location
-            String randBankFile = String.join(File.separator, "src", "main", "resources", "csv", "randomBank.csv");
-            String randAccountFile = String.join(File.separator, "src", "main", "resources", "csv", "randomAccounts.csv");
-            String randPaymentFile = String.join(File.separator, "src", "main", "resources", "csv", "randomPayments.csv");
-
-            DataGeneratorFactory factory = new DataGeneratorFactory();
-            factory.generate(BANK,randBankFile);
-            factory.generate(ACCOUNT,randAccountFile);
-            factory.generate(PAYMENT,randPaymentFile);
-
-        } else {
-            System.out.println("Do you wish to work with csv or sql?(type either csv or sql)");
-
-            //Waits for input
-            String type = scann.nextLine();
-
-            //If using sql
-            if (type.equals("sql")) {
-
-                //Because sql repositories are not implemented yet, it will just terminate
-                System.out.println("You choosed sql, you choosed wrong");
-
-                bankService = new BankServiceImpl(new MySqlBankRepository());
-                accountService = new AccountServiceImpl(new MySqlAccountRepository());
-                paymentService = new PaymentServiceImpl(new MySqlPaymentRepository());
-            }
-
-            //If using csv
-            else {
-
-                bankService = new BankServiceImpl(new CsvBankRepository());
-                accountService = new AccountServiceImpl(new CsvAccountRepository());
-                paymentService = new PaymentServiceImpl(new CsvPaymentRepository());
-
-
+            Scanner scann = new Scanner(System.in);
+            System.out.println("Do you wish to work with existing files or create random new ones?(type either old or new)");
+            String type1 = scann.nextLine();
+            if (type1.equals("new")) {
                 // File names might change depending on file location
-                String bankFile = String.join(File.separator, "src", "main", "resources", "csv", "bank.csv");
-                String accountFile = String.join(File.separator, "src", "main", "resources", "csv", "accounts.csv");
-                String paymentFile = String.join(File.separator, "src", "main", "resources", "csv", "payments.csv");
+                String randBankFile = String.join(File.separator, "src", "main", "resources", "csv", "randomBank.csv");
+                String randAccountFile = String.join(File.separator, "src", "main", "resources", "csv", "randomAccounts.csv");
+                String randPaymentFile = String.join(File.separator, "src", "main", "resources", "csv", "randomPayments.csv");
 
-                // Creates the bank
-                Bank bestBank = bankService.processBank(bankFile);
+                DataGeneratorFactory factory = new DataGeneratorFactory();
+                factory.generate(BANK, randBankFile);
+                factory.generate(ACCOUNT, randAccountFile);
+                factory.generate(PAYMENT, randPaymentFile);
 
-                // Creates account list with Account manager
-                List<Account> accounts = accountService.processAccounts(accountFile);
+            } else {
+                System.out.println("Do you wish to work with csv or sql?(type either csv or sql)");
 
-                // Stores all the accounts into our bank before payments
-                bestBank.setUsers(accounts);
+                //Waits for input
+                String type = scann.nextLine();
 
+                if (type.equals("sql")) {
 
-                //Writes accounts before payments
-                paymentService.fileWriter(String.join(File.separator, "src", "main", "resources", "csv", "accountsBeforePayments.csv"), bestBank);
+                    //Because sql repositories are not implemented yet, it will just terminate
+                    System.out.println("You choosed sql, you choosed wrong");
 
-                //Process payments
-                List<Payment> payments = paymentService.processPayments(paymentFile, bestBank);
+                    bankService = new BankServiceImpl(new MySqlBankRepository());
+                    accountService = new AccountServiceImpl(new MySqlAccountRepository());
+                    paymentService = new PaymentServiceImpl(new MySqlPaymentRepository());
+                }
+
+                //If using csv
+                else {
+
+                    bankService = new BankServiceImpl(new CsvBankRepository());
+                    accountService = new AccountServiceImpl(new CsvAccountRepository());
+                    paymentService = new PaymentServiceImpl(new CsvPaymentRepository());
+
+                    // File names might change depending on file location
+                    String bankFile = String.join(File.separator, "src", "main", "resources", "csv", "bank.csv");
+                    String accountFile = String.join(File.separator, "src", "main", "resources", "csv", "accounts.csv");
+                    String paymentFile = String.join(File.separator, "src", "main", "resources", "csv", "payments.csv");
+
+                    // Creates the bank
+                    Bank bestBank = bankService.processBank(bankFile);
+
+                    // Creates account list with Account manager
+                    List<Account> accounts = accountService.processAccounts(accountFile);
+
+                    // Stores all the accounts into our bank before payments
+                    bestBank.setUsers(accounts);
+
+                    //Writes accounts before payments
+                    paymentService.fileWriter(String.join(File.separator, "src", "main", "resources", "csv", "accountsBeforePayments.csv"), bestBank);
+
+                    //Process payments
+                    List<Payment> payments = paymentService.processPayments(paymentFile, bestBank);
+                }
             }
-
-        }
-        //Ask for search
+            //Ask for search
             Scanner searchQuestion = new Scanner(System.in);
             System.out.println("Do you wish to search anything?(y/n)");
             String searchQanswer = searchQuestion.nextLine();
             if (searchQanswer.equals("y")) {
-
                 Scanner typeParameter = new Scanner(System.in);
                 System.out.println("Are you looking for a bank, an account, or a payment?");
                 DataType dType = DataType.fromValue(typeParameter.nextLine());
 
-                if(dType != null) {
+                if (dType != null) {
                     Scanner searchParameter = new Scanner(System.in);
                     System.out.println("Write a name to search");
                     String searchString = searchParameter.nextLine();
 
                     ToolSearchEngine searchEngine = new ToolSearchEngine();
-                    //Prints search result
-                    System.out.println(searchEngine.search(dType,searchString));
-                }
-                else{
+                    System.out.println(searchEngine.search(dType, searchString));
+                } else {
                     System.out.println("Could not identify search data type");
                 }
             }
@@ -136,11 +124,9 @@ public class MainProcess {
             while (repeat) {
 
                 System.out.println("Do you wish to continue?(y/n)");
-
                 //Waits for input
                 String answer = scan.nextLine();
-
-                //For comparing strings, use "equals()" rather than "=="
+              
                 if (answer.equals("y")) {
                     doAgain = true;
                     repeat = false;

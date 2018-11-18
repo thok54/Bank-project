@@ -23,44 +23,35 @@ public class CsvPaymentRepository implements PaymentRepository {
     }
 
     @Override
-    public List<Payment> findAll(String filename){
-        // Creates list of payments
+    public List<Payment> findAll(String filename) {
         List<Payment> payments = new ArrayList<Payment>();
-
-        List<String> in = null;
+        List<String> in = new ArrayList<String>();
         try {
             in = reader.read(filename);
 
+            for (int x = 0; x < in.size(); x++) {
+                String line = in.get(x);
+                System.out.println(line);
+                Payment pay;
 
-        for (int x = 0; x < in.size(); x++) {
-            String line = in.get(x);
-            System.out.println(line);
-            Payment pay;
-
-            try {
-                // Assuming that the info is separated by "; " ,splits it
-                String[] parts = line.split(";");
-                int paymentId = Integer.parseInt(parts[0]);
-                int bankId = Integer.parseInt(parts[1]);
-                int userId = Integer.parseInt(parts[2]);
-                float amount = Float.valueOf(parts[3]);
-                System.out.println("Processing payment " + paymentId + " of" + amount + "$");
-                // Creates a new payment and adds it to the list
-                pay = new Payment(paymentId, bankId, userId, amount);
-                payments.add(pay);
+                try {
+                    String[] parts = line.split("; ");
+                    int paymentId = Integer.parseInt(parts[0]);
+                    int bankId = Integer.parseInt(parts[1]);
+                    int userId = Integer.parseInt(parts[2]);
+                    float amount = Float.valueOf(parts[3]);
+                    System.out.println("Processing payment " + paymentId + " of" + amount + "$");
+                    pay = new Payment(paymentId, bankId, userId, amount);
+                    payments.add(pay);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    System.out.println("Unable to parse number " + line);
+                }
             }
-            catch (NumberFormatException e){
-                e.printStackTrace();
-                System.out.println("Unable to parse number "+line);
-                //throw e;
-            }
-        }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("filename "+filename+" was not found");
+            throw new IllegalArgumentException("filename " + filename + " was not found");
         }
-
         return payments;
     }
 
@@ -73,27 +64,23 @@ public class CsvPaymentRepository implements PaymentRepository {
                 return payment;
             }
         }
-        //Method requires a return statement
         return null;
     }
 
     @Override
     public List<Payment> findById(String filename, int id) {
         List<Payment> all = findAll(filename);
-        List<Payment> results = null;
+        List<Payment> results = new ArrayList<>();
         for (Payment payment : all) {
-            if (payment.getBankId()== id) {
+            if (payment.getBankId() == id) {
                 results.add(payment);
             }
         }
         return results;
     }
 
-
-
     @Override
     public void store(Payment payment) {
-        //Adds account to file
         try {
             Files.write(Paths.get(FILENAME), payment.toString().getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
@@ -103,7 +90,7 @@ public class CsvPaymentRepository implements PaymentRepository {
     }
 
     @Override
-    public void update(int id, Payment payment)  {
+    public void update(int id, Payment payment) {
         List<String> in = null;
         String line;
         try {
@@ -113,19 +100,16 @@ public class CsvPaymentRepository implements PaymentRepository {
             e.printStackTrace();
             System.out.println("Failed to find file");
             return;
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
             System.out.println("Payment not in list");
             return;
         }
-
-        //For now, we just print "Updating"
         System.out.println("Updating payment " + line + " to be " + payment);
     }
 
     @Override
-    public void delete(int id){
+    public void delete(int id) {
         List<String> in = null;
         try {
             in = reader.read(FILENAME);
@@ -134,10 +118,7 @@ public class CsvPaymentRepository implements PaymentRepository {
             System.out.println("Failed to delete payment");
             return;
         }
-
         String line = in.get(id);
-
-        //For now, we just print "deleting"
         System.out.println("Deleting payment " + line);
     }
 }

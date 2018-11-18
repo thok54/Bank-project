@@ -11,7 +11,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
     }
 
     @Override
-    public Payment find(int id)  {
+    public Payment find(int id) {
         return null;
     }
 
@@ -21,7 +21,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
     }
 
     @Override
-    public void store(Payment payment)  {
+    public void store(Payment payment) {
 
     }
 
@@ -31,7 +31,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
     }
 
     @Override
-    public void delete(int id)  {
+    public void delete(int id) {
 
     }
 }

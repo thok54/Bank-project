@@ -9,14 +9,11 @@ public interface BankRepository {
 
     Bank find(int id);
 
-    public List<Bank> findByName(String filename, String name);
-
-    //Prints storing
+    List<Bank> findByName(String filename, String name);
+  
     void store(Bank bank);
 
-    //Prints updating
     void update(int id, Bank bank);
 
-    //Prints "deleting"
     void delete(int id);
 }

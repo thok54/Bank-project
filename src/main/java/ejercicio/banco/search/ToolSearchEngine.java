@@ -3,6 +3,7 @@ package ejercicio.banco.search;
 import ejercicio.banco.dto.Account;
 import ejercicio.banco.dto.Bank;
 import ejercicio.banco.dto.DataType;
+import ejercicio.banco.dto.InternalDto;
 import ejercicio.banco.dto.Payment;
 import ejercicio.banco.repository.CsvAccountRepository;
 import ejercicio.banco.repository.CsvBankRepository;
@@ -19,33 +20,40 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-//TODO: Make everything return InternalDto
+//TODO: Returning Internal dto causes Collections to no longer work
 
-//TODO: Searcher is returning everything from file
+public class ToolSearchEngine implements SearchEngine {
 
-public class ToolSearchEngine implements SearchEngine{
+    private BankService bankService;
+    private AccountService accountService;
+    private PaymentService paymentService;
+
+    public ToolSearchEngine() {
+        this.bankService = new BankServiceImpl(new CsvBankRepository());
+        this.accountService = new AccountServiceImpl(new CsvAccountRepository());
+        this.paymentService = new PaymentServiceImpl(new CsvPaymentRepository());
+    }
+
     @Override
     public List<Object> search(DataType type, String stuff) {
-         String file;
-
-        //Usando switch
+        String file;
+        if (type == null) {
+            throw new IllegalArgumentException("Type must not be null");
+        }
+        if (stuff == null) {
+            throw new IllegalArgumentException("Searching Null String");
+        }
         switch (type) {
             case BANK:
-                //Searches bank name
                 file = String.join(File.separator, "src", "main", "resources", "csv", "randomBank.csv");
-                BankService bankService = new BankServiceImpl(new CsvBankRepository());
                 List<Bank> banks = ((BankServiceImpl) bankService).findBanks(file, stuff);
                 return Collections.singletonList(banks);
             case ACCOUNT:
-                //Searchers user name
                 file = String.join(File.separator, "src", "main", "resources", "csv", "randomAccounts.csv");
-                AccountService accountService = new AccountServiceImpl(new CsvAccountRepository());
                 List<Account> accounts = ((AccountServiceImpl) accountService).findAccounts(file, stuff);
                 return Collections.singletonList(accounts);
             case PAYMENT:
-                //Searches payment ID
                 file = String.join(File.separator, "src", "main", "resources", "csv", "randomPayments.csv");
-                PaymentService paymentService = new PaymentServiceImpl(new CsvPaymentRepository());
                 List<Payment> payments = ((PaymentServiceImpl) paymentService).findPayments(file, stuff);
                 return Collections.singletonList(payments);
         }

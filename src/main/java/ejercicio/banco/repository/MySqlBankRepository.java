@@ -6,12 +6,12 @@ import java.util.List;
 
 public class MySqlBankRepository implements BankRepository {
     @Override
-    public List<Bank> findAll(String filename)  {
+    public List<Bank> findAll(String filename) {
         return null;
     }
 
     @Override
-    public Bank find(int id){
+    public Bank find(int id) {
         return null;
     }
 
@@ -22,17 +22,17 @@ public class MySqlBankRepository implements BankRepository {
 
 
     @Override
-    public void store(Bank bank)  {
+    public void store(Bank bank) {
 
     }
 
     @Override
-    public void update(int id, Bank bank)  {
+    public void update(int id, Bank bank) {
 
     }
 
     @Override
-    public void delete(int id)  {
+    public void delete(int id) {
 
     }
 }
