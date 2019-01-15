@@ -28,6 +28,12 @@
             <version>${mockito-all.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <!--MySQL Dependencies-->
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>6.0.6</version>
+        </dependency>
     </dependencies>
 
     <build>
