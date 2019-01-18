@@ -22,9 +22,6 @@ public class DataGeneratorFactory implements DataGenerator {
     Random rand = new Random();
 
 
-    //Todo: UniTests
-
-
     @Override
     public InternalDto generate(DataType object, String filename) {
         if (filename == null) {
