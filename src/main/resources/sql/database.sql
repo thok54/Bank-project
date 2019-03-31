@@ -6,7 +6,7 @@ USE bank_project;
 
      CREATE TABLE BANKS
        (
-          id INT NOT NULL PRIMARY KEY,
+          id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
           name VARCHAR(20),
           address VARCHAR(50)
        );
@@ -14,7 +14,7 @@ USE bank_project;
 
        CREATE TABLE ACCOUNTS
        (
-          id INT NOT NULL  PRIMARY KEY,
+          id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
           name VARCHAR(20),
           money float,
           iban VARCHAR(20)
@@ -23,7 +23,7 @@ USE bank_project;
 
        CREATE TABLE PAYMENTS
        (
-          id INT NOT NULL PRIMARY KEY,
+          id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
           bank_id INT,
           user_id INT,
           amount float,

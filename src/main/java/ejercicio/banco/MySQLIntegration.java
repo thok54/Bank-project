@@ -2,12 +2,8 @@ package ejercicio.banco;
 
 import java.sql.*;
 
-//TODO: Not sure where to do this
 public class MySQLIntegration {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-
-        //Register driver
-        Class.forName("com.mysql.cj.jdbc.Driver");
 
         //Creates Connection
         Connection con = DriverManager
@@ -17,16 +13,16 @@ public class MySQLIntegration {
         Statement stmt = con.createStatement();
 
         //Inserts
-        String insertBankSql = "INSERT INTO BANKS(id, name, address)"
-                + " VALUES(1, 'bestBank', 'right here'), (3, 'Worst ATM', 'over there')";
+        String insertBankSql = "INSERT INTO BANKS(name, address)"
+                + " VALUES('bestBank', 'right here'), ('Worst ATM', 'over there')";
         stmt.executeUpdate(insertBankSql);
 
-        String insertAccountSql = "INSERT INTO Accounts(id, name, money, iban)"
-                + " VALUES(1, 'Peter', 3.00, 'PIPIRANA87'), (2, 'Aurelio', 8.49, 'SATURN15STINKS')";
+        String insertAccountSql = "INSERT INTO Accounts(name, money, iban)"
+                + " VALUES('Peter', 3.00, 'PIPIRANA87'), ('Aurelio', 8.49, 'SATURN15STINKS')";
         stmt.executeUpdate(insertAccountSql);
 
-        String insertPaymentSql = "INSERT INTO PAYMENTS(id, bank_id, user_id, amount)"
-                + " VALUES(1, 1, 1, 1.87), (2, 3, 2, 3.41)";
+        String insertPaymentSql = "INSERT INTO PAYMENTS(bank_id, user_id, amount)"
+                + " VALUES(1, 2, 1.87), (2, 1, 3.41)";
         stmt.executeUpdate(insertPaymentSql);
 
         //Show tables

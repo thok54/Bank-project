@@ -7,16 +7,19 @@ import java.util.List;
 public class MySqlAccountRepository implements AccountRepository {
     @Override
     public List<Account> findAll(String filename) {
+        //TODO: connect database, Select*from BANKS, iterate ResultSet and add its results to Bank and return it
         return null;
     }
 
     @Override
     public Account find(int id) {
+        //TODO: return ONLY selected id
         return null;
     }
 
     @Override
     public List<Account> findByName(String filename, String name) {
+        //TODO: return ONLY selected name
         return null;
     }
 
