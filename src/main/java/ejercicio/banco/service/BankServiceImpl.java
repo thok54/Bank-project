@@ -3,6 +3,7 @@ package ejercicio.banco.service;
 import ejercicio.banco.dto.Bank;
 import ejercicio.banco.repository.BankRepository;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class BankServiceImpl implements BankService {
@@ -18,7 +19,12 @@ public class BankServiceImpl implements BankService {
             throw new IllegalArgumentException("Filename must not be null");
         }
         Bank bank;
-        List<Bank> banks = repository.findAll(filename);
+        List<Bank> banks = null;
+        try {
+            banks = repository.findAll(filename);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         try {
             bank = banks.get(0);
         } catch (IndexOutOfBoundsException e) {
@@ -30,12 +36,21 @@ public class BankServiceImpl implements BankService {
 
     public Bank findBank(int n) {
         Bank bank = null;
-        bank = repository.find(n);
+        try {
+            bank = repository.find(n);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return bank;
     }
   
     public List<Bank> findBanks(String filename, String name) {
-        return repository.findByName(filename, name);
+        try {
+            return repository.findByName(filename, name);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

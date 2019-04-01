@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class PaymentServiceImpl implements PaymentService {
@@ -23,7 +24,12 @@ public class PaymentServiceImpl implements PaymentService {
         if (filename == null) {
             throw new IllegalArgumentException("Filename must not be null");
         }
-        List<Payment> payments = repository.findAll(filename);
+        List<Payment> payments = null;
+        try {
+            payments = repository.findAll(filename);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         try {
             for (int i = 0; i < payments.size(); i++) {
@@ -83,7 +89,12 @@ public class PaymentServiceImpl implements PaymentService {
 
     public List<Payment> findPayments(String filename, String name) {
         int id = Integer.parseInt(name);
-        return repository.findByBankId(filename, id);
+        try {
+            return repository.findByBankId(filename, id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void storePayment(Payment payment) {
