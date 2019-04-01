@@ -2,14 +2,15 @@ package ejercicio.banco.repository;
 
 import ejercicio.banco.dto.Payment;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface PaymentRepository {
-    List<Payment> findAll(String filename);
+    List<Payment> findAll(String filename) throws SQLException;
 
-    Payment find(int id);
+    Payment find(int id) throws SQLException;
 
-    List<Payment> findById(String filename, int id);
+    List<Payment> findByBankId(String filename, int id) throws SQLException;
 
     //Prints storing
     void store(Payment payment);

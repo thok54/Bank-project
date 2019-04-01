@@ -83,7 +83,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     public List<Payment> findPayments(String filename, String name) {
         int id = Integer.parseInt(name);
-        return repository.findById(filename, id);
+        return repository.findByBankId(filename, id);
     }
 
     public void storePayment(Payment payment) {

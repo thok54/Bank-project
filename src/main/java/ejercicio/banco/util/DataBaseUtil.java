@@ -5,13 +5,13 @@ import java.sql.*;
 public class DataBaseUtil {
 
     public static void main(String[] args) throws SQLException {
-        Connection con = openConnections();
+        Connection con = startConnection();
         executeQuery(con, " imposible query");
         showTables(con);
         closeConections(con);
     }
 
-    public static Connection openConnections() throws SQLException {
+    public static Connection startConnection() throws SQLException {
         Connection con = DriverManager
                 .getConnection("jdbc:mysql://localhost:3306/bank_project", "user", "user");
         return con;
@@ -19,10 +19,10 @@ public class DataBaseUtil {
 
     public static void executeQuery(Connection con, String query) throws SQLException {
         try {
-            Statement pstmt = con.createStatement();
-            pstmt.executeUpdate(query);
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate(query);
             try {
-                pstmt.close();
+                stmt.close();
             } catch (Exception e) {
             }
         }

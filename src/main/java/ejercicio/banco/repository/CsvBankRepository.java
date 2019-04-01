@@ -75,7 +75,7 @@ public class CsvBankRepository implements BankRepository {
         }
         return results;
     }
-  
+
     @Override
     public void store(Bank bank) {
         try {
