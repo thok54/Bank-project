@@ -12,27 +12,30 @@ import static ejercicio.banco.util.DataBaseUtil.closeConections;
 import static ejercicio.banco.util.DataBaseUtil.startConnection;
 
 public class MySqlPaymentRepository implements PaymentRepository {
+
+    private static final String FILENAME = "bank_project";
+
     @Override
     public List<Payment> findAll(String filename) {
         List<Payment> payments = new ArrayList();
-        try {
-            Connection con = startConnection();
 
+        Connection con = startConnection(filename);
+
+        try {
             //Reads PAYMENTS table, returning results
             PreparedStatement pstmt = con.prepareStatement("select * from PAYMENTS");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 Integer id = rs.getInt("id");
-                Integer bankId = rs.getInt("bank_id");
-                Integer userId = rs.getInt("user_id");
+                Integer bankId = rs.getInt("bankId");
+                Integer userId = rs.getInt("userId");
                 Float amount = rs.getFloat("amount");
                 Payment payment = new Payment(id, bankId, userId, amount);
                 payments.add(payment);
             }
 
             closeConections(con);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return payments;
@@ -40,17 +43,18 @@ public class MySqlPaymentRepository implements PaymentRepository {
 
     @Override
     public Payment find(int id) {
-        try {
-            Connection con = startConnection();
 
+        Connection con = startConnection(FILENAME);
+
+        try {
             //Reads PAYMENTS table, returning results
             PreparedStatement pstmt = con.prepareStatement("select * from PAYMENTS");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 Integer currentId = rs.getInt("id");
                 if (id == currentId) {
-                    Integer bankId = rs.getInt("bank_id");
-                    Integer userId = rs.getInt("user_id");
+                    Integer bankId = rs.getInt("bankId");
+                    Integer userId = rs.getInt("userId");
                     Float amount = rs.getFloat("amount");
                     Payment payment = new Payment(id, bankId, userId, amount);
                     closeConections(con);
@@ -58,8 +62,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
                 }
             }
             closeConections(con);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -68,25 +71,25 @@ public class MySqlPaymentRepository implements PaymentRepository {
     @Override
     public List<Payment> findByBankId(String filename, int bankId) {
         List<Payment> payments = new ArrayList();
-        try {
-            Connection con = startConnection();
 
+        Connection con = startConnection(filename);
+
+        try {
             //Reads PAYMENTS table, returning results
-            PreparedStatement pstmt = con.prepareStatement("select * from PAYMENT");
+            PreparedStatement pstmt = con.prepareStatement("select * from PAYMENTS");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                Integer currentId = rs.getInt("bank_id");
+                Integer currentId = rs.getInt("bankId");
                 if (bankId == currentId) {
                     Integer id = rs.getInt("id");
-                    Integer userId = rs.getInt("user_id");
+                    Integer userId = rs.getInt("userId");
                     Float amount = rs.getFloat("amount");
                     Payment payment = new Payment(id, bankId, userId, amount);
                     payments.add(payment);
                 }
             }
             closeConections(con);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return payments;

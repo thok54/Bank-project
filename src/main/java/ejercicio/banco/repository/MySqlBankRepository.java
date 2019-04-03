@@ -1,6 +1,7 @@
 package ejercicio.banco.repository;
 
 import ejercicio.banco.dto.Bank;
+import ejercicio.banco.util.DataBaseUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,14 +12,16 @@ import java.util.List;
 import static ejercicio.banco.util.DataBaseUtil.startConnection;
 import static ejercicio.banco.util.DataBaseUtil.closeConections;
 
+
 public class MySqlBankRepository implements BankRepository {
+
+    private static final String FILENAME = "bank_project";
+
     @Override
     public List<Bank> findAll(String filename) {
         List<Bank> banks = new ArrayList();
-
+        Connection con = startConnection(filename);
         try {
-            Connection con = startConnection();
-
             //Reads BANKS table, returning results
             PreparedStatement pstmt = con.prepareStatement("select * from BANKS");
             ResultSet rs = pstmt.executeQuery();
@@ -39,9 +42,9 @@ public class MySqlBankRepository implements BankRepository {
 
     @Override
     public Bank find(int id) {
-        try {
-            Connection con = startConnection();
+        Connection con = startConnection(FILENAME);
 
+        try {
             //Reads BANKS table, returning results
             PreparedStatement pstmt = con.prepareStatement("select * from BANKS");
             ResultSet rs = pstmt.executeQuery();
@@ -65,9 +68,9 @@ public class MySqlBankRepository implements BankRepository {
     @Override
     public List<Bank> findByName(String filename, String name) {
         List<Bank> banks = new ArrayList();
-        try {
-            Connection con = startConnection();
+        Connection con = startConnection(filename);
 
+        try {
             //Reads BANKS table, returning results
             PreparedStatement pstmt = con.prepareStatement("select * from BANKS");
             ResultSet rs = pstmt.executeQuery();

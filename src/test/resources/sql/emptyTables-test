@@ -1,8 +1,8 @@
-DROP DATABASE bank_project;
-CREATE DATABASE bank_project;
-USE bank_project;
+DROP DATABASE empty_test;
+CREATE DATABASE empty_test;
+USE empty_test;
     CREATE USER 'user' IDENTIFIED WITH mysql_native_password BY 'user';
-    GRANT ALL on bank_project.* TO 'user';
+    GRANT ALL on empty_test.* TO 'user';
 
      CREATE TABLE BANKS
        (
@@ -30,5 +30,3 @@ USE bank_project;
           FOREIGN KEY(bankId) REFERENCES BANKS(id),
           FOREIGN KEY(userId) REFERENCES ACCOUNTS(id)
        );
-
-

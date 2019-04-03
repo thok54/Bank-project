@@ -4,20 +4,29 @@ import java.sql.*;
 
 public class DataBaseUtil {
 
-    public static void main(String[] args) throws SQLException {
-        Connection con = startConnection();
+    public static void main(String[] args) {
+        Connection con = startConnection("bank_project");
         executeQuery(con, " imposible query");
-        showTables(con);
+        try {
+            showTables(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         closeConections(con);
     }
 
-    public static Connection startConnection() throws SQLException {
-        Connection con = DriverManager
-                .getConnection("jdbc:mysql://localhost:3306/bank_project", "user", "user");
+    public static Connection startConnection(String tablename) {
+        Connection con = null;
+        try {
+            con = DriverManager
+                    .getConnection("jdbc:mysql://localhost:3306/"+tablename, "user", "user");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return con;
     }
 
-    public static void executeQuery(Connection con, String query) throws SQLException {
+    public static void executeQuery(Connection con, String query){
         try {
             Statement stmt = con.createStatement();
             stmt.executeUpdate(query);
@@ -59,8 +68,8 @@ public class DataBaseUtil {
         System.out.println("PAYMENTS");
         while (rs.next()) {
             Integer id = rs.getInt("id");
-            Integer bankId = rs.getInt("bank_id");
-            Integer userId = rs.getInt("user_id");
+            Integer bankId = rs.getInt("bankId");
+            Integer userId = rs.getInt("userId");
             Float amount = rs.getFloat("amount");
             System.out.println(id + "; bank id: " + bankId + "; user id:" + userId + "; for an amount of $" + amount);
         }

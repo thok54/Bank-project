@@ -1,8 +1,8 @@
-DROP DATABASE bank_project;
-CREATE DATABASE bank_project;
-USE bank_project;
+DROP DATABASE bank_project_test;
+CREATE DATABASE bank_project_test;
+USE bank_project_test;
     CREATE USER 'user' IDENTIFIED WITH mysql_native_password BY 'user';
-    GRANT ALL on bank_project.* TO 'user';
+    GRANT ALL on bank_project_test.* TO 'user';
 
      CREATE TABLE BANKS
        (
@@ -10,6 +10,8 @@ USE bank_project;
           name VARCHAR(20),
           address VARCHAR(50)
        );
+
+       INSERT INTO BANKS(name, address) VALUES('bestBank', 'right here'), ('Worst ATM', 'over there');
 
 
        CREATE TABLE ACCOUNTS
@@ -19,6 +21,8 @@ USE bank_project;
           money float,
           iban VARCHAR(20)
        );
+
+       INSERT INTO ACCOUNTS(name, money, iban) VALUES('Peter', 3.00, 'PIPIRANA87'), ('Aurelio', 8.49, 'SATURN15STINKS');
 
 
        CREATE TABLE PAYMENTS
@@ -31,4 +35,4 @@ USE bank_project;
           FOREIGN KEY(userId) REFERENCES ACCOUNTS(id)
        );
 
-
+       INSERT INTO PAYMENTS(bankId, userId, amount) VALUES(1, 2, 1.87), (2, 1, 3.41);

@@ -12,13 +12,16 @@ import static ejercicio.banco.util.DataBaseUtil.closeConections;
 import static ejercicio.banco.util.DataBaseUtil.startConnection;
 
 public class MySqlAccountRepository implements AccountRepository {
+
+    private static final String FILENAME = "bank_project";
+
     @Override
     public List<Account> findAll(String filename) {
         List<Account> accounts = new ArrayList();
 
-        try {
-            Connection con = startConnection();
+        Connection con = startConnection(filename);
 
+        try {
             //Reads ACCOUNTS table, returning results
             PreparedStatement pstmt = con.prepareStatement("select * from ACCOUNTS");
             ResultSet rs = pstmt.executeQuery();
@@ -40,9 +43,10 @@ public class MySqlAccountRepository implements AccountRepository {
 
     @Override
     public Account find(int id) {
-        try {
-            Connection con = startConnection();
 
+        Connection con = startConnection(FILENAME);
+
+        try {
             //Reads ACCOUNTS table, returning results
             PreparedStatement pstmt = con.prepareStatement("select * from ACCOUNTS");
             ResultSet rs = pstmt.executeQuery();
@@ -67,9 +71,10 @@ public class MySqlAccountRepository implements AccountRepository {
     @Override
     public List<Account> findByName(String filename, String name) {
         List<Account> accounts = new ArrayList();
-        try {
-            Connection con = startConnection();
 
+        Connection con = startConnection(filename);
+
+        try {
             //Reads ACCOUNTS table, returning results
             PreparedStatement pstmt = con.prepareStatement("select * from ACCOUNTS");
             ResultSet rs = pstmt.executeQuery();

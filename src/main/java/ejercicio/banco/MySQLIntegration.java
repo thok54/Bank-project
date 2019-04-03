@@ -17,11 +17,11 @@ public class MySQLIntegration {
                 + " VALUES('bestBank', 'right here'), ('Worst ATM', 'over there')";
         stmt.executeUpdate(insertBankSql);
 
-        String insertAccountSql = "INSERT INTO Accounts(name, money, iban)"
+        String insertAccountSql = "INSERT INTO ACCOUNTS(name, money, iban)"
                 + " VALUES('Peter', 3.00, 'PIPIRANA87'), ('Aurelio', 8.49, 'SATURN15STINKS')";
         stmt.executeUpdate(insertAccountSql);
 
-        String insertPaymentSql = "INSERT INTO PAYMENTS(bank_id, user_id, amount)"
+        String insertPaymentSql = "INSERT INTO PAYMENTS(bankId, userId, amount)"
                 + " VALUES(1, 2, 1.87), (2, 1, 3.41)";
         stmt.executeUpdate(insertPaymentSql);
 
