@@ -33,8 +33,11 @@ public class MySqlAccountRepository implements AccountRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            if (con != null) {
+                DataBaseUtil.closeConections(con);
+            }
         }
-        DataBaseUtil.closeConections(con);
         return accounts;
     }
 
@@ -54,14 +57,16 @@ public class MySqlAccountRepository implements AccountRepository {
                     Float money = rs.getFloat("money");
                     String iban = rs.getString("iban");
                     Account account = new Account(id, name, money, iban);
-                    DataBaseUtil.closeConections(con);
                     return account;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (con != null) {
+                DataBaseUtil.closeConections(con);
+            }
         }
-        DataBaseUtil.closeConections(con);
         return null;
     }
 
@@ -87,8 +92,11 @@ public class MySqlAccountRepository implements AccountRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            if (con != null) {
+                DataBaseUtil.closeConections(con);
+            }
         }
-        DataBaseUtil.closeConections(con);
         return accounts;
     }
 

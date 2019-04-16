@@ -33,8 +33,11 @@ public class MySqlPaymentRepository implements PaymentRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            if (con != null) {
+                DataBaseUtil.closeConections(con);
+            }
         }
-        DataBaseUtil.closeConections(con);
         return payments;
     }
 
@@ -54,14 +57,16 @@ public class MySqlPaymentRepository implements PaymentRepository {
                     Integer userId = rs.getInt("userId");
                     Float amount = rs.getFloat("amount");
                     Payment payment = new Payment(id, bankId, userId, amount);
-                    DataBaseUtil.closeConections(con);
                     return payment;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            if (con != null) {
+                DataBaseUtil.closeConections(con);
+            }
         }
-        DataBaseUtil.closeConections(con);
         return null;
     }
 
@@ -87,8 +92,11 @@ public class MySqlPaymentRepository implements PaymentRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            if (con != null) {
+                DataBaseUtil.closeConections(con);
+            }
         }
-        DataBaseUtil.closeConections(con);
         return payments;
     }
 

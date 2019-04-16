@@ -31,8 +31,11 @@ public class MySqlBankRepository implements BankRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            if (con != null) {
+                DataBaseUtil.closeConections(con);
+            }
         }
-        DataBaseUtil.closeConections(con);
         return banks;
     }
 
@@ -50,14 +53,16 @@ public class MySqlBankRepository implements BankRepository {
                     String name = rs.getString("name");
                     String address = rs.getString("address");
                     Bank bank = new Bank(id, name, address);
-                    DataBaseUtil.closeConections(con);
                     return bank;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            if (con != null) {
+                DataBaseUtil.closeConections(con);
+            }
         }
-        DataBaseUtil.closeConections(con);
         return null;
     }
 
@@ -81,8 +86,11 @@ public class MySqlBankRepository implements BankRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            if (con != null) {
+                DataBaseUtil.closeConections(con);
+            }
         }
-        DataBaseUtil.closeConections(con);
         return banks;
     }
 
