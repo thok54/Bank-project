@@ -1,15 +1,13 @@
 package ejercicio.banco.repository;
 
 import ejercicio.banco.dto.Account;
+import ejercicio.banco.util.DataBaseUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
-import static ejercicio.banco.util.DataBaseUtil.closeConections;
-import static ejercicio.banco.util.DataBaseUtil.startConnection;
 
 public class MySqlAccountRepository implements AccountRepository {
 
@@ -19,7 +17,7 @@ public class MySqlAccountRepository implements AccountRepository {
     public List<Account> findAll(String filename) {
         List<Account> accounts = new ArrayList();
 
-        Connection con = startConnection(filename);
+        Connection con = DataBaseUtil.startConnection(filename);
 
         try {
             //Reads ACCOUNTS table, returning results
@@ -33,18 +31,17 @@ public class MySqlAccountRepository implements AccountRepository {
                 Account account = new Account(id, name, money, iban);
                 accounts.add(account);
             }
-
-            closeConections(con);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DataBaseUtil.closeConections(con);
         return accounts;
     }
 
     @Override
     public Account find(int id) {
 
-        Connection con = startConnection(FILENAME);
+        Connection con = DataBaseUtil.startConnection(FILENAME);
 
         try {
             //Reads ACCOUNTS table, returning results
@@ -57,14 +54,14 @@ public class MySqlAccountRepository implements AccountRepository {
                     Float money = rs.getFloat("money");
                     String iban = rs.getString("iban");
                     Account account = new Account(id, name, money, iban);
-                    closeConections(con);
+                    DataBaseUtil.closeConections(con);
                     return account;
                 }
             }
-            closeConections(con);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DataBaseUtil.closeConections(con);
         return null;
     }
 
@@ -72,7 +69,7 @@ public class MySqlAccountRepository implements AccountRepository {
     public List<Account> findByName(String filename, String name) {
         List<Account> accounts = new ArrayList();
 
-        Connection con = startConnection(filename);
+        Connection con = DataBaseUtil.startConnection(filename);
 
         try {
             //Reads ACCOUNTS table, returning results
@@ -88,10 +85,10 @@ public class MySqlAccountRepository implements AccountRepository {
                     accounts.add(account);
                 }
             }
-            closeConections(con);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DataBaseUtil.closeConections(con);
         return accounts;
     }
 

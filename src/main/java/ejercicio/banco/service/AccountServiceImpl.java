@@ -22,13 +22,7 @@ public class AccountServiceImpl implements AccountService {
         if (filename == null) {
             throw new IllegalArgumentException("Filename must not be null");
         }
-
-        try {
-            return repository.findAll(filename);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return repository.findAll(filename);
     }
 
     // Find user
@@ -48,12 +42,7 @@ public class AccountServiceImpl implements AccountService {
 
     // Find accounts by string
     public List<Account> findAccounts(String filename, String name){
-        try {
-            return repository.findByName(filename, name);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return repository.findByName(filename, name);
     }
 
 

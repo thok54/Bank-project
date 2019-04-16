@@ -24,12 +24,7 @@ public class PaymentServiceImpl implements PaymentService {
         if (filename == null) {
             throw new IllegalArgumentException("Filename must not be null");
         }
-        List<Payment> payments = null;
-        try {
-            payments = repository.findAll(filename);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        List<Payment> payments = repository.findAll(filename);
 
         try {
             for (int i = 0; i < payments.size(); i++) {
@@ -89,12 +84,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     public List<Payment> findPayments(String filename, String name) {
         int id = Integer.parseInt(name);
-        try {
-            return repository.findByBankId(filename, id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return repository.findByBankId(filename, id);
     }
 
     public void storePayment(Payment payment) {

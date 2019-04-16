@@ -9,9 +9,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ejercicio.banco.util.DataBaseUtil.startConnection;
-import static ejercicio.banco.util.DataBaseUtil.closeConections;
-
 
 public class MySqlBankRepository implements BankRepository {
 
@@ -20,7 +17,7 @@ public class MySqlBankRepository implements BankRepository {
     @Override
     public List<Bank> findAll(String filename) {
         List<Bank> banks = new ArrayList();
-        Connection con = startConnection(filename);
+        Connection con = DataBaseUtil.startConnection(filename);
         try {
             //Reads BANKS table, returning results
             PreparedStatement pstmt = con.prepareStatement("select * from BANKS");
@@ -32,17 +29,16 @@ public class MySqlBankRepository implements BankRepository {
                 Bank bank = new Bank(id, name, address);
                 banks.add(bank);
             }
-
-            closeConections(con);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DataBaseUtil.closeConections(con);
         return banks;
     }
 
     @Override
     public Bank find(int id) {
-        Connection con = startConnection(FILENAME);
+        Connection con = DataBaseUtil.startConnection(FILENAME);
 
         try {
             //Reads BANKS table, returning results
@@ -54,21 +50,21 @@ public class MySqlBankRepository implements BankRepository {
                     String name = rs.getString("name");
                     String address = rs.getString("address");
                     Bank bank = new Bank(id, name, address);
-                    closeConections(con);
+                    DataBaseUtil.closeConections(con);
                     return bank;
                 }
             }
-            closeConections(con);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DataBaseUtil.closeConections(con);
         return null;
     }
 
     @Override
     public List<Bank> findByName(String filename, String name) {
         List<Bank> banks = new ArrayList();
-        Connection con = startConnection(filename);
+        Connection con = DataBaseUtil.startConnection(filename);
 
         try {
             //Reads BANKS table, returning results
@@ -83,10 +79,10 @@ public class MySqlBankRepository implements BankRepository {
                     banks.add(bank);
                 }
             }
-            closeConections(con);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DataBaseUtil.closeConections(con);
         return banks;
     }
 

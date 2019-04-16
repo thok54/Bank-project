@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface BankRepository {
-    List<Bank> findAll(String filename) throws SQLException;
+    List<Bank> findAll(String filename);
 
     Bank find(int id) throws SQLException;
 
-    List<Bank> findByName(String filename, String name) throws SQLException;
+    List<Bank> findByName(String filename, String name);
   
     void store(Bank bank);
 

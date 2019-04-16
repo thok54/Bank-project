@@ -19,12 +19,7 @@ public class BankServiceImpl implements BankService {
             throw new IllegalArgumentException("Filename must not be null");
         }
         Bank bank;
-        List<Bank> banks = null;
-        try {
-            banks = repository.findAll(filename);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        List<Bank> banks = repository.findAll(filename);
         try {
             bank = banks.get(0);
         } catch (IndexOutOfBoundsException e) {
@@ -45,12 +40,7 @@ public class BankServiceImpl implements BankService {
     }
   
     public List<Bank> findBanks(String filename, String name) {
-        try {
-            return repository.findByName(filename, name);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return repository.findByName(filename, name);
     }
 
 

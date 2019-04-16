@@ -15,11 +15,11 @@ public class DataBaseUtil {
         closeConections(con);
     }
 
-    public static Connection startConnection(String tablename) {
+    public static Connection startConnection(String database_name) {
         Connection con = null;
         try {
             con = DriverManager
-                    .getConnection("jdbc:mysql://localhost:3306/"+tablename, "user", "user");
+                    .getConnection("jdbc:mysql://localhost:3306/"+database_name, "user", "user");
         } catch (SQLException e) {
             e.printStackTrace();
         }
