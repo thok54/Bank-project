@@ -13,11 +13,17 @@ public class MySqlAccountRepository implements AccountRepository {
 
     private static final String FILENAME = "bank_project";
 
+    private DataBaseUtil dataBaseUtil;
+
+    public MySqlAccountRepository() {
+        this.dataBaseUtil = new DataBaseUtil();
+    }
+
     @Override
     public List<Account> findAll(String filename) {
         List<Account> accounts = new ArrayList();
 
-        Connection con = DataBaseUtil.startConnection(filename);
+        Connection con = dataBaseUtil.startConnection(filename);
 
         try {
             //Reads ACCOUNTS table, returning results
@@ -33,10 +39,8 @@ public class MySqlAccountRepository implements AccountRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if (con != null) {
-                DataBaseUtil.closeConections(con);
-            }
+        } finally {
+            dataBaseUtil.closeConections(con);
         }
         return accounts;
     }
@@ -44,7 +48,7 @@ public class MySqlAccountRepository implements AccountRepository {
     @Override
     public Account find(int id) {
 
-        Connection con = DataBaseUtil.startConnection(FILENAME);
+        Connection con = dataBaseUtil.startConnection(FILENAME);
 
         try {
             //Reads ACCOUNTS table, returning results
@@ -63,9 +67,7 @@ public class MySqlAccountRepository implements AccountRepository {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (con != null) {
-                DataBaseUtil.closeConections(con);
-            }
+            dataBaseUtil.closeConections(con);
         }
         return null;
     }
@@ -74,7 +76,7 @@ public class MySqlAccountRepository implements AccountRepository {
     public List<Account> findByName(String filename, String name) {
         List<Account> accounts = new ArrayList();
 
-        Connection con = DataBaseUtil.startConnection(filename);
+        Connection con = dataBaseUtil.startConnection(filename);
 
         try {
             //Reads ACCOUNTS table, returning results
@@ -92,10 +94,8 @@ public class MySqlAccountRepository implements AccountRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if (con != null) {
-                DataBaseUtil.closeConections(con);
-            }
+        } finally {
+            dataBaseUtil.closeConections(con);
         }
         return accounts;
     }

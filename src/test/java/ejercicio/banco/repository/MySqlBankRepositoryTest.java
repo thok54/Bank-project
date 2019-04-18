@@ -14,7 +14,8 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MySqlBankRepositoryTest {
+public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
+
     private static final String TABLE = "bank_project_test";
     private static final String NOTHING = "nothing";
     private static final String EMPTYTABLE = "empty";

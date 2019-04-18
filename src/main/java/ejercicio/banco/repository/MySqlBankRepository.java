@@ -14,10 +14,17 @@ public class MySqlBankRepository implements BankRepository {
 
     private static final String FILENAME = "bank_project";
 
+    private DataBaseUtil dataBaseUtil;
+
+    public MySqlBankRepository() {
+        this.dataBaseUtil = new DataBaseUtil();
+    }
+
     @Override
     public List<Bank> findAll(String filename) {
         List<Bank> banks = new ArrayList();
-        Connection con = DataBaseUtil.startConnection(filename);
+
+        Connection con = dataBaseUtil.startConnection(filename);
         try {
             //Reads BANKS table, returning results
             PreparedStatement pstmt = con.prepareStatement("select * from BANKS");
@@ -31,17 +38,15 @@ public class MySqlBankRepository implements BankRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if (con != null) {
-                DataBaseUtil.closeConections(con);
-            }
+        } finally {
+            dataBaseUtil.closeConections(con);
         }
         return banks;
     }
 
     @Override
     public Bank find(int id) {
-        Connection con = DataBaseUtil.startConnection(FILENAME);
+        Connection con = dataBaseUtil.startConnection(FILENAME);
 
         try {
             //Reads BANKS table, returning results
@@ -58,10 +63,8 @@ public class MySqlBankRepository implements BankRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if (con != null) {
-                DataBaseUtil.closeConections(con);
-            }
+        } finally {
+            dataBaseUtil.closeConections(con);
         }
         return null;
     }
@@ -69,7 +72,7 @@ public class MySqlBankRepository implements BankRepository {
     @Override
     public List<Bank> findByName(String filename, String name) {
         List<Bank> banks = new ArrayList();
-        Connection con = DataBaseUtil.startConnection(filename);
+        Connection con = dataBaseUtil.startConnection(filename);
 
         try {
             //Reads BANKS table, returning results
@@ -86,10 +89,8 @@ public class MySqlBankRepository implements BankRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if (con != null) {
-                DataBaseUtil.closeConections(con);
-            }
+        } finally {
+            dataBaseUtil.closeConections(con);
         }
         return banks;
     }

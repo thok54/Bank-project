@@ -5,28 +5,30 @@ import java.sql.*;
 public class DataBaseUtil {
 
     public static void main(String[] args) {
-        Connection con = startConnection("bank_project");
-        executeQuery(con, " imposible query");
+        DataBaseUtil util = new DataBaseUtil();
+
+        Connection con = util.startConnection("bank_project");
+        util.executeQuery(con, " imposible query");
         try {
             showTables(con);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        closeConections(con);
+        util.closeConections(con);
     }
 
-    public static Connection startConnection(String database_name) {
+    public Connection startConnection(String databaseName) {
         Connection con = null;
         try {
             con = DriverManager
-                    .getConnection("jdbc:mysql://localhost:3306/"+database_name, "user", "user");
+                    .getConnection("jdbc:mysql://localhost:3306/"+databaseName, "user", "user");
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return con;
     }
 
-    public static void executeQuery(Connection con, String query){
+    public void executeQuery(Connection con, String query){
         try {
             Statement stmt = con.createStatement();
             stmt.executeUpdate(query);
@@ -84,9 +86,11 @@ public class DataBaseUtil {
         }
     }
 
-    public static void closeConections(Connection con) {
+    public void closeConections(Connection con) {
         try {
-            con.close();
+            if (con != null) {
+                con.close();
+            }
         } catch (Exception e) {
         }
     }

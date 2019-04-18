@@ -13,11 +13,17 @@ public class MySqlPaymentRepository implements PaymentRepository {
 
     private static final String FILENAME = "bank_project";
 
+    private DataBaseUtil dataBaseUtil;
+
+    public MySqlPaymentRepository() {
+        this.dataBaseUtil = new DataBaseUtil();
+    }
+
     @Override
     public List<Payment> findAll(String filename) {
         List<Payment> payments = new ArrayList();
 
-        Connection con = DataBaseUtil.startConnection(filename);
+        Connection con = dataBaseUtil.startConnection(filename);
 
         try {
             //Reads PAYMENTS table, returning results
@@ -33,10 +39,8 @@ public class MySqlPaymentRepository implements PaymentRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if (con != null) {
-                DataBaseUtil.closeConections(con);
-            }
+        } finally {
+            dataBaseUtil.closeConections(con);
         }
         return payments;
     }
@@ -44,7 +48,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
     @Override
     public Payment find(int id) {
 
-        Connection con = DataBaseUtil.startConnection(FILENAME);
+        Connection con = dataBaseUtil.startConnection(FILENAME);
 
         try {
             //Reads PAYMENTS table, returning results
@@ -62,10 +66,8 @@ public class MySqlPaymentRepository implements PaymentRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if (con != null) {
-                DataBaseUtil.closeConections(con);
-            }
+        } finally {
+            dataBaseUtil.closeConections(con);
         }
         return null;
     }
@@ -74,7 +76,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
     public List<Payment> findByBankId(String filename, int bankId) {
         List<Payment> payments = new ArrayList();
 
-        Connection con = DataBaseUtil.startConnection(filename);
+        Connection con = dataBaseUtil.startConnection(filename);
 
         try {
             //Reads PAYMENTS table, returning results
@@ -92,10 +94,8 @@ public class MySqlPaymentRepository implements PaymentRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if (con != null) {
-                DataBaseUtil.closeConections(con);
-            }
+        } finally {
+            dataBaseUtil.closeConections(con);
         }
         return payments;
     }

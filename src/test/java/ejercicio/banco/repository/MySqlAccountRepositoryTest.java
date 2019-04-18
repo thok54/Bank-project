@@ -6,15 +6,23 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MySqlAccountRepositoryTest {
+public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
+
     private static final String TABLE = "bank_project_test";
     private static final String NOTHING = "nothing";
     private static final String EMPTYTABLE = "empty";
@@ -89,8 +97,18 @@ public class MySqlAccountRepositoryTest {
     }
 
     @Test
-    public void testFindByNameReturnsProperItems() {
+    public void testFindByNameReturnsProperItems() throws SQLException {
+        executeQuery(util, TABLE, "select * from ACCOUNTS");
+
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getString("name")).thenReturn(expectedAccount2.getName());
+        when(resultSet.getInt("id")).thenReturn(expectedAccount2.getId());
+        when(resultSet.getFloat("money")).thenReturn(expectedAccount2.getMoney());
+        when(resultSet.getString("iban")).thenReturn(expectedAccount2.getIban());
+
         accounts = repository.findByName(TABLE, expectedAccount2.getName());
+
+        assertFalse(accounts.isEmpty());
         assertEquals(expectedAccount2.getName(), accounts.get(0).getName());
     }
 }
