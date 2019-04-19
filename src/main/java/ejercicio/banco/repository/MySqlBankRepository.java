@@ -6,13 +6,12 @@ import ejercicio.banco.util.DataBaseUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MySqlBankRepository implements BankRepository {
-
-    private static final String FILENAME = "bank_project";
 
     private DataBaseUtil dataBaseUtil;
 
@@ -24,7 +23,7 @@ public class MySqlBankRepository implements BankRepository {
     public List<Bank> findAll(String filename) {
         List<Bank> banks = new ArrayList();
 
-        Connection con = dataBaseUtil.startConnection(filename);
+        Connection con = dataBaseUtil.startConnection();
         try {
             //Reads BANKS table, returning results
             PreparedStatement pstmt = con.prepareStatement("select * from BANKS");
@@ -46,7 +45,7 @@ public class MySqlBankRepository implements BankRepository {
 
     @Override
     public Bank find(int id) {
-        Connection con = dataBaseUtil.startConnection(FILENAME);
+        Connection con = dataBaseUtil.startConnection();
 
         try {
             //Reads BANKS table, returning results
@@ -72,7 +71,7 @@ public class MySqlBankRepository implements BankRepository {
     @Override
     public List<Bank> findByName(String filename, String name) {
         List<Bank> banks = new ArrayList();
-        Connection con = dataBaseUtil.startConnection(filename);
+        Connection con = dataBaseUtil.startConnection();
 
         try {
             //Reads BANKS table, returning results
@@ -98,16 +97,50 @@ public class MySqlBankRepository implements BankRepository {
 
     @Override
     public void store(Bank bank) {
+        Connection con = dataBaseUtil.startConnection();
+        try{
+            String name = bank.getName();
+            String address = bank.getAddress();
+            PreparedStatement pstmt = con.prepareStatement("INSERT INTO BANKS (name, address) VALUES ("+name
+                    +", " +address+")");
+            ResultSet rs = pstmt.executeQuery();
 
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dataBaseUtil.closeConections(con);
+        }
     }
 
     @Override
     public void update(int id, Bank bank) {
+        Connection con = dataBaseUtil.startConnection();
+        try{
+            String name = bank.getName();
+            String address = bank.getAddress();
+            PreparedStatement pstmt = con.prepareStatement("UPDATE BANKS SET name = "+name+", address = "+address+
+                    " WHERE id = "+bank.getId());
+            ResultSet rs = pstmt.executeQuery();
 
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dataBaseUtil.closeConections(con);
+        }
     }
 
     @Override
     public void delete(int id) {
+        Connection con = dataBaseUtil.startConnection();
+        try{
+            PreparedStatement pstmt = con.prepareStatement("DELETE FROM BANKS WHERE id = "+id);
+            ResultSet rs = pstmt.executeQuery();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dataBaseUtil.closeConections(con);
+        }
 
     }
 }

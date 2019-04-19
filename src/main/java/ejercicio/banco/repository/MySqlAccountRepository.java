@@ -6,12 +6,11 @@ import ejercicio.banco.util.DataBaseUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlAccountRepository implements AccountRepository {
-
-    private static final String FILENAME = "bank_project";
 
     private DataBaseUtil dataBaseUtil;
 
@@ -23,7 +22,7 @@ public class MySqlAccountRepository implements AccountRepository {
     public List<Account> findAll(String filename) {
         List<Account> accounts = new ArrayList();
 
-        Connection con = dataBaseUtil.startConnection(filename);
+        Connection con = dataBaseUtil.startConnection();
 
         try {
             //Reads ACCOUNTS table, returning results
@@ -48,7 +47,7 @@ public class MySqlAccountRepository implements AccountRepository {
     @Override
     public Account find(int id) {
 
-        Connection con = dataBaseUtil.startConnection(FILENAME);
+        Connection con = dataBaseUtil.startConnection();
 
         try {
             //Reads ACCOUNTS table, returning results
@@ -76,7 +75,7 @@ public class MySqlAccountRepository implements AccountRepository {
     public List<Account> findByName(String filename, String name) {
         List<Account> accounts = new ArrayList();
 
-        Connection con = dataBaseUtil.startConnection(filename);
+        Connection con = dataBaseUtil.startConnection();
 
         try {
             //Reads ACCOUNTS table, returning results
@@ -102,16 +101,52 @@ public class MySqlAccountRepository implements AccountRepository {
 
     @Override
     public void store(Account account) {
+        Connection con = dataBaseUtil.startConnection();
+        try{
+            String name = account.getName();
+            Float money = account.getMoney();
+            String iban = account.getIban();
+            PreparedStatement pstmt = con.prepareStatement("INSERT INTO ACCOUNTS (name, money, iban) VALUES ("+name
+                   +", " +money+", "+iban+")");
+            ResultSet rs = pstmt.executeQuery();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dataBaseUtil.closeConections(con);
+        }
 
     }
 
     @Override
     public void update(int id, Account account) {
+        Connection con = dataBaseUtil.startConnection();
+        try{
+            String name = account.getName();
+            Float money = account.getMoney();
+            String iban = account.getIban();
+            PreparedStatement pstmt = con.prepareStatement("UPDATE ACCOUNTS SET name = "+name+
+                    ", money = "+money+", iban = "+iban+ " WHERE id = "+account.getId());
+            ResultSet rs = pstmt.executeQuery();
 
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dataBaseUtil.closeConections(con);
+        }
     }
 
     @Override
     public void delete(int id) {
+        Connection con = dataBaseUtil.startConnection();
+        try{
+            PreparedStatement pstmt = con.prepareStatement("DELETE FROM ACCOUNTS WHERE id = "+id);
+            ResultSet rs = pstmt.executeQuery();
 
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dataBaseUtil.closeConections(con);
+        }
     }
 }

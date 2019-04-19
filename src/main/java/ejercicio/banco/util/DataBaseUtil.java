@@ -7,7 +7,7 @@ public class DataBaseUtil {
     public static void main(String[] args) {
         DataBaseUtil util = new DataBaseUtil();
 
-        Connection con = util.startConnection("bank_project");
+        Connection con = util.startConnection();
         util.executeQuery(con, " imposible query");
         try {
             showTables(con);
@@ -17,11 +17,11 @@ public class DataBaseUtil {
         util.closeConections(con);
     }
 
-    public Connection startConnection(String databaseName) {
+    public Connection startConnection() {
         Connection con = null;
         try {
             con = DriverManager
-                    .getConnection("jdbc:mysql://localhost:3306/"+databaseName, "user", "user");
+                    .getConnection("jdbc:mysql://localhost:3306/bank_project", "user", "user");
         } catch (SQLException e) {
             e.printStackTrace();
         }

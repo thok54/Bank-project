@@ -8,22 +8,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MySqlPaymentRepositoryTest {
-    private static final String TABLE = "bank_project_test";
-    private static final String NOTHING = "nothing";
-    private static final String EMPTYTABLE = "empty";
-    private List<Payment> payments = new ArrayList();
-    private List<Payment> empty = new ArrayList();
+public class MySqlPaymentRepositoryTest extends AbstractMySqlRepositoryTest{
     private Payment payment;
-    private Payment expectedPayment1 = new Payment(1, 1, 2, (float)1.87);
-    private Payment expectedPayment2 = new Payment(2, 2, 1, (float)3.41);
-    private List<Payment> full = new ArrayList();
+    private Payment expectedPayment1 = new Payment(1, 3, 5, (float)1.87);
+    private Payment expectedPayment2 = new Payment(2, 4, 6, (float)3.41);
 
     @Mock
     private DataBaseUtil util;
@@ -32,65 +28,95 @@ public class MySqlPaymentRepositoryTest {
     MySqlPaymentRepository repository;
 
     @Test
-    public void testFindAllReturnsEmptyListWhenNull() {
-        payments = repository.findAll(null);
-        assertEquals(empty, payments);
-    }
+    public void testFindAllReturnsFullList() throws SQLException {
+        executeQuery(util, "select * from PAYMENTS");
 
-    @Test
-    public void testFindAllReturnsEmptyListWhenListNotFound() {
-        payments = repository.findAll(NOTHING);
-        assertEquals(empty, payments);
-    }
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getInt("id")).thenReturn(expectedPayment2.getPaymentId());
+        when(resultSet.getInt("bankId")).thenReturn(expectedPayment2.getBankId());
+        when(resultSet.getInt("userId")).thenReturn(expectedPayment2.getUserId());
+        when(resultSet.getFloat("money")).thenReturn(expectedPayment2.getAmount());
 
-    @Test
-    public void testFindReturnsEmptyListWhenListIsEmpty() {
-        payments = repository.findAll(EMPTYTABLE);
-        assertEquals(empty, payments);
-    }
-
-    @Test
-    public void testFindAllReturnsFullList() {
-        full.add(expectedPayment1);
-        full.add(expectedPayment2);
-        payments = repository.findAll(TABLE);
-        assertEquals(full.size(), payments.size());
+        List<Payment> payments = new ArrayList();
+        payments.add(expectedPayment1);
+        payments.add(expectedPayment2);
+        payments = repository.findAll("");
+        assertFalse(payments.isEmpty());
+        assertEquals(payments.size(), payments.size());
     }
 
 
     @Test
-    public void testFindReturnsNullWhenItemNotFound() {
+    public void testFindReturnsNullWhenItemNotFound() throws SQLException {
+        executeQuery(util, "select * from PAYMENTS");
+
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getInt("id")).thenReturn(expectedPayment2.getPaymentId());
+        when(resultSet.getInt("bankId")).thenReturn(expectedPayment2.getBankId());
+        when(resultSet.getInt("userId")).thenReturn(expectedPayment2.getUserId());
+        when(resultSet.getFloat("money")).thenReturn(expectedPayment2.getAmount());
+
         payment = repository.find(3);
-        assertEquals(payment, null);
+        assertNull(payment);
     }
 
     @Test
-    public void testFindReturnsProperItem() {
+    public void testFindReturnsProperItem() throws SQLException {
+        executeQuery(util, "select * from PAYMENTS");
+
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getInt("id")).thenReturn(expectedPayment2.getPaymentId());
+        when(resultSet.getInt("bankId")).thenReturn(expectedPayment2.getBankId());
+        when(resultSet.getInt("userId")).thenReturn(expectedPayment2.getUserId());
+        when(resultSet.getFloat("money")).thenReturn(expectedPayment2.getAmount());
+
         payment = repository.find(2);
         assertEquals(payment.getBankId(), expectedPayment2.getBankId());
     }
 
     @Test
-    public void testFindByBankIDThrowsExceptionWhenNull() {
+    public void testFindByBankIDThrowsExceptionWhenNull() throws SQLException {
+        executeQuery(util, "select * from PAYMENTS");
+
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getInt("id")).thenReturn(expectedPayment2.getPaymentId());
+        when(resultSet.getInt("bankId")).thenReturn(expectedPayment2.getBankId());
+        when(resultSet.getInt("userId")).thenReturn(expectedPayment2.getUserId());
+        when(resultSet.getFloat("money")).thenReturn(expectedPayment2.getAmount());
+
+        List<Payment> payments;
         payments = repository.findByBankId(null, 14);
-        assertEquals(empty, payments);
+        assertTrue(payments.isEmpty());
     }
 
     @Test
-    public void testFindByBankIDExceptionWhenListIsEmpty() {
-        payments = repository.findByBankId(EMPTYTABLE, 14);
-        assertEquals(empty, payments);
+    public void testFindByBankIDReturnsNullWhenItemsNotFound() throws SQLException {
+        executeQuery(util, "select * from PAYMENTS");
+
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getInt("id")).thenReturn(expectedPayment2.getPaymentId());
+        when(resultSet.getInt("bankId")).thenReturn(expectedPayment2.getBankId());
+        when(resultSet.getInt("userId")).thenReturn(expectedPayment2.getUserId());
+        when(resultSet.getFloat("money")).thenReturn(expectedPayment2.getAmount());
+
+        List<Payment> payments;
+        payments = repository.findByBankId("", 14);
+        assertTrue(payments.isEmpty());
     }
 
     @Test
-    public void testFindByBankIDReturnsNullWhenItemsNotFound() {
-        payments = repository.findByBankId(TABLE, 14);
-        assertEquals(empty, payments);
-    }
+    public void testFindByBankIDReturnsProperItems() throws SQLException {
+        executeQuery(util, "select * from PAYMENTS");
 
-    @Test
-    public void testFindByBankIDReturnsProperItems() {
-        payments = repository.findByBankId(TABLE, expectedPayment2.getBankId());
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getInt("id")).thenReturn(expectedPayment2.getPaymentId());
+        when(resultSet.getInt("bankId")).thenReturn(expectedPayment2.getBankId());
+        when(resultSet.getInt("userId")).thenReturn(expectedPayment2.getUserId());
+        when(resultSet.getFloat("money")).thenReturn(expectedPayment2.getAmount());
+
+        List<Payment> payments;
+        payments = repository.findByBankId("", expectedPayment2.getBankId());
+        assertFalse(payments.isEmpty());
         assertEquals(expectedPayment2.getBankId(), payments.get(0).getBankId());
     }
 }

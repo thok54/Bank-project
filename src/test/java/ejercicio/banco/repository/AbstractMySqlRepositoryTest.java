@@ -22,8 +22,8 @@ public abstract class AbstractMySqlRepositoryTest {
     @Mock
     protected ResultSet resultSet;
 
-    protected void executeQuery(DataBaseUtil util, String table, String query) throws SQLException {
-        when(util.startConnection(table)).thenReturn(connection);
+    protected void executeQuery(DataBaseUtil util, String query) throws SQLException {
+        when(util.startConnection()).thenReturn(connection);
         when(connection.prepareStatement(query)).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
     }

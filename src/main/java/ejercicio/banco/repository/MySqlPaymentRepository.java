@@ -6,12 +6,11 @@ import ejercicio.banco.util.DataBaseUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlPaymentRepository implements PaymentRepository {
-
-    private static final String FILENAME = "bank_project";
 
     private DataBaseUtil dataBaseUtil;
 
@@ -23,7 +22,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
     public List<Payment> findAll(String filename) {
         List<Payment> payments = new ArrayList();
 
-        Connection con = dataBaseUtil.startConnection(filename);
+        Connection con = dataBaseUtil.startConnection();
 
         try {
             //Reads PAYMENTS table, returning results
@@ -48,7 +47,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
     @Override
     public Payment find(int id) {
 
-        Connection con = dataBaseUtil.startConnection(FILENAME);
+        Connection con = dataBaseUtil.startConnection();
 
         try {
             //Reads PAYMENTS table, returning results
@@ -76,7 +75,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
     public List<Payment> findByBankId(String filename, int bankId) {
         List<Payment> payments = new ArrayList();
 
-        Connection con = dataBaseUtil.startConnection(filename);
+        Connection con = dataBaseUtil.startConnection();
 
         try {
             //Reads PAYMENTS table, returning results
@@ -102,16 +101,51 @@ public class MySqlPaymentRepository implements PaymentRepository {
 
     @Override
     public void store(Payment payment) {
+        Connection con = dataBaseUtil.startConnection();
+        try{
+            Integer bankId = payment.getBankId();
+            Integer userId = payment.getUserId();
+            Float amount = payment.getAmount();
+            PreparedStatement pstmt = con.prepareStatement("INSERT INTO PAYMENTS (bankId, userId, amount) VALUES ("+bankId
+                    +", " +userId+", "+amount+")");
+            ResultSet rs = pstmt.executeQuery();
 
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dataBaseUtil.closeConections(con);
+        }
     }
 
     @Override
     public void update(int id, Payment payment) {
+        Connection con = dataBaseUtil.startConnection();
+        try{
+            Integer bankId = payment.getBankId();
+            Integer userId = payment.getUserId();
+            Float amount = payment.getAmount();
+            PreparedStatement pstmt = con.prepareStatement("UPDATE PAYMENTS SET bankId = "+bankId+", userId = "+
+                    userId+", amount = "+amount+ " WHERE id = "+payment.getPaymentId());
+            ResultSet rs = pstmt.executeQuery();
 
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dataBaseUtil.closeConections(con);
+        }
     }
 
     @Override
     public void delete(int id) {
+        Connection con = dataBaseUtil.startConnection();
+        try{
+            PreparedStatement pstmt = con.prepareStatement("DELETE FROM PAYMENTS WHERE id = "+id);
+            ResultSet rs = pstmt.executeQuery();
 
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dataBaseUtil.closeConections(con);
+        }
     }
 }

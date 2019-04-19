@@ -8,23 +8,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
-
-    private static final String TABLE = "bank_project_test";
-    private static final String NOTHING = "nothing";
-    private static final String EMPTYTABLE = "empty";
-    private List<Bank> banks = new ArrayList();
-    private List<Bank> empty = new ArrayList();
     private Bank bank;
     private Bank expectedBank1 = new Bank(1, "bestBank", "right here");
     private Bank expectedBank2 = new Bank(2, "Worst ATM", "over there");
-    private List<Bank> full = new ArrayList();
 
     @Mock
     private DataBaseUtil util;
@@ -32,66 +27,91 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
     @InjectMocks
     MySqlBankRepository repository;
 
-    @Test
-    public void testFindAllReturnsEmptyListWhenNull() {
-        banks = repository.findAll(null);
-        assertEquals(empty, banks);
-    }
 
     @Test
-    public void testFindAllReturnsEmptyListWhenListNotFound() {
-        banks = repository.findAll(NOTHING);
-        assertEquals(empty, banks);
-    }
+    public void testFindAllReturnsFullList() throws SQLException {
+        executeQuery(util, "select * from BANKS");
 
-    @Test
-    public void testFindReturnsEmptyListWhenListIsEmpty() {
-        banks = repository.findAll(EMPTYTABLE);
-        assertEquals(empty, banks);
-    }
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getString("name")).thenReturn(expectedBank2.getName());
+        when(resultSet.getInt("id")).thenReturn(expectedBank2.getId());
+        when(resultSet.getString("address")).thenReturn(expectedBank2.getAddress());
 
-    @Test
-    public void testFindAllReturnsFullList() {
-        full.add(expectedBank1);
-        full.add(expectedBank2);
-        banks = repository.findAll(TABLE);
-        assertEquals(full.size(), banks.size());
+        List<Bank> banks = new ArrayList();
+        banks.add(expectedBank1);
+        banks.add(expectedBank2);
+        banks = repository.findAll("");
+        assertFalse(banks.isEmpty());
+        assertEquals(banks.size(), banks.size());
     }
 
 
     @Test
-    public void testFindReturnsNullWhenItemNotFound() {
+    public void testFindReturnsNullWhenItemNotFound() throws SQLException {
+        executeQuery(util, "select * from BANKS");
+
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getString("name")).thenReturn(expectedBank2.getName());
+        when(resultSet.getInt("id")).thenReturn(expectedBank2.getId());
+        when(resultSet.getString("address")).thenReturn(expectedBank2.getAddress());
+
         bank = repository.find(3);
-        assertEquals(bank, null);
+        assertNull(bank);
     }
 
     @Test
-    public void testFindReturnsProperItem() {
+    public void testFindReturnsProperItem() throws SQLException {
+        executeQuery(util, "select * from BANKS");
+
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getString("name")).thenReturn(expectedBank2.getName());
+        when(resultSet.getInt("id")).thenReturn(expectedBank2.getId());
+        when(resultSet.getString("address")).thenReturn(expectedBank2.getAddress());
+
         bank = repository.find(2);
         assertEquals(bank.getName(), expectedBank2.getName());
     }
 
     @Test
-    public void testFindByNameThrowsExceptionWhenNull() {
+    public void testFindByNameThrowsExceptionWhenNull() throws SQLException {
+        executeQuery(util, "select * from BANKS");
+
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getString("name")).thenReturn(expectedBank2.getName());
+        when(resultSet.getInt("id")).thenReturn(expectedBank2.getId());
+        when(resultSet.getString("address")).thenReturn(expectedBank2.getAddress());
+
+        List<Bank> banks;
         banks = repository.findByName(null, "name");
-        assertEquals(empty, banks);
+        assertTrue(banks.isEmpty());
     }
 
     @Test
-    public void testFindByNameThrowsExceptionWhenListIsEmpty() {
-        banks = repository.findByName(EMPTYTABLE, "name");
-        assertEquals(empty, banks);
+    public void testFindByNameReturnsNullWhenItemsNotFound() throws SQLException {
+        executeQuery(util, "select * from BANKS");
+
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getString("name")).thenReturn(expectedBank2.getName());
+        when(resultSet.getInt("id")).thenReturn(expectedBank2.getId());
+        when(resultSet.getString("address")).thenReturn(expectedBank2.getAddress());
+
+        List<Bank> banks;
+        banks = repository.findByName("", "nothing");
+        assertTrue(banks.isEmpty());
     }
 
     @Test
-    public void testFindByNameReturnsNullWhenItemsNotFound() {
-        banks = repository.findByName(TABLE, "nothing");
-        assertEquals(empty, banks);
-    }
+    public void testFindByNameReturnsProperItems() throws SQLException {
+        executeQuery(util, "select * from BANKS");
 
-    @Test
-    public void testFindByNameReturnsProperItems() {
-        banks = repository.findByName(TABLE, expectedBank2.getName());
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getString("name")).thenReturn(expectedBank2.getName());
+        when(resultSet.getInt("id")).thenReturn(expectedBank2.getId());
+        when(resultSet.getString("address")).thenReturn(expectedBank2.getAddress());
+
+        List<Bank> banks;
+        banks = repository.findByName("", expectedBank2.getName());
+        assertFalse(banks.isEmpty());
         assertEquals(expectedBank2.getName(), banks.get(0).getName());
     }
 }
