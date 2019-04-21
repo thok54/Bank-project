@@ -37,10 +37,7 @@ public class MySqlPaymentRepositoryTest extends AbstractMySqlRepositoryTest{
         when(resultSet.getInt("userId")).thenReturn(expectedPayment1.getUserId()).thenReturn(expectedPayment2.getUserId());
         when(resultSet.getFloat("money")).thenReturn(expectedPayment1.getAmount()).thenReturn(expectedPayment2.getAmount());
 
-        List<Payment> payments = new ArrayList();
-        payments.add(expectedPayment1);
-        payments.add(expectedPayment2);
-        payments = repository.findAll("");
+        List<Payment> payments = repository.findAll("");
         assertFalse(payments.isEmpty());
         assertEquals(2, payments.size());
     }

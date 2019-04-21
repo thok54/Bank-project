@@ -37,10 +37,7 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.getInt("id")).thenReturn(expectedBank1.getId()).thenReturn(expectedBank2.getId());
         when(resultSet.getString("address")).thenReturn(expectedBank2.getAddress()).thenReturn(expectedBank2.getAddress());
 
-        List<Bank> banks = new ArrayList();
-        banks.add(expectedBank1);
-        banks.add(expectedBank2);
-        banks = repository.findAll("");
+        List<Bank> banks = repository.findAll("");
         assertFalse(banks.isEmpty());
         assertEquals(2, banks.size());
     }
