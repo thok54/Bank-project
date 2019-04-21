@@ -35,11 +35,15 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getString("name")).thenReturn(expectedBank1.getName()).thenReturn(expectedBank2.getName());
         when(resultSet.getInt("id")).thenReturn(expectedBank1.getId()).thenReturn(expectedBank2.getId());
-        when(resultSet.getString("address")).thenReturn(expectedBank2.getAddress()).thenReturn(expectedBank2.getAddress());
+        when(resultSet.getString("address")).thenReturn(expectedBank1.getAddress()).thenReturn(expectedBank2.getAddress());
 
-        List<Bank> banks = repository.findAll("");
-        assertFalse(banks.isEmpty());
-        assertEquals(2, banks.size());
+        List<Bank> expectedBanks = new ArrayList();
+        expectedBanks.add(expectedBank1);
+        expectedBanks.add(expectedBank2);
+
+        List<Bank> full = repository.findAll("");
+        assertFalse(full.isEmpty());
+        assertEquals(expectedBanks, full);
     }
 
 
@@ -50,7 +54,7 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getString("name")).thenReturn(expectedBank1.getName()).thenReturn(expectedBank2.getName());
         when(resultSet.getInt("id")).thenReturn(expectedBank1.getId()).thenReturn(expectedBank2.getId());
-        when(resultSet.getString("address")).thenReturn(expectedBank2.getAddress()).thenReturn(expectedBank2.getAddress());
+        when(resultSet.getString("address")).thenReturn(expectedBank1.getAddress()).thenReturn(expectedBank2.getAddress());
 
 
         bank = repository.find(3);
@@ -77,7 +81,7 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getString("name")).thenReturn(expectedBank1.getName()).thenReturn(expectedBank2.getName());
         when(resultSet.getInt("id")).thenReturn(expectedBank1.getId()).thenReturn(expectedBank2.getId());
-        when(resultSet.getString("address")).thenReturn(expectedBank2.getAddress()).thenReturn(expectedBank2.getAddress());
+        when(resultSet.getString("address")).thenReturn(expectedBank1.getAddress()).thenReturn(expectedBank2.getAddress());
 
 
         List<Bank> banks = repository.findByName(null, "name");
@@ -91,7 +95,7 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getString("name")).thenReturn(expectedBank1.getName()).thenReturn(expectedBank2.getName());
         when(resultSet.getInt("id")).thenReturn(expectedBank1.getId()).thenReturn(expectedBank2.getId());
-        when(resultSet.getString("address")).thenReturn(expectedBank2.getAddress()).thenReturn(expectedBank2.getAddress());
+        when(resultSet.getString("address")).thenReturn(expectedBank1.getAddress()).thenReturn(expectedBank2.getAddress());
 
 
         List<Bank> banks = repository.findByName("", "nothing");
@@ -105,7 +109,7 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getString("name")).thenReturn(expectedBank1.getName()).thenReturn(expectedBank2.getName());
         when(resultSet.getInt("id")).thenReturn(expectedBank1.getId()).thenReturn(expectedBank2.getId());
-        when(resultSet.getString("address")).thenReturn(expectedBank2.getAddress()).thenReturn(expectedBank2.getAddress());
+        when(resultSet.getString("address")).thenReturn(expectedBank1.getAddress()).thenReturn(expectedBank2.getAddress());
 
 
         List<Bank> banks = repository.findByName("", expectedBank2.getName());
