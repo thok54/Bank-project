@@ -68,7 +68,7 @@ public class CsvPaymentRepository implements PaymentRepository {
     }
 
     @Override
-    public List<Payment> findById(String filename, int id) {
+    public List<Payment> findByBankId(String filename, int id) {
         List<Payment> all = findAll(filename);
         List<Payment> results = new ArrayList<>();
         for (Payment payment : all) {

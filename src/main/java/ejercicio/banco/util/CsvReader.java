@@ -12,7 +12,6 @@ public class CsvReader {
 
         File AccountCsvFile = new File(filename);
 
-        // Reads using Scanner
         Scanner in = new Scanner(AccountCsvFile);
         List<String> lines = new ArrayList<>();
 

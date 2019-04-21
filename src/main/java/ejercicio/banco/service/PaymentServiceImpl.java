@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class PaymentServiceImpl implements PaymentService {
@@ -83,7 +84,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     public List<Payment> findPayments(String filename, String name) {
         int id = Integer.parseInt(name);
-        return repository.findById(filename, id);
+        return repository.findByBankId(filename, id);
     }
 
     public void storePayment(Payment payment) {

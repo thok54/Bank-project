@@ -1,6 +1,8 @@
 package ejercicio.banco.dto;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 public class Bank implements InternalDto {
 
@@ -21,8 +23,6 @@ public class Bank implements InternalDto {
         this.address = address;
     }
 
-
-    //Getters and Setters
     public int getId() {
         return id;
     }
@@ -63,16 +63,29 @@ public class Bank implements InternalDto {
     }
 
 
+    @Override
     public String toString() {
+        return new StringJoiner(", ", Bank.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("name='" + name + "'")
+                .add("address='" + address + "'")
+                .add("users=" + users)
+                .toString();
+    }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(id);
-        sb.append("; ");
-        sb.append(name);
-        sb.append("; ");
-        sb.append(address);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bank bank = (Bank) o;
+        return id == bank.id &&
+                Objects.equals(name, bank.name) &&
+                Objects.equals(address, bank.address) &&
+                Objects.equals(users, bank.users);
+    }
 
-        String line = sb.toString();
-        return line;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, address, users);
     }
 }

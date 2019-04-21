@@ -70,7 +70,7 @@ public class PaymentServiceImplTest {
     public void testFindPaymentsCallsFindFromRepository() {
         paymentService.findPayments(FILE_NAME, PAYMENT_STRING);
 
-        verify(repository).findById(FILE_NAME, PAYMENT_ID);
+        verify(repository).findByBankId(FILE_NAME, PAYMENT_ID);
     }
 
     @Test

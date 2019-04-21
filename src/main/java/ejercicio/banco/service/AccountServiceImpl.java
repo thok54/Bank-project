@@ -4,6 +4,7 @@ import ejercicio.banco.dto.Account;
 import ejercicio.banco.repository.AccountNotFoundException;
 import ejercicio.banco.repository.AccountRepository;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,6 @@ public class AccountServiceImpl implements AccountService {
         if (filename == null) {
             throw new IllegalArgumentException("Filename must not be null");
         }
-
         return repository.findAll(filename);
     }
 
@@ -34,12 +34,14 @@ public class AccountServiceImpl implements AccountService {
         } catch (AccountNotFoundException e) {
             e.printStackTrace();
             account = null;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return account;
     }
 
     // Find accounts by string
-    public List<Account> findAccounts(String filename, String name) {
+    public List<Account> findAccounts(String filename, String name){
         return repository.findByName(filename, name);
     }
 

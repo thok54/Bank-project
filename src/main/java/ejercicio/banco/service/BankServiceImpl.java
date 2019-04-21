@@ -3,6 +3,7 @@ package ejercicio.banco.service;
 import ejercicio.banco.dto.Bank;
 import ejercicio.banco.repository.BankRepository;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class BankServiceImpl implements BankService {
@@ -30,7 +31,11 @@ public class BankServiceImpl implements BankService {
 
     public Bank findBank(int n) {
         Bank bank = null;
-        bank = repository.find(n);
+        try {
+            bank = repository.find(n);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return bank;
     }
   

@@ -1,5 +1,8 @@
 package ejercicio.banco.dto;
 
+import java.util.Objects;
+import java.util.StringJoiner;
+
 public class Account implements InternalDto {
 
     private int id;
@@ -58,18 +61,29 @@ public class Account implements InternalDto {
         this.iban = iban;
     }
 
+    @Override
     public String toString() {
+        return new StringJoiner(", ", Account.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("name='" + name + "'")
+                .add("money=" + money)
+                .add("iban='" + iban + "'")
+                .toString();
+    }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(id);
-        sb.append("; ");
-        sb.append(name);
-        sb.append("; ");
-        sb.append(money);
-        sb.append("; ");
-        sb.append(iban);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return id == account.id &&
+                Float.compare(account.money, money) == 0 &&
+                Objects.equals(name, account.name) &&
+                Objects.equals(iban, account.iban);
+    }
 
-        String line = sb.toString();
-        return line;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, money, iban);
     }
 }
