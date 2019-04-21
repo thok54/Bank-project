@@ -1,5 +1,8 @@
 package ejercicio.banco.dto;
 
+import java.util.Objects;
+import java.util.StringJoiner;
+
 public class Payment implements InternalDto {
 
     private int paymentId;
@@ -50,19 +53,29 @@ public class Payment implements InternalDto {
         this.amount = amount;
     }
 
+    @Override
     public String toString() {
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(paymentId);
-        sb.append("; ");
-        sb.append(bankId);
-        sb.append("; ");
-        sb.append(userId);
-        sb.append("; ");
-        sb.append(amount);
-
-        String line = sb.toString();
-        return line;
+        return new StringJoiner(", ", Payment.class.getSimpleName() + "[", "]")
+                .add("paymentId=" + paymentId)
+                .add("bankId=" + bankId)
+                .add("userId=" + userId)
+                .add("amount=" + amount)
+                .toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Payment payment = (Payment) o;
+        return paymentId == payment.paymentId &&
+                bankId == payment.bankId &&
+                userId == payment.userId &&
+                Float.compare(payment.amount, amount) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(paymentId, bankId, userId, amount);
+    }
 }

@@ -39,20 +39,13 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.getFloat("money")).thenReturn(expectedAccount1.getMoney()).thenReturn(expectedAccount2.getMoney());
         when(resultSet.getString("iban")).thenReturn(expectedAccount1.getIban()).thenReturn(expectedAccount2.getIban());
 
-        /*List<Account> expectedAccounts = new ArrayList();
+        List<Account> expectedAccounts = new ArrayList();
         expectedAccounts.add(expectedAccount1);
         expectedAccounts.add(expectedAccount2);
 
         List<Account> full = repository.findAll("");
         assertFalse(full.isEmpty());
-        assertEquals(expectedAccounts, full);*/
-
-        //TODO: When using assert equals on 2 arrays (above), they seem to compare whether the two are the same item,
-        // rather than comparing their elements
-
-        List<Account> full = repository.findAll("");
-        assertFalse(full.isEmpty());
-        assertEquals(2, full.size());
+        assertEquals(expectedAccounts, full);
     }
 
 
@@ -82,7 +75,7 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.getString("iban")).thenReturn(expectedAccount2.getIban());
 
         account = repository.find(2);
-        assertEquals(account.getName(), expectedAccount2.getName());
+        assertEquals(expectedAccount2, account);
     }
 
     @Test
