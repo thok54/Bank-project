@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -52,10 +52,7 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
         executeQuery(util, "select * from BANKS");
 
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(resultSet.getString("name")).thenReturn(expectedBank1.getName()).thenReturn(expectedBank2.getName());
         when(resultSet.getInt("id")).thenReturn(expectedBank1.getId()).thenReturn(expectedBank2.getId());
-        when(resultSet.getString("address")).thenReturn(expectedBank1.getAddress()).thenReturn(expectedBank2.getAddress());
-
 
         bank = repository.find(3);
         assertNull(bank);
@@ -80,9 +77,6 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
 
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getString("name")).thenReturn(expectedBank1.getName()).thenReturn(expectedBank2.getName());
-        when(resultSet.getInt("id")).thenReturn(expectedBank1.getId()).thenReturn(expectedBank2.getId());
-        when(resultSet.getString("address")).thenReturn(expectedBank1.getAddress()).thenReturn(expectedBank2.getAddress());
-
 
         List<Bank> banks = repository.findByName(null, "name");
         assertTrue(banks.isEmpty());
@@ -94,8 +88,6 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
 
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getString("name")).thenReturn(expectedBank1.getName()).thenReturn(expectedBank2.getName());
-        when(resultSet.getInt("id")).thenReturn(expectedBank1.getId()).thenReturn(expectedBank2.getId());
-        when(resultSet.getString("address")).thenReturn(expectedBank1.getAddress()).thenReturn(expectedBank2.getAddress());
 
 
         List<Bank> banks = repository.findByName("", "nothing");

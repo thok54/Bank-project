@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -53,10 +53,6 @@ public class MySqlPaymentRepositoryTest extends AbstractMySqlRepositoryTest{
 
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getInt("id")).thenReturn(expectedPayment1.getPaymentId()).thenReturn(expectedPayment2.getPaymentId());
-        when(resultSet.getInt("bankId")).thenReturn(expectedPayment1.getBankId()).thenReturn(expectedPayment2.getBankId());
-        when(resultSet.getInt("userId")).thenReturn(expectedPayment1.getUserId()).thenReturn(expectedPayment2.getUserId());
-        when(resultSet.getFloat("amount")).thenReturn(expectedPayment1.getAmount()).thenReturn(expectedPayment2.getAmount());
-
 
         payment = repository.find(3);
         assertNull(payment);
@@ -81,11 +77,7 @@ public class MySqlPaymentRepositoryTest extends AbstractMySqlRepositoryTest{
         executeQuery(util, "select * from PAYMENTS");
 
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(resultSet.getInt("id")).thenReturn(expectedPayment1.getPaymentId()).thenReturn(expectedPayment2.getPaymentId());
         when(resultSet.getInt("bankId")).thenReturn(expectedPayment1.getBankId()).thenReturn(expectedPayment2.getBankId());
-        when(resultSet.getInt("userId")).thenReturn(expectedPayment1.getUserId()).thenReturn(expectedPayment2.getUserId());
-        when(resultSet.getFloat("amount")).thenReturn(expectedPayment1.getAmount()).thenReturn(expectedPayment2.getAmount());
-
 
         List<Payment> payments = repository.findByBankId(null, 14);
         assertTrue(payments.isEmpty());
@@ -96,11 +88,7 @@ public class MySqlPaymentRepositoryTest extends AbstractMySqlRepositoryTest{
         executeQuery(util, "select * from PAYMENTS");
 
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(resultSet.getInt("id")).thenReturn(expectedPayment1.getPaymentId()).thenReturn(expectedPayment2.getPaymentId());
         when(resultSet.getInt("bankId")).thenReturn(expectedPayment1.getBankId()).thenReturn(expectedPayment2.getBankId());
-        when(resultSet.getInt("userId")).thenReturn(expectedPayment1.getUserId()).thenReturn(expectedPayment2.getUserId());
-        when(resultSet.getFloat("amount")).thenReturn(expectedPayment1.getAmount()).thenReturn(expectedPayment2.getAmount());
-
 
         List<Payment> payments = repository.findByBankId("", 14);
         assertTrue(payments.isEmpty());
