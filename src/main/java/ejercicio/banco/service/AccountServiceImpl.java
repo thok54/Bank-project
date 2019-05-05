@@ -3,19 +3,18 @@ package ejercicio.banco.service;
 import ejercicio.banco.dto.Account;
 import ejercicio.banco.repository.AccountNotFoundException;
 import ejercicio.banco.repository.AccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Service
 public class AccountServiceImpl implements AccountService {
 
+    @Autowired
     private AccountRepository repository;
-
-    public AccountServiceImpl(AccountRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public List<Account> processAccounts() {
@@ -38,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     // Find accounts by string
-    public List<Account> findAccounts(String name){
+    public List<Account> findAccounts(String name) {
         return repository.findByName(name);
     }
 
