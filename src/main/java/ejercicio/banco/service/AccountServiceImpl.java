@@ -18,11 +18,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> processAccounts(String filename) {
-        if (filename == null) {
-            throw new IllegalArgumentException("Filename must not be null");
-        }
-        return repository.findAll(filename);
+    public List<Account> processAccounts() {
+        return repository.findAll();
     }
 
     // Find user
@@ -41,8 +38,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     // Find accounts by string
-    public List<Account> findAccounts(String filename, String name){
-        return repository.findByName(filename, name);
+    public List<Account> findAccounts(String name){
+        return repository.findByName(name);
     }
 
 

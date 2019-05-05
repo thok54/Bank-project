@@ -22,7 +22,7 @@ public class MySqlAccountRepository implements AccountRepository {
     }
 
     @Override
-    public List<Account> findAll(String filename) {
+    public List<Account> findAll() {
         List<Account> accounts = new ArrayList();
 
         Connection con = dataBaseUtil.startConnection();
@@ -75,7 +75,7 @@ public class MySqlAccountRepository implements AccountRepository {
     }
 
     @Override
-    public List<Account> findByName(String filename, String name) {
+    public List<Account> findByName(String name) {
         List<Account> accounts = new ArrayList();
 
         Connection con = dataBaseUtil.startConnection();

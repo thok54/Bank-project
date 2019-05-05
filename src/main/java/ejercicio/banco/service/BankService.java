@@ -6,5 +6,5 @@ import java.sql.SQLException;
 
 
 public interface BankService {
-    Bank processBank(String filename);
+    Bank processBank();
 }

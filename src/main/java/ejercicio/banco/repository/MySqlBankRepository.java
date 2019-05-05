@@ -20,7 +20,7 @@ public class MySqlBankRepository implements BankRepository {
     }
 
     @Override
-    public List<Bank> findAll(String filename) {
+    public List<Bank> findAll() {
         List<Bank> banks = new ArrayList();
 
         Connection con = dataBaseUtil.startConnection();
@@ -69,7 +69,7 @@ public class MySqlBankRepository implements BankRepository {
     }
 
     @Override
-    public List<Bank> findByName(String filename, String name) {
+    public List<Bank> findByName(String name) {
         List<Bank> banks = new ArrayList();
         Connection con = dataBaseUtil.startConnection();
 

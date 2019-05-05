@@ -43,7 +43,7 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
         expectedAccounts.add(expectedAccount1);
         expectedAccounts.add(expectedAccount2);
 
-        List<Account> full = repository.findAll("");
+        List<Account> full = repository.findAll();
         assertFalse(full.isEmpty());
         assertEquals(expectedAccounts, full);
     }
@@ -81,7 +81,7 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getString("name")).thenReturn(expectedAccount1.getName()).thenReturn(expectedAccount2.getName());
 
-        List<Account> accounts = repository.findByName(null, "name");
+        List<Account> accounts = repository.findByName("name");
         assertTrue(accounts.isEmpty());
     }
 
@@ -92,7 +92,7 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getString("name")).thenReturn(expectedAccount1.getName()).thenReturn(expectedAccount2.getName());
 
-        List<Account> accounts = repository.findByName("", "nothing");
+        List<Account> accounts = repository.findByName("nothing");
 
         assertTrue(accounts.isEmpty());
     }
@@ -108,7 +108,7 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.getString("iban")).thenReturn(expectedAccount1.getIban()).thenReturn(expectedAccount2.getIban());
 
 
-        List<Account> accounts = repository.findByName("", expectedAccount2.getName());
+        List<Account> accounts = repository.findByName(expectedAccount2.getName());
 
         assertFalse(accounts.isEmpty());
         assertEquals(expectedAccount2.getName(), accounts.get(0).getName());

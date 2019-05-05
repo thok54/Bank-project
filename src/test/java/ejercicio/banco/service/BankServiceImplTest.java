@@ -3,7 +3,7 @@ package ejercicio.banco.service;
 import java.util.Arrays;
 
 import ejercicio.banco.dto.Bank;
-import ejercicio.banco.repository.CsvBankRepository;
+import ejercicio.banco.repository.MySqlBankRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -18,13 +18,12 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class BankServiceImplTest {
 
-    private static final String FILE_NAME = "file-name-test";
     private static final String BANK_NAME = "name";
     private static final int BANK_ID = 10876;
     private Bank expectedBank = new Bank(10876);
 
     @Mock
-    private CsvBankRepository repository;
+    private MySqlBankRepository repository;
 
     @InjectMocks
     private BankServiceImpl bankService;
@@ -32,21 +31,21 @@ public class BankServiceImplTest {
 
     @Test
     public void testProcessBankCallsFindAllFromRepository() {
-        Bank bank = bankService.processBank(FILE_NAME);
+        Bank bank = bankService.processBank();
 
-        verify(repository).findAll(FILE_NAME);
+        verify(repository).findAll();
     }
 
     @Test
     public void testProcessBankReturnsCorrectList() {
         // Given
-        when(repository.findAll(FILE_NAME)).thenReturn(Arrays.asList(expectedBank));
+        when(repository.findAll()).thenReturn(Arrays.asList(expectedBank));
 
         // When
-        Bank bank = bankService.processBank(FILE_NAME);
+        Bank bank = bankService.processBank();
 
         // Then
-        verify(repository).findAll(FILE_NAME);
+        verify(repository).findAll();
 
         assertNotNull(bank);
         assertEquals(BANK_ID, bank.getId());
@@ -54,7 +53,7 @@ public class BankServiceImplTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testProcessBankWithNullFilenameThrowsIllegalArgumentException() {
-        bankService.processBank(null);
+        bankService.processBank();
     }
 
 
@@ -67,9 +66,9 @@ public class BankServiceImplTest {
 
     @Test
     public void testFindBanksCallsFindFromRepository() {
-        bankService.findBanks(FILE_NAME, BANK_NAME);
+        bankService.findBanks(BANK_NAME);
 
-        verify(repository).findByName(FILE_NAME, BANK_NAME);
+        verify(repository).findByName(BANK_NAME);
     }
 
     @Test
