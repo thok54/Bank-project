@@ -12,6 +12,9 @@ import java.util.List;
 
 public class MySqlAccountRepository implements AccountRepository {
 
+    //TODO: @Component, @Repository, @Service, @Autowired(replacing constructors), @PathVariable
+    //TODO: Comment/delete main and csv
+    //TODO: Implement methods into controller
     private DataBaseUtil dataBaseUtil;
 
     public MySqlAccountRepository() {

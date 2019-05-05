@@ -31,7 +31,7 @@ import static ejercicio.banco.dto.DataType.PAYMENT;
 
 public class MainProcess {
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         Boolean doAgain = true;
 
         while (doAgain) {
@@ -137,5 +137,5 @@ public class MainProcess {
             }
         }
 
-    }
+    } */
 }
