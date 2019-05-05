@@ -7,6 +7,7 @@ import ejercicio.banco.dto.BankName;
 import ejercicio.banco.dto.DataType;
 import ejercicio.banco.dto.InternalDto;
 import ejercicio.banco.dto.Payment;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,6 +19,7 @@ import static ejercicio.banco.dto.DataType.ACCOUNT;
 import static ejercicio.banco.dto.DataType.BANK;
 import static ejercicio.banco.dto.DataType.PAYMENT;
 
+@Component
 public class DataGeneratorFactory implements DataGenerator {
     Random rand = new Random();
 

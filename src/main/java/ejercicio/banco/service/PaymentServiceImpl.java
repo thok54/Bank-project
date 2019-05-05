@@ -4,6 +4,8 @@ import ejercicio.banco.dto.Account;
 import ejercicio.banco.dto.Bank;
 import ejercicio.banco.dto.Payment;
 import ejercicio.banco.repository.PaymentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,13 +14,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+@Service
 public class PaymentServiceImpl implements PaymentService {
 
+    @Autowired
     private PaymentRepository repository;
-
-    public PaymentServiceImpl(PaymentRepository repository) {
-        this.repository = repository;
-    }
 
     public List<Payment> processPayments(Bank bestBank) {
         List<Payment> payments = repository.findAll();

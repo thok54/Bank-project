@@ -2,6 +2,8 @@ package ejercicio.banco.repository;
 
 import ejercicio.banco.dto.Account;
 import ejercicio.banco.util.DataBaseUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,16 +12,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class MySqlAccountRepository implements AccountRepository {
 
     //TODO: @Component, @Repository, @Service, @Autowired(replacing constructors), @PathVariable
-    //TODO: Comment/delete main and csv
-    //TODO: Implement methods into controller
-    private DataBaseUtil dataBaseUtil;
+    //TODO: Implement repository methods into controller
 
-    public MySqlAccountRepository() {
-        this.dataBaseUtil = new DataBaseUtil();
-    }
+    @Autowired
+    private DataBaseUtil dataBaseUtil;
 
     @Override
     public List<Account> findAll() {
@@ -105,17 +105,17 @@ public class MySqlAccountRepository implements AccountRepository {
     @Override
     public void store(Account account) {
         Connection con = dataBaseUtil.startConnection();
-        try{
+        try {
             String name = account.getName();
             Float money = account.getMoney();
             String iban = account.getIban();
-            PreparedStatement pstmt = con.prepareStatement("INSERT INTO ACCOUNTS (name, money, iban) VALUES ("+name
-                   +", " +money+", "+iban+")");
+            PreparedStatement pstmt = con.prepareStatement("INSERT INTO ACCOUNTS (name, money, iban) VALUES (" + name
+                    + ", " + money + ", " + iban + ")");
             ResultSet rs = pstmt.executeQuery();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             dataBaseUtil.closeConections(con);
         }
 
@@ -124,17 +124,17 @@ public class MySqlAccountRepository implements AccountRepository {
     @Override
     public void update(int id, Account account) {
         Connection con = dataBaseUtil.startConnection();
-        try{
+        try {
             String name = account.getName();
             Float money = account.getMoney();
             String iban = account.getIban();
-            PreparedStatement pstmt = con.prepareStatement("UPDATE ACCOUNTS SET name = "+name+
-                    ", money = "+money+", iban = "+iban+ " WHERE id = "+account.getId());
+            PreparedStatement pstmt = con.prepareStatement("UPDATE ACCOUNTS SET name = " + name +
+                    ", money = " + money + ", iban = " + iban + " WHERE id = " + account.getId());
             ResultSet rs = pstmt.executeQuery();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             dataBaseUtil.closeConections(con);
         }
     }
@@ -142,13 +142,13 @@ public class MySqlAccountRepository implements AccountRepository {
     @Override
     public void delete(int id) {
         Connection con = dataBaseUtil.startConnection();
-        try{
-            PreparedStatement pstmt = con.prepareStatement("DELETE FROM ACCOUNTS WHERE id = "+id);
+        try {
+            PreparedStatement pstmt = con.prepareStatement("DELETE FROM ACCOUNTS WHERE id = " + id);
             ResultSet rs = pstmt.executeQuery();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             dataBaseUtil.closeConections(con);
         }
     }

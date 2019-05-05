@@ -2,17 +2,17 @@ package ejercicio.banco.service;
 
 import ejercicio.banco.dto.Bank;
 import ejercicio.banco.repository.BankRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
 
+@Service
 public class BankServiceImpl implements BankService {
 
+    @Autowired
     private BankRepository repository;
-
-    public BankServiceImpl(BankRepository repository) {
-        this.repository = repository;
-    }
 
     public Bank processBank() throws IndexOutOfBoundsException {
         Bank bank;
@@ -35,7 +35,7 @@ public class BankServiceImpl implements BankService {
         }
         return bank;
     }
-  
+
     public List<Bank> findBanks(String name) {
         return repository.findByName(name);
     }
