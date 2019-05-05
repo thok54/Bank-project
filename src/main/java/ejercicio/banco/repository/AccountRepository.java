@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface AccountRepository {
 
-    List<Account> findAll(String filename);
+    List<Account> findAll();
 
     Account find(int id) throws SQLException;
 
-    List<Account> findByName(String filename, String name);
+    List<Account> findByName(String name);
 
     //Prints storing
     void store(Account account);

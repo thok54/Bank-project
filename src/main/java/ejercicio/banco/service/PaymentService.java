@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PaymentService {
 
-    List<Payment> processPayments(String filename, Bank bestBank);
+    List<Payment> processPayments(Bank bestBank);
 
     void fileWriter(String filename, Bank bestBank);
 }

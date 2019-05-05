@@ -19,7 +19,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
     }
 
     @Override
-    public List<Payment> findAll(String filename) {
+    public List<Payment> findAll() {
         List<Payment> payments = new ArrayList();
 
         Connection con = dataBaseUtil.startConnection();
@@ -72,7 +72,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
     }
 
     @Override
-    public List<Payment> findByBankId(String filename, int bankId) {
+    public List<Payment> findByBankId(int bankId) {
         List<Payment> payments = new ArrayList();
 
         Connection con = dataBaseUtil.startConnection();

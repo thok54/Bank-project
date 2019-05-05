@@ -41,7 +41,7 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
         expectedBanks.add(expectedBank1);
         expectedBanks.add(expectedBank2);
 
-        List<Bank> full = repository.findAll("");
+        List<Bank> full = repository.findAll();
         assertFalse(full.isEmpty());
         assertEquals(expectedBanks, full);
     }
@@ -78,7 +78,7 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getString("name")).thenReturn(expectedBank1.getName()).thenReturn(expectedBank2.getName());
 
-        List<Bank> banks = repository.findByName(null, "name");
+        List<Bank> banks = repository.findByName("name");
         assertTrue(banks.isEmpty());
     }
 
@@ -90,7 +90,7 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.getString("name")).thenReturn(expectedBank1.getName()).thenReturn(expectedBank2.getName());
 
 
-        List<Bank> banks = repository.findByName("", "nothing");
+        List<Bank> banks = repository.findByName("nothing");
         assertTrue(banks.isEmpty());
     }
 
@@ -104,7 +104,7 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.getString("address")).thenReturn(expectedBank1.getAddress()).thenReturn(expectedBank2.getAddress());
 
 
-        List<Bank> banks = repository.findByName("", expectedBank2.getName());
+        List<Bank> banks = repository.findByName(expectedBank2.getName());
         assertFalse(banks.isEmpty());
         assertEquals(expectedBank2.getName(), banks.get(0).getName());
     }

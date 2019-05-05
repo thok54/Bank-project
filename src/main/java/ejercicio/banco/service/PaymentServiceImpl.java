@@ -20,11 +20,8 @@ public class PaymentServiceImpl implements PaymentService {
         this.repository = repository;
     }
 
-    public List<Payment> processPayments(String filename, Bank bestBank) {
-        if (filename == null) {
-            throw new IllegalArgumentException("Filename must not be null");
-        }
-        List<Payment> payments = repository.findAll(filename);
+    public List<Payment> processPayments(Bank bestBank) {
+        List<Payment> payments = repository.findAll();
 
         try {
             for (int i = 0; i < payments.size(); i++) {
@@ -82,9 +79,9 @@ public class PaymentServiceImpl implements PaymentService {
         return payment;
     }
 
-    public List<Payment> findPayments(String filename, String name) {
+    public List<Payment> findPayments(String name) {
         int id = Integer.parseInt(name);
-        return repository.findByBankId(filename, id);
+        return repository.findByBankId(id);
     }
 
     public void storePayment(Payment payment) {

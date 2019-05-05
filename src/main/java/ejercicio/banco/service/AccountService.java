@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface AccountService {
 
-    List<Account> processAccounts(String filename);
+    List<Account> processAccounts();
 }

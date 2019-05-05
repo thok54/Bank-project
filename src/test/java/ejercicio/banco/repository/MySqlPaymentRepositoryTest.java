@@ -41,7 +41,7 @@ public class MySqlPaymentRepositoryTest extends AbstractMySqlRepositoryTest{
         expectedPayments.add(expectedPayment1);
         expectedPayments.add(expectedPayment2);
 
-        List<Payment> full = repository.findAll("");
+        List<Payment> full = repository.findAll();
         assertFalse(full.isEmpty());
         assertEquals(expectedPayments, full);
     }
@@ -79,7 +79,7 @@ public class MySqlPaymentRepositoryTest extends AbstractMySqlRepositoryTest{
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getInt("bankId")).thenReturn(expectedPayment1.getBankId()).thenReturn(expectedPayment2.getBankId());
 
-        List<Payment> payments = repository.findByBankId(null, 14);
+        List<Payment> payments = repository.findByBankId(14);
         assertTrue(payments.isEmpty());
     }
 
@@ -90,7 +90,7 @@ public class MySqlPaymentRepositoryTest extends AbstractMySqlRepositoryTest{
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getInt("bankId")).thenReturn(expectedPayment1.getBankId()).thenReturn(expectedPayment2.getBankId());
 
-        List<Payment> payments = repository.findByBankId("", 14);
+        List<Payment> payments = repository.findByBankId(14);
         assertTrue(payments.isEmpty());
     }
 
@@ -105,7 +105,7 @@ public class MySqlPaymentRepositoryTest extends AbstractMySqlRepositoryTest{
         when(resultSet.getFloat("amount")).thenReturn(expectedPayment1.getAmount()).thenReturn(expectedPayment2.getAmount());
 
 
-        List<Payment> payments = repository.findByBankId("", expectedPayment2.getBankId());
+        List<Payment> payments = repository.findByBankId(expectedPayment2.getBankId());
         assertFalse(payments.isEmpty());
         assertEquals(expectedPayment2.getBankId(), payments.get(0).getBankId());
     }

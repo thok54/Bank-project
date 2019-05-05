@@ -2,7 +2,7 @@ package ejercicio.banco.service;
 
 import ejercicio.banco.dto.Account;
 import ejercicio.banco.repository.AccountNotFoundException;
-import ejercicio.banco.repository.CsvAccountRepository;
+import ejercicio.banco.repository.MySqlAccountRepository;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -23,14 +23,13 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceImplTest {
 
-    private static final String FILE_NAME = "file-name-test";
     private static final String ACCOUNT_NAME = "name";
     private static final int ACCOUNT_ID = 10876;
     private static final int INVALID_ACCOUNT_ID = -123;
     private Account expectedAccount = new Account(10876);
 
     @Mock
-    private CsvAccountRepository repository;
+    private MySqlAccountRepository repository;
 
     @InjectMocks
     private AccountServiceImpl accountService;
@@ -40,18 +39,18 @@ public class AccountServiceImplTest {
 
     @Test
     public void testProcessAccountsCallsFindAllFromRepository() {
-        List<Account> accounts = accountService.processAccounts(FILE_NAME);
-        verify(repository).findAll(FILE_NAME);
+        List<Account> accounts = accountService.processAccounts();
+        verify(repository).findAll();
     }
 
     @Test
     public void testProcessAccountsReturnsCorrectList() {
         // Given
-        when(repository.findAll(FILE_NAME)).thenReturn(Arrays.asList(expectedAccount));
+        when(repository.findAll()).thenReturn(Arrays.asList(expectedAccount));
         // When
-        List<Account> accounts = accountService.processAccounts(FILE_NAME);
+        List<Account> accounts = accountService.processAccounts();
         // Then
-        verify(repository).findAll(FILE_NAME);
+        verify(repository).findAll();
         assertNotNull(accounts);
         assertEquals(ACCOUNT_ID, accounts.get(0).getId());
     }
@@ -59,7 +58,7 @@ public class AccountServiceImplTest {
     @Test
     public void testProcessAccountsWithNullFilenameThrowsIllegalArgumentException() {
         expectedEx.expect(IllegalArgumentException.class);
-        accountService.processAccounts(null);
+        accountService.processAccounts();
         expectedEx.expectMessage("Filename must not be null");
     }
 
@@ -79,8 +78,8 @@ public class AccountServiceImplTest {
 
     @Test
     public void testFindAccountsCallsFindFromRepository() {
-        accountService.findAccounts(FILE_NAME, ACCOUNT_NAME);
-        verify(repository).findByName(FILE_NAME, ACCOUNT_NAME);
+        accountService.findAccounts(ACCOUNT_NAME);
+        verify(repository).findByName(ACCOUNT_NAME);
     }
 
     @Test

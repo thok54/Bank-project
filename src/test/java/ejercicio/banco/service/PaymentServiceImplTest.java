@@ -2,14 +2,16 @@ package ejercicio.banco.service;
 
 import java.util.Arrays;
 import java.util.List;
+
 import ejercicio.banco.dto.Bank;
 import ejercicio.banco.dto.Payment;
-import ejercicio.banco.repository.CsvPaymentRepository;
+import ejercicio.banco.repository.MySqlPaymentRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.verify;
@@ -19,7 +21,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PaymentServiceImplTest {
 
-    private static final String FILE_NAME = "file-name-test";
     private static final int BANK_ID = 10876;
     private static final int PAYMENT_ID = 27428;
     private static final String PAYMENT_STRING = "27428";
@@ -27,28 +28,28 @@ public class PaymentServiceImplTest {
     private Payment expectedPayment = new Payment(PAYMENT_ID);
 
     @Mock
-    private CsvPaymentRepository repository;
+    private MySqlPaymentRepository repository;
 
     @InjectMocks
     private PaymentServiceImpl paymentService;
 
     @Test
     public void testProcessPaymentCallsFindAllFromRepository() {
-        List<Payment> payments = paymentService.processPayments(FILE_NAME, tsBank);
+        List<Payment> payments = paymentService.processPayments(tsBank);
 
-        verify(repository).findAll(FILE_NAME);
+        verify(repository).findAll();
     }
 
     @Test
     public void testProcessPaymentsReturnsCorrectList() {
         // Given
-        when(repository.findAll(FILE_NAME)).thenReturn(Arrays.asList(expectedPayment));
+        when(repository.findAll()).thenReturn(Arrays.asList(expectedPayment));
 
         // When
-        List<Payment> payments = paymentService.processPayments(FILE_NAME, tsBank);
+        List<Payment> payments = paymentService.processPayments(tsBank);
 
         // Then
-        verify(repository).findAll(FILE_NAME);
+        verify(repository).findAll();
 
         assertNotNull(payments);
         assertEquals(PAYMENT_ID, payments.get(0).getPaymentId());
@@ -56,7 +57,7 @@ public class PaymentServiceImplTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testProcessPaymentsWithNullFilenameThrowsIllegalArgumentException() {
-        paymentService.processPayments(null, null);
+        paymentService.processPayments(null);
     }
 
     @Test
@@ -68,9 +69,9 @@ public class PaymentServiceImplTest {
 
     @Test
     public void testFindPaymentsCallsFindFromRepository() {
-        paymentService.findPayments(FILE_NAME, PAYMENT_STRING);
+        paymentService.findPayments(PAYMENT_STRING);
 
-        verify(repository).findByBankId(FILE_NAME, PAYMENT_ID);
+        verify(repository).findByBankId(PAYMENT_ID);
     }
 
     @Test

@@ -14,12 +14,9 @@ public class BankServiceImpl implements BankService {
         this.repository = repository;
     }
 
-    public Bank processBank(String filename) throws IndexOutOfBoundsException {
-        if (filename == null) {
-            throw new IllegalArgumentException("Filename must not be null");
-        }
+    public Bank processBank() throws IndexOutOfBoundsException {
         Bank bank;
-        List<Bank> banks = repository.findAll(filename);
+        List<Bank> banks = repository.findAll();
         try {
             bank = banks.get(0);
         } catch (IndexOutOfBoundsException e) {
@@ -39,8 +36,8 @@ public class BankServiceImpl implements BankService {
         return bank;
     }
   
-    public List<Bank> findBanks(String filename, String name) {
-        return repository.findByName(filename, name);
+    public List<Bank> findBanks(String name) {
+        return repository.findByName(name);
     }
 
 
