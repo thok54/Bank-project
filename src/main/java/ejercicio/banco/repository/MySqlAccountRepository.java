@@ -15,9 +15,6 @@ import java.util.List;
 @Repository
 public class MySqlAccountRepository implements AccountRepository {
 
-    //TODO: @Component, @Repository, @Service, @Autowired(replacing constructors), @PathVariable
-    //TODO: Implement repository methods into controller
-
     @Autowired
     private DataBaseUtil dataBaseUtil;
 

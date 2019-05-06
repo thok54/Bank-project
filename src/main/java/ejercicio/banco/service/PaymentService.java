@@ -7,7 +7,17 @@ import java.util.List;
 
 public interface PaymentService {
 
-    List<Payment> processPayments(Bank bestBank);
+    List<Payment> process(Bank bestBank);
 
     void fileWriter(String filename, Bank bestBank);
+
+    Payment find(int n);
+
+    List<Payment> findByName(String name);
+
+    void store(Payment payment);
+
+    void update(int id, Payment payment);
+
+    void delete(int id);
 }

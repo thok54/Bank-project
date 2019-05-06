@@ -14,7 +14,8 @@ public class BankServiceImpl implements BankService {
     @Autowired
     private BankRepository repository;
 
-    public Bank processBank() throws IndexOutOfBoundsException {
+    @Override
+    public Bank process() throws IndexOutOfBoundsException {
         Bank bank;
         List<Bank> banks = repository.findAll();
         try {
@@ -26,7 +27,8 @@ public class BankServiceImpl implements BankService {
         return bank;
     }
 
-    public Bank findBank(int n) {
+    @Override
+    public Bank find(int n) {
         Bank bank = null;
         try {
             bank = repository.find(n);
@@ -36,20 +38,23 @@ public class BankServiceImpl implements BankService {
         return bank;
     }
 
-    public List<Bank> findBanks(String name) {
+    @Override
+    public List<Bank> findByName(String name) {
         return repository.findByName(name);
     }
 
-
-    public void storeBank(Bank bank) {
+    @Override
+    public void store(Bank bank) {
         repository.store(bank);
     }
 
-    public void updateBank(int id, Bank bank) {
+    @Override
+    public void update(int id, Bank bank) {
         repository.update(id, bank);
     }
 
-    public void deleteBank(int id) {
+    @Override
+    public void delete(int id) {
         repository.delete(id);
     }
 

@@ -31,7 +31,7 @@ public class BankServiceImplTest {
 
     @Test
     public void testProcessBankCallsFindAllFromRepository() {
-        Bank bank = bankService.processBank();
+        Bank bank = bankService.process();
 
         verify(repository).findAll();
     }
@@ -42,7 +42,7 @@ public class BankServiceImplTest {
         when(repository.findAll()).thenReturn(Arrays.asList(expectedBank));
 
         // When
-        Bank bank = bankService.processBank();
+        Bank bank = bankService.process();
 
         // Then
         verify(repository).findAll();
@@ -53,41 +53,41 @@ public class BankServiceImplTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testProcessBankWithNullFilenameThrowsIllegalArgumentException() {
-        bankService.processBank();
+        bankService.process();
     }
 
 
     @Test
     public void testFindBankCallsFindFromRepository() {
-        bankService.findBank(BANK_ID);
+        bankService.find(BANK_ID);
 
         verify(repository).find(BANK_ID);
     }
 
     @Test
     public void testFindBanksCallsFindFromRepository() {
-        bankService.findBanks(BANK_NAME);
+        bankService.findByName(BANK_NAME);
 
         verify(repository).findByName(BANK_NAME);
     }
 
     @Test
     public void testStoreBankCallsFindFromRepository() {
-        bankService.storeBank(expectedBank);
+        bankService.store(expectedBank);
 
         verify(repository).store(expectedBank);
     }
 
     @Test
     public void testUpdateBankCallsFindFromRepository() {
-        bankService.updateBank(BANK_ID, expectedBank);
+        bankService.update(BANK_ID, expectedBank);
 
         verify(repository).update(BANK_ID, expectedBank);
     }
 
     @Test
     public void testDeleteBankCallsFindFromRepository() {
-        bankService.deleteBank(BANK_ID);
+        bankService.delete(BANK_ID);
 
         verify(repository).delete(BANK_ID);
     }

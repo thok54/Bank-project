@@ -17,12 +17,12 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository repository;
 
     @Override
-    public List<Account> processAccounts() {
+    public List<Account> process() {
         return repository.findAll();
     }
 
-    // Find user
-    public Account findAccount(int accountId) {
+    @Override
+    public Account find(int accountId) {
         // Creates list of Accounts
         Account account = null;
         try {
@@ -36,21 +36,23 @@ public class AccountServiceImpl implements AccountService {
         return account;
     }
 
-    // Find accounts by string
-    public List<Account> findAccounts(String name) {
+    @Override
+    public List<Account> findByName(String name) {
         return repository.findByName(name);
     }
 
-
-    public void storeAccount(Account acc) {
+    @Override
+    public void store(Account acc) {
         repository.store(acc);
     }
 
-    public void updateAccount(int id, Account acc) {
+    @Override
+    public void update(int id, Account acc) {
         repository.update(id, acc);
     }
 
-    public void deleteAccount(int id) {
+    @Override
+    public void delete(int id) {
         repository.delete(id);
     }
 

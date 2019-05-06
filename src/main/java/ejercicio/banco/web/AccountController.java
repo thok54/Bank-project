@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO: @Component, @Repository, @Service, @Autowired(replacing constructors), @PathVariable
+//TODO: Implement service methods into controller
+
 @RestController
 @RequestMapping("/account")
 public class AccountController {

@@ -39,7 +39,7 @@ public class AccountServiceImplTest {
 
     @Test
     public void testProcessAccountsCallsFindAllFromRepository() {
-        List<Account> accounts = accountService.processAccounts();
+        List<Account> accounts = accountService.process();
         verify(repository).findAll();
     }
 
@@ -48,7 +48,7 @@ public class AccountServiceImplTest {
         // Given
         when(repository.findAll()).thenReturn(Arrays.asList(expectedAccount));
         // When
-        List<Account> accounts = accountService.processAccounts();
+        List<Account> accounts = accountService.process();
         // Then
         verify(repository).findAll();
         assertNotNull(accounts);
@@ -58,45 +58,45 @@ public class AccountServiceImplTest {
     @Test
     public void testProcessAccountsWithNullFilenameThrowsIllegalArgumentException() {
         expectedEx.expect(IllegalArgumentException.class);
-        accountService.processAccounts();
+        accountService.process();
         expectedEx.expectMessage("Filename must not be null");
     }
 
     @Test
     public void testFindAccountCallsFindFromRepository() {
-        accountService.findAccount(ACCOUNT_ID);
+        accountService.find(ACCOUNT_ID);
         verify(repository).find(ACCOUNT_ID);
     }
 
     @Test
     public void testFindAccountReturnsNullIfAccountNotFoundExceptionIsThrown() {
         when(repository.find(INVALID_ACCOUNT_ID)).thenThrow(new AccountNotFoundException(""));
-        Account account = accountService.findAccount(INVALID_ACCOUNT_ID);
+        Account account = accountService.find(INVALID_ACCOUNT_ID);
         assertNull(account);
     }
 
 
     @Test
     public void testFindAccountsCallsFindFromRepository() {
-        accountService.findAccounts(ACCOUNT_NAME);
+        accountService.findByName(ACCOUNT_NAME);
         verify(repository).findByName(ACCOUNT_NAME);
     }
 
     @Test
     public void testStoreAccountCallsFindFromRepository() {
-        accountService.storeAccount(expectedAccount);
+        accountService.store(expectedAccount);
         verify(repository).store(expectedAccount);
     }
 
     @Test
     public void testUpdateAccountCallsFindFromRepository() {
-        accountService.updateAccount(ACCOUNT_ID, expectedAccount);
+        accountService.update(ACCOUNT_ID, expectedAccount);
         verify(repository).update(ACCOUNT_ID, expectedAccount);
     }
 
     @Test
     public void testDeleteAccountCallsFindFromRepository() {
-        accountService.deleteAccount(ACCOUNT_ID);
+        accountService.delete(ACCOUNT_ID);
         verify(repository).delete(ACCOUNT_ID);
     }
 }
