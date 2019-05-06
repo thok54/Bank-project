@@ -15,16 +15,16 @@ public class BankServiceImpl implements BankService {
     private BankRepository repository;
 
     @Override
-    public Bank process() throws IndexOutOfBoundsException {
+    public List<Bank> process() throws IndexOutOfBoundsException {
         Bank bank;
         List<Bank> banks = repository.findAll();
-        try {
+        /*try {
             bank = banks.get(0);
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
             bank = null;
-        }
-        return bank;
+        }*/
+        return banks;
     }
 
     @Override

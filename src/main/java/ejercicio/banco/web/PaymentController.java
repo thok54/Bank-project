@@ -1,30 +1,46 @@
 package ejercicio.banco.web;
 
 import ejercicio.banco.dto.Payment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import ejercicio.banco.service.PaymentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/payment")
 public class PaymentController {
-    private Payment expectedPayment1 = new Payment(1, 3, 5, (float) 1.87);
-    private Payment expectedPayment2 = new Payment(2, 4, 6, (float) 3.41);
+    @Autowired
+    PaymentService paymentService;
 
 
     @GetMapping
-    public Payment getPayment() {
-        return expectedPayment1;
+    public List<Payment> getAll() {
+        return paymentService.process();
     }
 
-    @GetMapping("/all")
-    public List<Payment> getAllPayments() {
-        List<Payment> expectedPayments = new ArrayList();
-        expectedPayments.add(expectedPayment1);
-        expectedPayments.add(expectedPayment2);
-        return expectedPayments;
+    @GetMapping("/byId/{id}")
+    public Payment getById(@PathVariable Integer id) {
+        return paymentService.find(id);
+    }
+
+    @GetMapping("/byName/{name}")
+    public List<Payment> getByName(@PathVariable String name) {
+        return paymentService.findByName(name);
+    }
+
+    @PostMapping("/store/{payment}")
+    public void store(@PathVariable Payment payment) {
+        paymentService.store(payment);
+    }
+
+    @PostMapping("/update/{position}/{payment}")
+    public void update(@PathVariable Integer position, @PathVariable Payment payment) {
+        paymentService.update(position, payment);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable Integer id) {
+        paymentService.delete(id);
     }
 }

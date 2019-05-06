@@ -21,10 +21,9 @@ public class PaymentServiceImpl implements PaymentService {
     private PaymentRepository repository;
 
     @Override
-    public List<Payment> process(Bank bestBank) {
+    public List<Payment> process(/*Bank bestBank*/) {
         List<Payment> payments = repository.findAll();
-
-        try {
+        /*try {
             for (int i = 0; i < payments.size(); i++) {
                 if (bestBank.getId() == payments.get(i).getBankId()) {
                     try {
@@ -42,7 +41,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
         if (bestBank != null) {
             fileWriter(String.join(File.separator, "src", "main", "resources", "csv", "AccountsAfterPayments.csv"), bestBank);
-        }
+        }*/
         return payments;
     }
 
