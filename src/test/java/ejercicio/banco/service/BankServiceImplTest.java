@@ -31,7 +31,7 @@ public class BankServiceImplTest {
 
     @Test
     public void testProcessBankCallsFindAllFromRepository() {
-        Bank bank = bankService.process();
+        Bank bank = bankService.process().get(0);
 
         verify(repository).findAll();
     }
@@ -42,7 +42,7 @@ public class BankServiceImplTest {
         when(repository.findAll()).thenReturn(Arrays.asList(expectedBank));
 
         // When
-        Bank bank = bankService.process();
+        Bank bank = bankService.process().get(0);
 
         // Then
         verify(repository).findAll();

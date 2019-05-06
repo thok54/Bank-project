@@ -23,7 +23,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account find(int accountId) {
-        // Creates list of Accounts
         Account account = null;
         try {
             account = repository.find(accountId);

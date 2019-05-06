@@ -1,34 +1,49 @@
 package ejercicio.banco.web;
 
 import ejercicio.banco.dto.Account;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import ejercicio.banco.repository.MySqlAccountRepository;
+import ejercicio.banco.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: @Component, @Repository, @Service, @Autowired(replacing constructors), @PathVariable
-//TODO: Implement service methods into controller
-
 @RestController
 @RequestMapping("/account")
 public class AccountController {
-    private Account expectedAccount1 = new Account(1, "Peter", (float) 3.00, "PIPIRANA87");
-    private Account expectedAccount2 = new Account(2, "Aurelio", (float) 8.49, "SATURN15STINKS");
+    @Autowired
+    AccountService accountService;
 
 
     @GetMapping
-    public Account getAccount() {
-        return expectedAccount1;
+    public List<Account> getAll() {
+        return accountService.process();
     }
 
-    @GetMapping("/all")
-    public List<Account> getAllAccounts() {
-        List<Account> expectedAccounts = new ArrayList();
-        expectedAccounts.add(expectedAccount1);
-        expectedAccounts.add(expectedAccount2);
-        return expectedAccounts;
+    @GetMapping("/byId/{id}")
+    public Account getById(@PathVariable Integer id) {
+        return accountService.find(id);
+    }
+
+    @GetMapping("/byName/{name}")
+    public List<Account> getByName(@PathVariable String name) {
+        return accountService.findByName(name);
+    }
+
+    @PostMapping("/store/{acc}")
+    public void store(@PathVariable Account acc) {
+        accountService.store(acc);
+    }
+
+    @PostMapping("/update/{position}/{acc}")
+    public void update(@PathVariable Integer position, @PathVariable Account acc) {
+        accountService.update(position, acc);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable Integer id) {
+        accountService.delete(id);
     }
 }
 

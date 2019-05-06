@@ -1,31 +1,46 @@
 package ejercicio.banco.web;
 
 import ejercicio.banco.dto.Bank;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import ejercicio.banco.service.BankService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/bank")
 public class BankController {
-    private Bank expectedBank1 = new Bank(1, "bestBank", "right here");
-    private Bank expectedBank2 = new Bank(2, "Worst ATM", "over there");
+    @Autowired
+    BankService bankService;
 
 
     @GetMapping
-    public Bank getBank() {
-        return expectedBank1;
+    public List<Bank> getAll() {
+        return bankService.process();
     }
 
-    @GetMapping("/all")
-    public List<Bank> getAllBanks() {
-        List<Bank> expectedBanks = new ArrayList();
-        expectedBanks.add(expectedBank1);
-        expectedBanks.add(expectedBank2);
-        return expectedBanks;
+    @GetMapping("/byId/{id}")
+    public Bank getById(@PathVariable Integer id) {
+        return bankService.find(id);
     }
 
+    @GetMapping("/byName/{name}")
+    public List<Bank> getByName(@PathVariable String name) {
+        return bankService.findByName(name);
+    }
+
+    @PostMapping("/store/{bank}")
+    public void store(@PathVariable Bank bank) {
+        bankService.store(bank);
+    }
+
+    @PostMapping("/update/{position}/{bank}")
+    public void update(@PathVariable Integer position, @PathVariable Bank bank) {
+        bankService.update(position, bank);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable Integer id) {
+        bankService.delete(id);
+    }
 }

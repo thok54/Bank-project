@@ -1,7 +1,10 @@
 package ejercicio.banco.util;
 
+import org.springframework.stereotype.Component;
+
 import java.sql.*;
 
+@Component
 public class DataBaseUtil {
 
     public static void main(String[] args) {
