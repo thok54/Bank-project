@@ -7,5 +7,15 @@ import java.util.List;
 
 public interface AccountService {
 
-    List<Account> processAccounts();
+    List<Account> process();
+
+    Account find(int accountId);
+
+    List<Account> findByName(String name);
+
+    void store(Account acc);
+
+    void update(int id, Account acc);
+
+    void delete(int id);
 }

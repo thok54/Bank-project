@@ -35,7 +35,7 @@ public class PaymentServiceImplTest {
 
     @Test
     public void testProcessPaymentCallsFindAllFromRepository() {
-        List<Payment> payments = paymentService.processPayments(tsBank);
+        List<Payment> payments = paymentService.process(tsBank);
 
         verify(repository).findAll();
     }
@@ -46,7 +46,7 @@ public class PaymentServiceImplTest {
         when(repository.findAll()).thenReturn(Arrays.asList(expectedPayment));
 
         // When
-        List<Payment> payments = paymentService.processPayments(tsBank);
+        List<Payment> payments = paymentService.process(tsBank);
 
         // Then
         verify(repository).findAll();
@@ -57,40 +57,40 @@ public class PaymentServiceImplTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testProcessPaymentsWithNullFilenameThrowsIllegalArgumentException() {
-        paymentService.processPayments(null);
+        paymentService.process(null);
     }
 
     @Test
     public void testFindPaymentCallsFindFromRepository() {
-        paymentService.findPayment(PAYMENT_ID);
+        paymentService.find(PAYMENT_ID);
 
         verify(repository).find(PAYMENT_ID);
     }
 
     @Test
     public void testFindPaymentsCallsFindFromRepository() {
-        paymentService.findPayments(PAYMENT_STRING);
+        paymentService.findByName(PAYMENT_STRING);
 
         verify(repository).findByBankId(PAYMENT_ID);
     }
 
     @Test
     public void testStorePaymentsCallsFindFromRepository() {
-        paymentService.storePayment(expectedPayment);
+        paymentService.store(expectedPayment);
 
         verify(repository).store(expectedPayment);
     }
 
     @Test
     public void testUpdatePaymentCallsFindFromRepository() {
-        paymentService.updatePayment(PAYMENT_ID, expectedPayment);
+        paymentService.update(PAYMENT_ID, expectedPayment);
 
         verify(repository).update(PAYMENT_ID, expectedPayment);
     }
 
     @Test
     public void testDeleteCallsFindFromRepository() {
-        paymentService.deletePayment(PAYMENT_ID);
+        paymentService.delete(PAYMENT_ID);
 
         verify(repository).delete(PAYMENT_ID);
     }

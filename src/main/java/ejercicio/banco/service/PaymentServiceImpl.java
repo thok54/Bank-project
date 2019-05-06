@@ -20,7 +20,8 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private PaymentRepository repository;
 
-    public List<Payment> processPayments(Bank bestBank) {
+    @Override
+    public List<Payment> process(Bank bestBank) {
         List<Payment> payments = repository.findAll();
 
         try {
@@ -45,7 +46,7 @@ public class PaymentServiceImpl implements PaymentService {
         return payments;
     }
 
-
+    @Override
     public void fileWriter(String filename, Bank bestBank) {
         if (filename == null) {
             throw new IllegalArgumentException("Filename must not be null");
@@ -67,8 +68,8 @@ public class PaymentServiceImpl implements PaymentService {
         }
     }
 
-
-    public Payment findPayment(int n) {
+    @Override
+    public Payment find(int n) {
         Payment payment = null;
         try {
             payment = repository.find(n);
@@ -79,20 +80,24 @@ public class PaymentServiceImpl implements PaymentService {
         return payment;
     }
 
-    public List<Payment> findPayments(String name) {
+    @Override
+    public List<Payment> findByName(String name) {
         int id = Integer.parseInt(name);
         return repository.findByBankId(id);
     }
 
-    public void storePayment(Payment payment) {
+    @Override
+    public void store(Payment payment) {
         repository.store(payment);
     }
 
-    public void updatePayment(int id, Payment payment) {
+    @Override
+    public void update(int id, Payment payment) {
         repository.update(id, payment);
     }
 
-    public void deletePayment(int id) {
+    @Override
+    public void delete(int id) {
         repository.delete(id);
     }
 

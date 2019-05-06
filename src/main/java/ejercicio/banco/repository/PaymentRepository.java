@@ -12,12 +12,9 @@ public interface PaymentRepository {
 
     List<Payment> findByBankId(int id);
 
-    //Prints storing
     void store(Payment payment);
 
-    //Prints updating
     void update(int id, Payment payment);
 
-    //Prints "deleting"
     void delete(int id);
 }
