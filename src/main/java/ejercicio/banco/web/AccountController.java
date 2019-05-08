@@ -21,23 +21,25 @@ public class AccountController {
         return accountService.process();
     }
 
-    @GetMapping("/byId/{id}")
+    @GetMapping("/{id}")
     public Account getById(@PathVariable Integer id) {
         return accountService.find(id);
     }
 
-    @GetMapping("/byName/{name}")
+    @GetMapping("/{name}")
     public List<Account> getByName(@PathVariable String name) {
         return accountService.findByName(name);
     }
 
-    @PostMapping("/store/{acc}")
-    public void store(@PathVariable Account acc) {
+    @PostMapping("/store/{id}/{name}/{money}/{iban}")
+    public void store(@PathVariable Integer id, @PathVariable String name, @PathVariable Float money, @PathVariable String iban) {
+        Account acc = new Account(id,name,money,iban);
         accountService.store(acc);
     }
 
-    @PostMapping("/update/{position}/{acc}")
-    public void update(@PathVariable Integer position, @PathVariable Account acc) {
+    @PostMapping("/update/{position}/{id}/{name}/{money}/{iban}")
+    public void update(@PathVariable Integer position, @PathVariable Integer id, @PathVariable String name, @PathVariable Float money, @PathVariable String iban) {
+        Account acc = new Account(id,name,money,iban);
         accountService.update(position, acc);
     }
 

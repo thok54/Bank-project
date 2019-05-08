@@ -19,23 +19,25 @@ public class BankController {
         return bankService.process();
     }
 
-    @GetMapping("/byId/{id}")
+    @GetMapping("/{id}")
     public Bank getById(@PathVariable Integer id) {
         return bankService.find(id);
     }
 
-    @GetMapping("/byName/{name}")
+    @GetMapping("/{name}")
     public List<Bank> getByName(@PathVariable String name) {
         return bankService.findByName(name);
     }
 
-    @PostMapping("/store/{bank}")
-    public void store(@PathVariable Bank bank) {
+    @PostMapping("/store/{id}/{name}/{address}")
+    public void store(@PathVariable Integer id, @PathVariable String name, @PathVariable String address) {
+        Bank bank = new Bank(id,name,address);
         bankService.store(bank);
     }
 
-    @PostMapping("/update/{position}/{bank}")
-    public void update(@PathVariable Integer position, @PathVariable Bank bank) {
+    @PostMapping("/update/{position}/{id}/{name}/{address}")
+    public void update(@PathVariable Integer position, @PathVariable Integer id, @PathVariable String name, @PathVariable String address) {
+        Bank bank = new Bank(id,name,address);
         bankService.update(position, bank);
     }
 

@@ -35,7 +35,7 @@ public class PaymentServiceImplTest {
 
     @Test
     public void testProcessPaymentCallsFindAllFromRepository() {
-        List<Payment> payments = paymentService.process(tsBank);
+        List<Payment> payments = paymentService.process();
 
         verify(repository).findAll();
     }
@@ -46,7 +46,7 @@ public class PaymentServiceImplTest {
         when(repository.findAll()).thenReturn(Arrays.asList(expectedPayment));
 
         // When
-        List<Payment> payments = paymentService.process(tsBank);
+        List<Payment> payments = paymentService.process();
 
         // Then
         verify(repository).findAll();
@@ -57,7 +57,7 @@ public class PaymentServiceImplTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testProcessPaymentsWithNullFilenameThrowsIllegalArgumentException() {
-        paymentService.process(null);
+        paymentService.process();
     }
 
     @Test
