@@ -19,23 +19,25 @@ public class PaymentController {
         return paymentService.process();
     }
 
-    @GetMapping("/byId/{id}")
+    @GetMapping("/{id}")
     public Payment getById(@PathVariable Integer id) {
         return paymentService.find(id);
     }
 
-    @GetMapping("/byName/{name}")
+    @GetMapping("/{name}")
     public List<Payment> getByName(@PathVariable String name) {
         return paymentService.findByName(name);
     }
 
-    @PostMapping("/store/{payment}")
-    public void store(@PathVariable Payment payment) {
+    @PostMapping("/store/{id}/{bankId}/{userId}/{amount}")
+    public void store(@PathVariable Integer id, @PathVariable Integer bankId, @PathVariable Integer userId, @PathVariable Float amount) {
+        Payment payment = new Payment(id, bankId, userId, amount);
         paymentService.store(payment);
     }
 
-    @PostMapping("/update/{position}/{payment}")
-    public void update(@PathVariable Integer position, @PathVariable Payment payment) {
+    @PostMapping("/update/{position}/{id}/{bankId}/{userId}/{amount}")
+    public void update(@PathVariable Integer position, @PathVariable Integer id, @PathVariable Integer bankId, @PathVariable Integer userId, @PathVariable Float amount) {
+        Payment payment = new Payment(id, bankId, userId, amount);
         paymentService.update(position, payment);
     }
 
