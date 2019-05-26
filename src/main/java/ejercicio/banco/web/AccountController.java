@@ -1,12 +1,10 @@
 package ejercicio.banco.web;
 
 import ejercicio.banco.dto.Account;
-import ejercicio.banco.repository.MySqlAccountRepository;
 import ejercicio.banco.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,19 +29,17 @@ public class AccountController {
         return accountService.findByName(name);
     }
 
-    @PostMapping("/store/{id}/{name}/{money}/{iban}")
-    public void store(@PathVariable Integer id, @PathVariable String name, @PathVariable Float money, @PathVariable String iban) {
-        Account acc = new Account(id,name,money,iban);
+    @PostMapping
+    public void store(@RequestBody Account acc) {
         accountService.store(acc);
     }
 
-    @PostMapping("/update/{position}/{id}/{name}/{money}/{iban}")
-    public void update(@PathVariable Integer position, @PathVariable Integer id, @PathVariable String name, @PathVariable Float money, @PathVariable String iban) {
-        Account acc = new Account(id,name,money,iban);
-        accountService.update(position, acc);
+    @PutMapping("/{id}")
+    public void update(@PathVariable Integer id, @RequestBody Account acc){
+        accountService.update(id, acc);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         accountService.delete(id);
     }
