@@ -10,6 +10,8 @@ public class Account implements InternalDto {
     private float money;
     private String iban;
 
+    public Account(){}
+
     public Account(int id) {
         this.id = id;
     }

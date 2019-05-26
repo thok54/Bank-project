@@ -106,9 +106,11 @@ public class MySqlAccountRepository implements AccountRepository {
             String name = account.getName();
             Float money = account.getMoney();
             String iban = account.getIban();
-            PreparedStatement pstmt = con.prepareStatement("INSERT INTO ACCOUNTS (name, money, iban) VALUES (" + name
-                    + ", " + money + ", " + iban + ")");
-            ResultSet rs = pstmt.executeQuery();
+
+            String query = String.format("INSERT INTO ACCOUNTS (name, money, iban) VALUES (\"%s\", %f, \"%s\")", name, money, iban);
+
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -125,9 +127,11 @@ public class MySqlAccountRepository implements AccountRepository {
             String name = account.getName();
             Float money = account.getMoney();
             String iban = account.getIban();
-            PreparedStatement pstmt = con.prepareStatement("UPDATE ACCOUNTS SET name = " + name +
-                    ", money = " + money + ", iban = " + iban + " WHERE id = " + account.getId());
-            ResultSet rs = pstmt.executeQuery();
+
+            String query = String.format("UPDATE ACCOUNTS SET name = \"%s\", money = %f, iban = \"%s\" WHERE id = %d", name, money, iban, id);
+
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
