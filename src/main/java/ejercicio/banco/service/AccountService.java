@@ -18,4 +18,6 @@ public interface AccountService {
     void update(int id, Account acc);
 
     void delete(int id);
+
+    void reset(Account acc);
 }

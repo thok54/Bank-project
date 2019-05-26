@@ -35,13 +35,19 @@ public class AccountController {
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Integer id, @RequestBody Account acc){
+    public void update(@PathVariable Integer id, @RequestBody Account acc) {
         accountService.update(id, acc);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         accountService.delete(id);
+    }
+
+    //TODO: Reset Account by setting its money to 0 and deleting all its payments.
+    @PutMapping("/reset")
+    public void reset(@RequestBody Account acc) {
+        accountService.reset(acc);
     }
 }
 

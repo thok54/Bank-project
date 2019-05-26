@@ -18,4 +18,6 @@ public interface AccountRepository {
     void update(int id, Account account);
 
     void delete(int id);
+
+    void reset(Account acc);
 }
