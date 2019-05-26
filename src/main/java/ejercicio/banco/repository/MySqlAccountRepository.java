@@ -108,7 +108,6 @@ public class MySqlAccountRepository implements AccountRepository {
             String iban = account.getIban();
 
             String query = String.format("INSERT INTO ACCOUNTS (name, money, iban) VALUES (\"%s\", %f, \"%s\")", name, money, iban);
-
             PreparedStatement pstmt = con.prepareStatement(query);
             pstmt.executeUpdate();
 
@@ -129,7 +128,6 @@ public class MySqlAccountRepository implements AccountRepository {
             String iban = account.getIban();
 
             String query = String.format("UPDATE ACCOUNTS SET name = \"%s\", money = %f, iban = \"%s\" WHERE id = %d", name, money, iban, id);
-
             PreparedStatement pstmt = con.prepareStatement(query);
             pstmt.executeUpdate();
 
@@ -146,6 +144,28 @@ public class MySqlAccountRepository implements AccountRepository {
         try {
             PreparedStatement pstmt = con.prepareStatement("DELETE FROM ACCOUNTS WHERE id = " + id);
             ResultSet rs = pstmt.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dataBaseUtil.closeConections(con);
+        }
+    }
+
+
+    @Override
+    public void reset(Account acc) {
+        Connection con = dataBaseUtil.startConnection();
+        try {
+            int id = acc.getId();
+
+            String query1 = String.format("UPDATE ACCOUNTS SET money = 0 WHERE id = " + id);
+            PreparedStatement pstmt1 = con.prepareStatement(query1);
+            pstmt1.executeUpdate();
+
+            String query2 = String.format("DELETE FROM PAYMENTS WHERE userId = " + id);
+            PreparedStatement pstmt2 = con.prepareStatement(query2);
+            ResultSet rs = pstmt2.executeQuery();
 
         } catch (SQLException e) {
             e.printStackTrace();

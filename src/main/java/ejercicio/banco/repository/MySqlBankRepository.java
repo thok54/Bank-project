@@ -100,8 +100,9 @@ public class MySqlBankRepository implements BankRepository {
         try {
             String name = bank.getName();
             String address = bank.getAddress();
-            PreparedStatement pstmt = con.prepareStatement("INSERT INTO BANKS (name, address) VALUES (" + name
-                    + ", " + address + ")");
+
+            String query = String.format("INSERT INTO BANKS (name, address) VALUES (\"%s\",\"%s\")", name, address);
+            PreparedStatement pstmt = con.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
         } catch (SQLException e) {
@@ -117,8 +118,9 @@ public class MySqlBankRepository implements BankRepository {
         try {
             String name = bank.getName();
             String address = bank.getAddress();
-            PreparedStatement pstmt = con.prepareStatement("UPDATE BANKS SET name = " + name + ", address = " + address +
-                    " WHERE id = " + bank.getId());
+
+            String query = String.format("UPDATE BANKS SET name = \"%s\", address = \"%s\" WHERE id = %d", name, address, id);
+            PreparedStatement pstmt = con.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
         } catch (SQLException e) {

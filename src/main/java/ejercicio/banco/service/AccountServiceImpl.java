@@ -55,4 +55,7 @@ public class AccountServiceImpl implements AccountService {
         repository.delete(id);
     }
 
+    @Override
+    public void reset(Account acc) {repository.reset(acc);}
+
 }

@@ -29,19 +29,17 @@ public class BankController {
         return bankService.findByName(name);
     }
 
-    @PostMapping("/store/{id}/{name}/{address}")
-    public void store(@PathVariable Integer id, @PathVariable String name, @PathVariable String address) {
-        Bank bank = new Bank(id,name,address);
+    @PostMapping
+    public void store(@RequestBody Bank bank) {
         bankService.store(bank);
     }
 
-    @PostMapping("/update/{position}/{id}/{name}/{address}")
-    public void update(@PathVariable Integer position, @PathVariable Integer id, @PathVariable String name, @PathVariable String address) {
-        Bank bank = new Bank(id,name,address);
+    @PostMapping("/{id}")
+    public void update(@PathVariable Integer position, @RequestBody Bank bank) {
         bankService.update(position, bank);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         bankService.delete(id);
     }

@@ -29,19 +29,17 @@ public class PaymentController {
         return paymentService.findByName(name);
     }
 
-    @PostMapping("/store/{id}/{bankId}/{userId}/{amount}")
-    public void store(@PathVariable Integer id, @PathVariable Integer bankId, @PathVariable Integer userId, @PathVariable Float amount) {
-        Payment payment = new Payment(id, bankId, userId, amount);
+    @PostMapping
+    public void store(@RequestBody Payment payment) {
         paymentService.store(payment);
     }
 
-    @PostMapping("/update/{position}/{id}/{bankId}/{userId}/{amount}")
-    public void update(@PathVariable Integer position, @PathVariable Integer id, @PathVariable Integer bankId, @PathVariable Integer userId, @PathVariable Float amount) {
-        Payment payment = new Payment(id, bankId, userId, amount);
+    @PostMapping("/{id}")
+    public void update(@PathVariable Integer position, @RequestBody Payment payment) {
         paymentService.update(position, payment);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         paymentService.delete(id);
     }

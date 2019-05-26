@@ -11,6 +11,8 @@ public class Bank implements InternalDto {
     private String address;
     private List<Account> users;
 
+    public Bank() {
+    }
 
     public Bank(int id) {
         this.id = id;
