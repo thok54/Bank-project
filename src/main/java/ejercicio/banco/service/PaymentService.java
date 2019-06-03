@@ -1,6 +1,5 @@
 package ejercicio.banco.service;
 
-import ejercicio.banco.dto.Bank;
 import ejercicio.banco.dto.Payment;
 
 import java.util.List;
@@ -8,8 +7,6 @@ import java.util.List;
 public interface PaymentService {
 
     List<Payment> process();
-
-    void fileWriter(String filename, Bank bestBank);
 
     Payment find(int n);
 

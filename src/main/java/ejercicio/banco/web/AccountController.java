@@ -24,7 +24,7 @@ public class AccountController {
         return accountService.find(id);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/byName/{name}")
     public List<Account> getByName(@PathVariable String name) {
         return accountService.findByName(name);
     }
@@ -44,7 +44,6 @@ public class AccountController {
         accountService.delete(id);
     }
 
-    //TODO: Reset Account by setting its money to 0 and deleting all its payments.
     @PutMapping("/reset")
     public void reset(@RequestBody Account acc) {
         accountService.reset(acc);

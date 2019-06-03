@@ -107,9 +107,9 @@ public class MySqlPaymentRepository implements PaymentRepository {
             Integer userId = payment.getUserId();
             Float amount = payment.getAmount();
 
-            String query = String.format("INSERT INTO PAYMENTS (bankId, userId, amount) VALUES (%d, %d, %f)" + bankId, userId, amount);
+            String query = String.format("INSERT INTO PAYMENTS (bankId, userId, amount) VALUES (%d, %d, %f)", bankId, userId, amount);
             PreparedStatement pstmt = con.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
+            int rs = pstmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -128,7 +128,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
 
             String query = String.format("UPDATE PAYMENTS SET bankId = %d, %d, %f WHERE id = %d", bankId, userId, amount, id);
             PreparedStatement pstmt = con.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
+            int rs = pstmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -142,7 +142,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
         Connection con = dataBaseUtil.startConnection();
         try {
             PreparedStatement pstmt = con.prepareStatement("DELETE FROM PAYMENTS WHERE id = " + id);
-            ResultSet rs = pstmt.executeQuery();
+            int rs = pstmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
