@@ -34,9 +34,9 @@ public class BankController {
         bankService.store(bank);
     }
 
-    @PostMapping("/{id}")
-    public void update(@PathVariable Integer position, @RequestBody Bank bank) {
-        bankService.update(position, bank);
+    @PutMapping("/{id}")
+    public void update(@PathVariable Integer id, @RequestBody Bank bank) {
+        bankService.update(id, bank);
     }
 
     @DeleteMapping("/{id}")
