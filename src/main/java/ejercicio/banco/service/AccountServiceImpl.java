@@ -56,6 +56,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void reset(Account acc) {repository.reset(acc);}
+    public void reset(Account acc) {
+        repository.reset(acc);
+    }
 
 }

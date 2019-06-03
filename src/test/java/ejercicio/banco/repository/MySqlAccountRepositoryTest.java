@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
     private Account account;
     private Account expectedAccount1 = new Account(1, "Peter",(float)3.00, "PIPIRANA87");
     private Account expectedAccount2 = new Account(2, "Aurelio", (float)8.49, "SATURN15STINKS");
+    private Account expectedAccount3 = new Account(3, "Manolola", (float)14.41, "N0105E");
 
     @Mock
     private DataBaseUtil util;
@@ -28,6 +30,7 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
     @InjectMocks
     MySqlAccountRepository repository;
 
+    //TODO: Repository tests(store,update,delete,reset) and POSTMAN controllers
 
     @Test
     public void testFindAllReturnsFullList() throws SQLException {
@@ -75,17 +78,6 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
     }
 
     @Test
-    public void testFindByNameThrowsExceptionWhenNull() throws SQLException {
-        executeQuery(util, "select * from ACCOUNTS");
-
-        when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(resultSet.getString("name")).thenReturn(expectedAccount1.getName()).thenReturn(expectedAccount2.getName());
-
-        List<Account> accounts = repository.findByName("name");
-        assertTrue(accounts.isEmpty());
-    }
-
-    @Test
     public void testFindByNameReturnsNullWhenItemsNotFound() throws SQLException {
         executeQuery(util, "select * from ACCOUNTS");
 
@@ -112,5 +104,40 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
 
         assertFalse(accounts.isEmpty());
         assertEquals(expectedAccount2.getName(), accounts.get(0).getName());
+    }
+
+    @Test
+    public void testStoreStoresProperAccount() throws SQLException {
+
+    }
+
+    @Test
+    public void testUpdateUpdatesProperAccount() throws SQLException{
+
+    }
+
+    @Test
+    public void testUpdateThrowsExceptionWhenIdNotFound() throws SQLException{
+
+    }
+
+    @Test
+    public void testDeleteDeletesProperAccount() throws SQLException{
+
+    }
+
+    @Test
+    public void testDeleteThrowsExceptionWhenIdNotFound() throws SQLException{
+
+    }
+
+    @Test
+    public void testResetResetsProperAccount() throws SQLException{
+
+    }
+
+    @Test
+    public void testResetThrowsExceptionWhenAccountFound() throws SQLException{
+
     }
 }

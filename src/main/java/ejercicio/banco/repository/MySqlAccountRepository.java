@@ -143,7 +143,7 @@ public class MySqlAccountRepository implements AccountRepository {
         Connection con = dataBaseUtil.startConnection();
         try {
             PreparedStatement pstmt = con.prepareStatement("DELETE FROM ACCOUNTS WHERE id = " + id);
-            ResultSet rs = pstmt.executeQuery();
+            int rs = pstmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -159,13 +159,13 @@ public class MySqlAccountRepository implements AccountRepository {
         try {
             int id = acc.getId();
 
-            String query1 = String.format("UPDATE ACCOUNTS SET money = 0 WHERE id = " + id);
+            String query1 = "UPDATE ACCOUNTS SET money = 0 WHERE id = " + id;
             PreparedStatement pstmt1 = con.prepareStatement(query1);
             pstmt1.executeUpdate();
 
-            String query2 = String.format("DELETE FROM PAYMENTS WHERE userId = " + id);
+            String query2 = "DELETE FROM PAYMENTS WHERE userId = " + id;
             PreparedStatement pstmt2 = con.prepareStatement(query2);
-            ResultSet rs = pstmt2.executeQuery();
+            int rs = pstmt2.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();

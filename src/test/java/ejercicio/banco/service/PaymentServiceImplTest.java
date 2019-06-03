@@ -36,62 +36,46 @@ public class PaymentServiceImplTest {
     @Test
     public void testProcessPaymentCallsFindAllFromRepository() {
         List<Payment> payments = paymentService.process();
-
         verify(repository).findAll();
     }
 
     @Test
     public void testProcessPaymentsReturnsCorrectList() {
-        // Given
         when(repository.findAll()).thenReturn(Arrays.asList(expectedPayment));
-
-        // When
         List<Payment> payments = paymentService.process();
-
-        // Then
         verify(repository).findAll();
 
         assertNotNull(payments);
         assertEquals(PAYMENT_ID, payments.get(0).getPaymentId());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testProcessPaymentsWithNullFilenameThrowsIllegalArgumentException() {
-        paymentService.process();
-    }
-
     @Test
     public void testFindPaymentCallsFindFromRepository() {
         paymentService.find(PAYMENT_ID);
-
         verify(repository).find(PAYMENT_ID);
     }
 
     @Test
-    public void testFindPaymentsCallsFindFromRepository() {
+    public void testFindPaymentsCallsFindByNameFromRepository() {
         paymentService.findByName(PAYMENT_STRING);
-
         verify(repository).findByBankId(PAYMENT_ID);
     }
 
     @Test
-    public void testStorePaymentsCallsFindFromRepository() {
+    public void testStorePaymentsCallsStoreFromRepository() {
         paymentService.store(expectedPayment);
-
         verify(repository).store(expectedPayment);
     }
 
     @Test
-    public void testUpdatePaymentCallsFindFromRepository() {
+    public void testUpdatePaymentCallsUpdateFromRepository() {
         paymentService.update(PAYMENT_ID, expectedPayment);
-
         verify(repository).update(PAYMENT_ID, expectedPayment);
     }
 
     @Test
-    public void testDeleteCallsFindFromRepository() {
+    public void testDeleteCallsDeleteFromRepository() {
         paymentService.delete(PAYMENT_ID);
-
         verify(repository).delete(PAYMENT_ID);
     }
 }

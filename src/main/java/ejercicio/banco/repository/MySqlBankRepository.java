@@ -103,7 +103,7 @@ public class MySqlBankRepository implements BankRepository {
 
             String query = String.format("INSERT INTO BANKS (name, address) VALUES (\"%s\",\"%s\")", name, address);
             PreparedStatement pstmt = con.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
+            int rs = pstmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -121,7 +121,7 @@ public class MySqlBankRepository implements BankRepository {
 
             String query = String.format("UPDATE BANKS SET name = \"%s\", address = \"%s\" WHERE id = %d", name, address, id);
             PreparedStatement pstmt = con.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
+            int rs = pstmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -135,7 +135,7 @@ public class MySqlBankRepository implements BankRepository {
         Connection con = dataBaseUtil.startConnection();
         try {
             PreparedStatement pstmt = con.prepareStatement("DELETE FROM BANKS WHERE id = " + id);
-            ResultSet rs = pstmt.executeQuery();
+            int rs = pstmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();

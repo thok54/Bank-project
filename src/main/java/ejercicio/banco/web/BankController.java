@@ -24,7 +24,7 @@ public class BankController {
         return bankService.find(id);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/byName/{name}")
     public List<Bank> getByName(@PathVariable String name) {
         return bankService.findByName(name);
     }

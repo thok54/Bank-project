@@ -45,21 +45,12 @@ public class AccountServiceImplTest {
 
     @Test
     public void testProcessAccountsReturnsCorrectList() {
-        // Given
         when(repository.findAll()).thenReturn(Arrays.asList(expectedAccount));
-        // When
         List<Account> accounts = accountService.process();
-        // Then
+
         verify(repository).findAll();
         assertNotNull(accounts);
         assertEquals(ACCOUNT_ID, accounts.get(0).getId());
-    }
-
-    @Test
-    public void testProcessAccountsWithNullFilenameThrowsIllegalArgumentException() {
-        expectedEx.expect(IllegalArgumentException.class);
-        accountService.process();
-        expectedEx.expectMessage("Filename must not be null");
     }
 
     @Test
@@ -77,26 +68,32 @@ public class AccountServiceImplTest {
 
 
     @Test
-    public void testFindAccountsCallsFindFromRepository() {
+    public void testFindAccountsCallsFindByNameFromRepository() {
         accountService.findByName(ACCOUNT_NAME);
         verify(repository).findByName(ACCOUNT_NAME);
     }
 
     @Test
-    public void testStoreAccountCallsFindFromRepository() {
+    public void testStoreAccountCallsStoreFromRepository() {
         accountService.store(expectedAccount);
         verify(repository).store(expectedAccount);
     }
 
     @Test
-    public void testUpdateAccountCallsFindFromRepository() {
+    public void testUpdateAccountCallsUpdateFromRepository() {
         accountService.update(ACCOUNT_ID, expectedAccount);
         verify(repository).update(ACCOUNT_ID, expectedAccount);
     }
 
     @Test
-    public void testDeleteAccountCallsFindFromRepository() {
+    public void testDeleteAccountCallsDeleteFromRepository() {
         accountService.delete(ACCOUNT_ID);
         verify(repository).delete(ACCOUNT_ID);
+    }
+
+    @Test
+    public void testResetAccountCallsResetFromRepository() {
+        accountService.reset(expectedAccount);
+        verify(repository).reset(expectedAccount);
     }
 }
