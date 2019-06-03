@@ -126,7 +126,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
             Integer userId = payment.getUserId();
             Float amount = payment.getAmount();
 
-            String query = String.format("UPDATE PAYMENTS SET bankId = %d, %d, %f WHERE id = %d", bankId, userId, amount, id);
+            String query = String.format("UPDATE PAYMENTS SET bankId = %d, userID = %d, amount = %f WHERE id = %d", bankId, userId, amount, id);
             PreparedStatement pstmt = con.prepareStatement(query);
             int rs = pstmt.executeUpdate();
 

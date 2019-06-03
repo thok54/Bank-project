@@ -34,9 +34,9 @@ public class PaymentController {
         paymentService.store(payment);
     }
 
-    @PostMapping("/{id}")
-    public void update(@PathVariable Integer position, @RequestBody Payment payment) {
-        paymentService.update(position, payment);
+    @PutMapping("/{id}")
+    public void update(@PathVariable Integer id, @RequestBody Payment payment) {
+        paymentService.update(id, payment);
     }
 
     @DeleteMapping("/{id}")
