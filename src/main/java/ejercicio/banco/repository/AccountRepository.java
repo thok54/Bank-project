@@ -9,7 +9,7 @@ public interface AccountRepository {
 
     List<Account> findAll();
 
-    Account find(int id) throws SQLException;
+    Account find(int id);
 
     List<Account> findByName(String name);
 
