@@ -1,13 +1,10 @@
 package ejercicio.banco.service;
 
 import ejercicio.banco.dto.Account;
-import ejercicio.banco.repository.AccountNotFoundException;
 import ejercicio.banco.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,16 +20,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account find(int accountId) {
-        Account account = null;
-        try {
-            account = repository.find(accountId);
-        } catch (AccountNotFoundException e) {
-            e.printStackTrace();
-            account = null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return account;
+        return repository.find(accountId);
     }
 
     @Override

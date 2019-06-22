@@ -1,7 +1,7 @@
 package ejercicio.banco.service;
 
 import ejercicio.banco.dto.Account;
-import ejercicio.banco.repository.AccountNotFoundException;
+import ejercicio.banco.repository.EntityNotFoundException;
 import ejercicio.banco.repository.MySqlAccountRepository;
 import org.junit.Rule;
 import org.junit.Test;
@@ -61,7 +61,7 @@ public class AccountServiceImplTest {
 
     @Test
     public void testFindAccountReturnsNullIfAccountNotFoundExceptionIsThrown() {
-        when(repository.find(INVALID_ACCOUNT_ID)).thenThrow(new AccountNotFoundException(""));
+        when(repository.find(INVALID_ACCOUNT_ID)).thenThrow(new EntityNotFoundException(""));
         Account account = accountService.find(INVALID_ACCOUNT_ID);
         assertNull(account);
     }
