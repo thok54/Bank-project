@@ -25,7 +25,6 @@ public class MySqlPaymentRepository implements PaymentRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            //Reads PAYMENTS table, returning results
             PreparedStatement pstmt = con.prepareStatement("select * from PAYMENTS");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -50,19 +49,16 @@ public class MySqlPaymentRepository implements PaymentRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            //Reads PAYMENTS table, returning results
-            PreparedStatement pstmt = con.prepareStatement("select * from PAYMENTS");
+            PreparedStatement pstmt = con.prepareStatement("select * from PAYMENTS where id = " + id);
             ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                Integer currentId = rs.getInt("id");
-                if (id == currentId) {
-                    Integer bankId = rs.getInt("bankId");
-                    Integer userId = rs.getInt("userId");
-                    Float amount = rs.getFloat("amount");
-                    Payment payment = new Payment(id, bankId, userId, amount);
-                    return payment;
-                }
+            if (rs.next()) {
+                Integer bankId = rs.getInt("bankId");
+                Integer userId = rs.getInt("userId");
+                Float amount = rs.getFloat("amount");
+                Payment payment = new Payment(id, bankId, userId, amount);
+                return payment;
             }
+            throw new EntityNotFoundException(String.format("Payment with ID = %d does not exist", id));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -78,25 +74,23 @@ public class MySqlPaymentRepository implements PaymentRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            //Reads PAYMENTS table, returning results
-            PreparedStatement pstmt = con.prepareStatement("select * from PAYMENTS");
+            PreparedStatement pstmt = con.prepareStatement("select * from PAYMENTS where bankId = " + bankId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                Integer currentId = rs.getInt("bankId");
-                if (bankId == currentId) {
-                    Integer id = rs.getInt("id");
-                    Integer userId = rs.getInt("userId");
-                    Float amount = rs.getFloat("amount");
-                    Payment payment = new Payment(id, bankId, userId, amount);
-                    payments.add(payment);
-                }
+                Integer id = rs.getInt("id");
+                Integer userId = rs.getInt("userId");
+                Float amount = rs.getFloat("amount");
+                Payment payment = new Payment(id, bankId, userId, amount);
+                payments.add(payment);
+                return payments;
             }
+            throw new EntityNotFoundException(String.format("Payment with bankId = %d does not exist", bankId));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             dataBaseUtil.closeConections(con);
         }
-        return payments;
+        return null;
     }
 
     @Override
