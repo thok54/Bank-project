@@ -52,7 +52,7 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
 
     @Test
     public void testFindReturnsNullWhenItemNotFound() throws SQLException {
-        executeQuery(util, "select * from ACCOUNTS");
+        executeQuery(util, "select * from ACCOUNTS where id=3");
 
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getInt("id")).thenReturn(expectedAccount1.getId()).thenReturn(expectedAccount2.getId());
@@ -63,13 +63,15 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
 
     @Test
     public void testFindReturnsProperItem() throws SQLException {
-        executeQuery(util, "select * from ACCOUNTS");
+        executeQuery(util, "select * from ACCOUNTS where id=2");
 
-        when(resultSet.next()).thenReturn(true).thenReturn(false);
-        when(resultSet.getString("name")).thenReturn(expectedAccount2.getName());
-        when(resultSet.getInt("id")).thenReturn(expectedAccount2.getId());
-        when(resultSet.getFloat("money")).thenReturn(expectedAccount2.getMoney());
-        when(resultSet.getString("iban")).thenReturn(expectedAccount2.getIban());
+        when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
+        when(resultSet.getString("name")).thenReturn(expectedAccount1.getName()).thenReturn(expectedAccount2.getName());
+        when(resultSet.getInt("id")).thenReturn(expectedAccount1.getId()).thenReturn(expectedAccount2.getId());
+        when(resultSet.getFloat("money")).thenReturn(expectedAccount1.getMoney()).thenReturn(expectedAccount2.getMoney());
+        when(resultSet.getString("iban")).thenReturn(expectedAccount1.getIban()).thenReturn(expectedAccount2.getIban());
+
+
 
         account = repository.find(2);
         assertEquals(expectedAccount2, account);
@@ -77,7 +79,7 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
 
     @Test
     public void testFindByNameReturnsNullWhenItemsNotFound() throws SQLException {
-        executeQuery(util, "select * from ACCOUNTS");
+        executeQuery(util, "select * from ACCOUNTS where name = nothing");
 
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getString("name")).thenReturn(expectedAccount1.getName()).thenReturn(expectedAccount2.getName());
@@ -89,7 +91,7 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
 
     @Test
     public void testFindByNameReturnsProperItems() throws SQLException {
-        executeQuery(util, "select * from ACCOUNTS");
+        executeQuery(util, "select * from ACCOUNTS where name = " + expectedAccount2.getName());
 
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getString("name")).thenReturn(expectedAccount1.getName()).thenReturn(expectedAccount2.getName());
@@ -104,7 +106,7 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
         assertEquals(expectedAccount2.getName(), accounts.get(0).getName());
     }
 
-    //TODO: Repository tests(store,update,delete,reset) and POSTMAN controllers
+    //TODO: Repository tests(store,update,delete,reset) and POSTMAN controllers, tests not working properly
 
     @Test
     public void testStoreStoresProperAccount() throws SQLException {

@@ -49,22 +49,22 @@ public class MySqlAccountRepository implements AccountRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            PreparedStatement pstmt = con.prepareStatement("select * from ACCOUNTS where id = " + id);
+            PreparedStatement pstmt = con.prepareStatement("select * from ACCOUNTS where id=" + id);
             ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
+            if(rs.getInt("id")== id) {
                 String name = rs.getString("name");
                 Float money = rs.getFloat("money");
                 String iban = rs.getString("iban");
                 return new Account(id, name, money, iban);
             }
             throw new EntityNotFoundException(String.format("Account with ID = %d does not exist", id));
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            dataBaseUtil.closeConections(con);
-        }
-        return null;
-    }
+    } catch(Exception e)
+
+    { e.printStackTrace();
+    } finally{
+        dataBaseUtil.closeConections(con);
+    }return null;
+}
 
     @Override
     public List<Account> findByName(String name) {
@@ -76,14 +76,16 @@ public class MySqlAccountRepository implements AccountRepository {
             PreparedStatement pstmt = con.prepareStatement("select * from ACCOUNTS where name = " + name);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                Integer id = rs.getInt("id");
-                Float money = rs.getFloat("money");
-                String iban = rs.getString("iban");
-                Account account = new Account(id, name, money, iban);
-                accounts.add(account);
-                return accounts;
+                if (rs.getString("name") == name) {
+                    Integer id = rs.getInt("id");
+                    Float money = rs.getFloat("money");
+                    String iban = rs.getString("iban");
+                    Account account = new Account(id, name, money, iban);
+                    accounts.add(account);
+                }
             }
-            throw new EntityNotFoundException(String.format("Account with NAME = %s does not exist", name));
+            return accounts;
+            //throw new EntityNotFoundException(String.format("Account with NAME = %s does not exist", name));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
