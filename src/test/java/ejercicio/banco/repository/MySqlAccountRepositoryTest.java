@@ -20,17 +20,15 @@ import static org.mockito.Mockito.when;
 public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
 
     private Account account;
-    private Account expectedAccount1 = new Account(1, "Peter",(float)3.00, "PIPIRANA87");
-    private Account expectedAccount2 = new Account(2, "Aurelio", (float)8.49, "SATURN15STINKS");
-    private Account expectedAccount3 = new Account(3, "Manolola", (float)14.41, "N0105E");
+    private Account expectedAccount1 = new Account(1, "Peter", (float) 3.00, "PIPIRANA87");
+    private Account expectedAccount2 = new Account(2, "Aurelio", (float) 8.49, "SATURN15STINKS");
+    private Account expectedAccount3 = new Account(3, "Manolola", (float) 14.41, "N0105E");
 
     @Mock
     private DataBaseUtil util;
 
     @InjectMocks
     MySqlAccountRepository repository;
-
-    //TODO: Repository tests(store,update,delete,reset) and POSTMAN controllers
 
     @Test
     public void testFindAllReturnsFullList() throws SQLException {
@@ -106,38 +104,40 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
         assertEquals(expectedAccount2.getName(), accounts.get(0).getName());
     }
 
+    //TODO: Repository tests(store,update,delete,reset) and POSTMAN controllers
+
     @Test
     public void testStoreStoresProperAccount() throws SQLException {
 
     }
 
     @Test
-    public void testUpdateUpdatesProperAccount() throws SQLException{
+    public void testUpdateUpdatesProperAccount() throws SQLException {
 
     }
 
     @Test
-    public void testUpdateThrowsExceptionWhenIdNotFound() throws SQLException{
+    public void testUpdateThrowsExceptionWhenIdNotFound() throws SQLException {
 
     }
 
     @Test
-    public void testDeleteDeletesProperAccount() throws SQLException{
+    public void testDeleteDeletesProperAccount() throws SQLException {
 
     }
 
     @Test
-    public void testDeleteThrowsExceptionWhenIdNotFound() throws SQLException{
+    public void testDeleteThrowsExceptionWhenIdNotFound() throws SQLException {
 
     }
 
     @Test
-    public void testResetResetsProperAccount() throws SQLException{
+    public void testResetResetsProperAccount() throws SQLException {
 
     }
 
     @Test
-    public void testResetThrowsExceptionWhenAccountFound() throws SQLException{
+    public void testResetThrowsExceptionWhenAccountFound() throws SQLException {
 
     }
 }

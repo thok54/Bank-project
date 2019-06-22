@@ -31,7 +31,7 @@ public class DataBaseUtil {
         return con;
     }
 
-    public void executeQuery(Connection con, String query){
+    public void executeQuery(Connection con, String query) {
         try {
             Statement stmt = con.createStatement();
             stmt.executeUpdate(query);
@@ -39,14 +39,12 @@ public class DataBaseUtil {
                 stmt.close();
             } catch (Exception e) {
             }
-        }
-        catch (Exception e){
-            System.out.println("Query: '"+ query+"' not possible");
+        } catch (Exception e) {
+            System.out.println("Query: '" + query + "' not possible");
         }
     }
 
     public static void showTables(Connection con) throws SQLException {
-        //Reads BANKS table, returning results
         PreparedStatement pstmt = con.prepareStatement("select * from BANKS");
         ResultSet rs = pstmt.executeQuery();
         System.out.println("BANKS");
@@ -56,7 +54,6 @@ public class DataBaseUtil {
             String address = rs.getString("address");
             System.out.println(id + " " + name + ", in " + address);
         }
-        //Reads ACCOUNTS table, returning results
         pstmt = con.prepareStatement("select * from ACCOUNTS");
         rs = pstmt.executeQuery();
         System.out.println("ACCOUNTS");
@@ -67,7 +64,6 @@ public class DataBaseUtil {
             String iban = rs.getString("iban");
             System.out.println(id + " " + name + ", with $" + money + "; iban code: " + iban);
         }
-        //Reads PAYMENTS table, returning results
         pstmt = con.prepareStatement("select * from PAYMENTS");
         rs = pstmt.executeQuery();
         System.out.println("PAYMENTS");
@@ -78,7 +74,6 @@ public class DataBaseUtil {
             Float amount = rs.getFloat("amount");
             System.out.println(id + "; bank id: " + bankId + "; user id:" + userId + "; for an amount of $" + amount);
         }
-        //Closing statement and ResultSet
         try {
             pstmt.close();
         } catch (Exception e) {

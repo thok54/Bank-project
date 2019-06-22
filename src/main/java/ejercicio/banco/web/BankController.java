@@ -3,6 +3,7 @@ package ejercicio.banco.web;
 import ejercicio.banco.dto.Bank;
 import ejercicio.banco.service.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,16 +31,19 @@ public class BankController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void store(@RequestBody Bank bank) {
         bankService.store(bank);
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody Bank bank) {
         bankService.update(id, bank);
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
         bankService.delete(id);
     }

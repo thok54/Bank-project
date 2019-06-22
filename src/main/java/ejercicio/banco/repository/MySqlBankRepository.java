@@ -24,7 +24,6 @@ public class MySqlBankRepository implements BankRepository {
 
         Connection con = dataBaseUtil.startConnection();
         try {
-            //Reads BANKS table, returning results
             PreparedStatement pstmt = con.prepareStatement("select * from BANKS");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -47,18 +46,15 @@ public class MySqlBankRepository implements BankRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            //Reads BANKS table, returning results
-            PreparedStatement pstmt = con.prepareStatement("select * from BANKS");
+            PreparedStatement pstmt = con.prepareStatement("select * from BANKS where id = " + id);
             ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                Integer currentId = rs.getInt("id");
-                if (id == currentId) {
-                    String name = rs.getString("name");
-                    String address = rs.getString("address");
-                    Bank bank = new Bank(id, name, address);
-                    return bank;
-                }
+            if (rs.next()) {
+                String name = rs.getString("name");
+                String address = rs.getString("address");
+                Bank bank = new Bank(id, name, address);
+                return bank;
             }
+            throw new EntityNotFoundException(String.format("Bank with ID = %d does not exist", id));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -73,24 +69,22 @@ public class MySqlBankRepository implements BankRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            //Reads BANKS table, returning results
-            PreparedStatement pstmt = con.prepareStatement("select * from BANKS");
+            PreparedStatement pstmt = con.prepareStatement("select * from BANKS where name = " + name);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                String currentName = rs.getString("name");
-                if (name.equals(currentName)) {
-                    Integer id = rs.getInt("id");
-                    String address = rs.getString("address");
-                    Bank bank = new Bank(id, name, address);
-                    banks.add(bank);
-                }
+                Integer id = rs.getInt("id");
+                String address = rs.getString("address");
+                Bank bank = new Bank(id, name, address);
+                banks.add(bank);
+                return banks;
             }
+            throw new EntityNotFoundException(String.format("Bank with name = %s does not exist", name));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             dataBaseUtil.closeConections(con);
         }
-        return banks;
+        return null;
     }
 
 

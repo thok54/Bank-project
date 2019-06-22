@@ -25,7 +25,6 @@ public class MySqlAccountRepository implements AccountRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            //Reads ACCOUNTS table, returning results
             PreparedStatement pstmt = con.prepareStatement("select * from ACCOUNTS");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -50,8 +49,6 @@ public class MySqlAccountRepository implements AccountRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            // TODO: Change this to use where clause
-            //Reads ACCOUNTS table, returning results
             PreparedStatement pstmt = con.prepareStatement("select * from ACCOUNTS where id = " + id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -60,7 +57,7 @@ public class MySqlAccountRepository implements AccountRepository {
                 String iban = rs.getString("iban");
                 return new Account(id, name, money, iban);
             }
-            throw new EntityNotFoundException(String.format("Account with ID=%d does not exist", id));
+            throw new EntityNotFoundException(String.format("Account with ID = %d does not exist", id));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -76,25 +73,23 @@ public class MySqlAccountRepository implements AccountRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            //Reads ACCOUNTS table, returning results
-            PreparedStatement pstmt = con.prepareStatement("select * from ACCOUNTS");
+            PreparedStatement pstmt = con.prepareStatement("select * from ACCOUNTS where name = " + name);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                String currentName = rs.getString("name");
-                if (name.equals(currentName)) {
-                    Integer id = rs.getInt("id");
-                    Float money = rs.getFloat("money");
-                    String iban = rs.getString("iban");
-                    Account account = new Account(id, name, money, iban);
-                    accounts.add(account);
-                }
+                Integer id = rs.getInt("id");
+                Float money = rs.getFloat("money");
+                String iban = rs.getString("iban");
+                Account account = new Account(id, name, money, iban);
+                accounts.add(account);
+                return accounts;
             }
+            throw new EntityNotFoundException(String.format("Account with NAME = %s does not exist", name));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             dataBaseUtil.closeConections(con);
         }
-        return accounts;
+        return null;
     }
 
     @Override
@@ -108,8 +103,6 @@ public class MySqlAccountRepository implements AccountRepository {
             String query = String.format("INSERT INTO ACCOUNTS (name, money, iban) VALUES (\"%s\", %f, \"%s\")", name, money, iban);
             PreparedStatement pstmt = con.prepareStatement(query);
             pstmt.executeUpdate();
-
-            // TODO: Return created account
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -130,8 +123,6 @@ public class MySqlAccountRepository implements AccountRepository {
             String query = String.format("UPDATE ACCOUNTS SET name = \"%s\", money = %f, iban = \"%s\" WHERE id = %d", name, money, iban, id);
             PreparedStatement pstmt = con.prepareStatement(query);
             pstmt.executeUpdate();
-
-            // TODO: Return updated account
 
         } catch (SQLException e) {
             e.printStackTrace();
