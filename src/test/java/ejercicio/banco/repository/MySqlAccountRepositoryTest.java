@@ -2,7 +2,9 @@ package ejercicio.banco.repository;
 
 import ejercicio.banco.dto.Account;
 import ejercicio.banco.util.DataBaseUtil;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -30,6 +32,9 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
     @InjectMocks
     MySqlAccountRepository repository;
 
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
+
     @Test
     public void testFindAllReturnsFullList() throws SQLException {
         executeQuery(util, "select * from ACCOUNTS");
@@ -52,10 +57,9 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
 
     @Test
     public void testFindReturnsNullWhenItemNotFound() throws SQLException {
-        executeQuery(util, "select * from ACCOUNTS where id=3");
+        executeQuery(util, "select * from ACCOUNTS where id = 3");
 
-        when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(resultSet.getInt("id")).thenReturn(expectedAccount1.getId()).thenReturn(expectedAccount2.getId());
+        when(resultSet.next()).thenReturn(false);
 
         account = repository.find(3);
         assertNull(account);
@@ -63,15 +67,12 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
 
     @Test
     public void testFindReturnsProperItem() throws SQLException {
-        executeQuery(util, "select * from ACCOUNTS where id=2");
+        executeQuery(util, "select * from ACCOUNTS where id = 2");
 
-        when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(resultSet.getString("name")).thenReturn(expectedAccount1.getName()).thenReturn(expectedAccount2.getName());
-        when(resultSet.getInt("id")).thenReturn(expectedAccount1.getId()).thenReturn(expectedAccount2.getId());
-        when(resultSet.getFloat("money")).thenReturn(expectedAccount1.getMoney()).thenReturn(expectedAccount2.getMoney());
-        when(resultSet.getString("iban")).thenReturn(expectedAccount1.getIban()).thenReturn(expectedAccount2.getIban());
-
-
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getString("name")).thenReturn(expectedAccount2.getName());
+        when(resultSet.getFloat("money")).thenReturn(expectedAccount2.getMoney());
+        when(resultSet.getString("iban")).thenReturn(expectedAccount2.getIban());
 
         account = repository.find(2);
         assertEquals(expectedAccount2, account);
@@ -81,11 +82,9 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
     public void testFindByNameReturnsNullWhenItemsNotFound() throws SQLException {
         executeQuery(util, "select * from ACCOUNTS where name = nothing");
 
-        when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(resultSet.getString("name")).thenReturn(expectedAccount1.getName()).thenReturn(expectedAccount2.getName());
+        when(resultSet.next()).thenReturn(false);
 
         List<Account> accounts = repository.findByName("nothing");
-
         assertTrue(accounts.isEmpty());
     }
 
@@ -94,7 +93,6 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
         executeQuery(util, "select * from ACCOUNTS where name = " + expectedAccount2.getName());
 
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(resultSet.getString("name")).thenReturn(expectedAccount1.getName()).thenReturn(expectedAccount2.getName());
         when(resultSet.getInt("id")).thenReturn(expectedAccount1.getId()).thenReturn(expectedAccount2.getId());
         when(resultSet.getFloat("money")).thenReturn(expectedAccount1.getMoney()).thenReturn(expectedAccount2.getMoney());
         when(resultSet.getString("iban")).thenReturn(expectedAccount1.getIban()).thenReturn(expectedAccount2.getIban());

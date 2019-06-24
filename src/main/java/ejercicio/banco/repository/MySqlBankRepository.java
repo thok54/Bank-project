@@ -48,12 +48,12 @@ public class MySqlBankRepository implements BankRepository {
         try {
             PreparedStatement pstmt = con.prepareStatement("select * from BANKS where id = " + id);
             ResultSet rs = pstmt.executeQuery();
-            //if (rs.next()) {
+            if (rs.next()) {
                 String name = rs.getString("name");
                 String address = rs.getString("address");
                 Bank bank = new Bank(id, name, address);
                 return bank;
-            //}throw new EntityNotFoundException(String.format("Bank with ID = %d does not exist", id));
+            }throw new EntityNotFoundException(String.format("Bank with ID = %d does not exist", id));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
