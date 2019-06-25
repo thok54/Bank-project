@@ -46,14 +46,14 @@ public class MySqlBankRepository implements BankRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            PreparedStatement pstmt = con.prepareStatement("select * from BANKS where id = " + id);
+            PreparedStatement pstmt = con.prepareStatement(String.format("select * from BANKS where id = %s", id));
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 String name = rs.getString("name");
                 String address = rs.getString("address");
-                Bank bank = new Bank(id, name, address);
-                return bank;
-            }throw new EntityNotFoundException(String.format("Bank with ID = %d does not exist", id));
+                return new Bank(id, name, address);
+            }
+            throw new EntityNotFoundException(String.format("Bank with ID = %d does not exist", id));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -68,22 +68,24 @@ public class MySqlBankRepository implements BankRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            PreparedStatement pstmt = con.prepareStatement("select * from BANKS where name = " + name);
+            PreparedStatement pstmt = con.prepareStatement(String.format("select * from BANKS where name = %s", name));
             ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                Integer id = rs.getInt("id");
-                String address = rs.getString("address");
-                Bank bank = new Bank(id, name, address);
-                banks.add(bank);
+            if (rs.next()) {
+                while (rs.next()) {
+                    Integer id = rs.getInt("id");
+                    String address = rs.getString("address");
+                    Bank bank = new Bank(id, name, address);
+                    banks.add(bank);
+                }
+                return banks;
             }
-            return banks;
-            //throw new EntityNotFoundException(String.format("Bank with name = %s does not exist", name));
+            throw new EntityNotFoundException(String.format("Bank with name = %s does not exist", name));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             dataBaseUtil.closeConections(con);
         }
-        return null;
+        return banks;
     }
 
 

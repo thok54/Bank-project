@@ -48,7 +48,7 @@ public class MySqlAccountRepository implements AccountRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            PreparedStatement pstmt = con.prepareStatement("select * from ACCOUNTS where id = " + id);
+            PreparedStatement pstmt = con.prepareStatement(String.format("select * from ACCOUNTS where id = %s", id));
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 String name = rs.getString("name");
@@ -71,7 +71,7 @@ public class MySqlAccountRepository implements AccountRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            PreparedStatement pstmt = con.prepareStatement("select * from ACCOUNTS where name = " + name);
+            PreparedStatement pstmt = con.prepareStatement(String.format("select * from ACCOUNTS where name = %s", name));
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 while (rs.next()) {

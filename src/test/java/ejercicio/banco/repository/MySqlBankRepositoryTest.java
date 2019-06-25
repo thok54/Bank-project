@@ -49,10 +49,9 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
 
     @Test
     public void testFindReturnsNullWhenItemNotFound() throws SQLException {
-        executeQuery(util, "select * from BANKS");
+        executeQuery(util, "select * from BANKS where id = 3");
 
-        when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(resultSet.getInt("id")).thenReturn(expectedBank1.getId()).thenReturn(expectedBank2.getId());
+        when(resultSet.next()).thenReturn(false);
 
         bank = repository.find(3);
         assertNull(bank);
@@ -60,11 +59,10 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
 
     @Test
     public void testFindReturnsProperItem() throws SQLException {
-        executeQuery(util, "select * from BANKS");
+        executeQuery(util, "select * from BANKS where id = 2");
 
         when(resultSet.next()).thenReturn(true).thenReturn(false);
         when(resultSet.getString("name")).thenReturn(expectedBank2.getName());
-        when(resultSet.getInt("id")).thenReturn(expectedBank2.getId());
         when(resultSet.getString("address")).thenReturn(expectedBank2.getAddress());
 
         bank = repository.find(2);
@@ -72,23 +70,10 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
     }
 
     @Test
-    public void testFindByNameThrowsExceptionWhenNull() throws SQLException {
-        executeQuery(util, "select * from BANKS");
+    public void testFindByNameReturnsEmptyListWhenItemsNotFound() throws SQLException {
+        executeQuery(util, String.format("select * from BANKS where name = %s", "nothing"));
 
-        when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(resultSet.getString("name")).thenReturn(expectedBank1.getName()).thenReturn(expectedBank2.getName());
-
-        List<Bank> banks = repository.findByName("name");
-        assertTrue(banks.isEmpty());
-    }
-
-    @Test
-    public void testFindByNameReturnsNullWhenItemsNotFound() throws SQLException {
-        executeQuery(util, "select * from BANKS");
-
-        when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(resultSet.getString("name")).thenReturn(expectedBank1.getName()).thenReturn(expectedBank2.getName());
-
+        when(resultSet.next()).thenReturn(false);
 
         List<Bank> banks = repository.findByName("nothing");
         assertTrue(banks.isEmpty());
@@ -96,10 +81,9 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
 
     @Test
     public void testFindByNameReturnsProperItems() throws SQLException {
-        executeQuery(util, "select * from BANKS");
+        executeQuery(util, String.format("select * from BANKS where name = %s", expectedBank2.getName()));
 
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(resultSet.getString("name")).thenReturn(expectedBank1.getName()).thenReturn(expectedBank2.getName());
         when(resultSet.getInt("id")).thenReturn(expectedBank1.getId()).thenReturn(expectedBank2.getId());
         when(resultSet.getString("address")).thenReturn(expectedBank1.getAddress()).thenReturn(expectedBank2.getAddress());
 

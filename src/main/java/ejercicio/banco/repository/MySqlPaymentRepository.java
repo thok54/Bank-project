@@ -45,19 +45,19 @@ public class MySqlPaymentRepository implements PaymentRepository {
 
     @Override
     public Payment find(int id) {
-
         Connection con = dataBaseUtil.startConnection();
 
         try {
             PreparedStatement pstmt = con.prepareStatement("select * from PAYMENTS where id = " + id);
             ResultSet rs = pstmt.executeQuery();
-            //if (rs.next()) {
+            if (rs.next()) {
                 Integer bankId = rs.getInt("bankId");
                 Integer userId = rs.getInt("userId");
                 Float amount = rs.getFloat("amount");
                 Payment payment = new Payment(id, bankId, userId, amount);
                 return payment;
-            //}throw new EntityNotFoundException(String.format("Payment with ID = %d does not exist", id));
+            }
+            throw new EntityNotFoundException(String.format("Payment with ID = %d does not exist", id));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -69,27 +69,28 @@ public class MySqlPaymentRepository implements PaymentRepository {
     @Override
     public List<Payment> findByBankId(int bankId) {
         List<Payment> payments = new ArrayList();
-
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            PreparedStatement pstmt = con.prepareStatement("select * from PAYMENTS where bankId = " + bankId);
+            PreparedStatement pstmt = con.prepareStatement(String.format("select * from PAYMENTS where bankId = %s", bankId));
             ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                Integer id = rs.getInt("id");
-                Integer userId = rs.getInt("userId");
-                Float amount = rs.getFloat("amount");
-                Payment payment = new Payment(id, bankId, userId, amount);
-                payments.add(payment);
+            if (rs.next()) {
+                while (rs.next()) {
+                    Integer id = rs.getInt("id");
+                    Integer userId = rs.getInt("userId");
+                    Float amount = rs.getFloat("amount");
+                    Payment payment = new Payment(id, bankId, userId, amount);
+                    payments.add(payment);
+                }
+                return payments;
             }
-            return payments;
-            //throw new EntityNotFoundException(String.format("Payment with bankId = %d does not exist", bankId));
+            throw new EntityNotFoundException(String.format("Payment with bankId = %d does not exist", bankId));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             dataBaseUtil.closeConections(con);
         }
-        return null;
+        return payments;
     }
 
     @Override
