@@ -79,8 +79,8 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
     }
 
     @Test
-    public void testFindByNameReturnsNullWhenItemsNotFound() throws SQLException {
-        executeQuery(util, "select * from ACCOUNTS where name = nothing");
+    public void testFindByNameReturnsEmptyListWhenItemsNotFound() throws SQLException {
+        executeQuery(util, String.format("select * from ACCOUNTS where name = %s", "nothing"));
 
         when(resultSet.next()).thenReturn(false);
 
@@ -90,7 +90,7 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
 
     @Test
     public void testFindByNameReturnsProperItems() throws SQLException {
-        executeQuery(util, "select * from ACCOUNTS where name = " + expectedAccount2.getName());
+        executeQuery(util, String.format("select * from ACCOUNTS where name = %s", expectedAccount2.getName()));
 
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(resultSet.getInt("id")).thenReturn(expectedAccount1.getId()).thenReturn(expectedAccount2.getId());
@@ -104,7 +104,7 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
         assertEquals(expectedAccount2.getName(), accounts.get(0).getName());
     }
 
-    //TODO: Repository tests(store,update,delete,reset) and POSTMAN controllers, tests not working properly
+    //TODO: Repository tests(store,update,delete,reset)
 
     @Test
     public void testStoreStoresProperAccount() throws SQLException {
