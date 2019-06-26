@@ -48,7 +48,7 @@ public class MySqlAccountRepository implements AccountRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            PreparedStatement pstmt = con.prepareStatement(String.format("select * from ACCOUNTS where id = %s", id));
+            PreparedStatement pstmt = con.prepareStatement(String.format("select * from ACCOUNTS where id = %d", id));
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 String name = rs.getString("name");

@@ -72,7 +72,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            PreparedStatement pstmt = con.prepareStatement(String.format("select * from PAYMENTS where bankId = %s", bankId));
+            PreparedStatement pstmt = con.prepareStatement(String.format("select * from PAYMENTS where bankId = %d", bankId));
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 while (rs.next()) {
