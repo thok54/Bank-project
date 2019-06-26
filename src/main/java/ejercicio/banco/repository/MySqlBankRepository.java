@@ -46,7 +46,7 @@ public class MySqlBankRepository implements BankRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            PreparedStatement pstmt = con.prepareStatement(String.format("select * from BANKS where id = %s", id));
+            PreparedStatement pstmt = con.prepareStatement(String.format("select * from BANKS where id = %d", id));
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 String name = rs.getString("name");

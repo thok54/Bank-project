@@ -1,11 +1,9 @@
 package ejercicio.banco.web;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ejercicio.banco.Application;
 import ejercicio.banco.config.RepositoryConfig;
 import ejercicio.banco.dto.Account;
-import ejercicio.banco.dto.Payment;
 import ejercicio.banco.repository.AccountRepository;
 import ejercicio.banco.repository.EntityNotFoundException;
 import org.junit.Test;
@@ -21,9 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AccountControllerTest {
 
     private Account expectedAccount = new Account(1, "Peter", (float) 3.00, "PIPIRANA87");
+    List<Account> expectedAccounts = Collections.singletonList(expectedAccount);
 
     @Autowired
     private MockMvc mockMvc;
@@ -46,10 +43,12 @@ public class AccountControllerTest {
     @Autowired
     private AccountRepository mySqlAccountRepository;
 
+    private String convertToJson(Object data) throws Exception {
+        return objectMapper.writeValueAsString(data);
+    }
+
     @Test
     public void shouldReturnAllAccounts() throws Exception {
-        List<Account> expectedAccounts = Collections.singletonList(expectedAccount);
-
         when(mySqlAccountRepository.findAll()).thenReturn(expectedAccounts);
 
         mockMvc.perform(get("/account"))
@@ -67,10 +66,27 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void shouldReturnNotFoundWhenAccountDoesNotExist() throws Exception {
+    public void shouldReturnNotFoundWhenAccountsIdDoesNotExist() throws Exception {
         when(mySqlAccountRepository.find(10)).thenThrow(new EntityNotFoundException(""));
 
         mockMvc.perform(get("/account/10"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void shouldReturnAccountByName() throws Exception {
+        when(mySqlAccountRepository.findByName("Peter")).thenReturn(expectedAccounts);
+
+        mockMvc.perform(get("/account/byName/Peter"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(convertToJson(expectedAccounts)));
+    }
+
+    @Test
+    public void shouldReturnNotFoundWhenAccountsNameDoesNotExist() throws Exception {
+        when(mySqlAccountRepository.findByName("10")).thenThrow(new EntityNotFoundException(""));
+
+        mockMvc.perform(get("/account/byName/10"))
                 .andExpect(status().isNotFound());
     }
 
@@ -86,10 +102,15 @@ public class AccountControllerTest {
                 .andExpect(status().isNoContent());
     }
 
-    //TODO: test Delete Account, Reset Account, Bank Controller, and attempt payment controller test using memory
-
-    private String convertToJson(Object data) throws Exception {
-        return objectMapper.writeValueAsString(data);
+    @Test
+    public void shouldDeleteAccount() throws Exception {
+        mockMvc.perform(delete("/account/10").contentType(MediaType.APPLICATION_JSON).content(convertToJson(expectedAccount)))
+                .andExpect(status().isNoContent());
     }
 
+    @Test
+    public void shouldResetAccount() throws Exception {
+        mockMvc.perform(put("/account/reset").contentType(MediaType.APPLICATION_JSON).content(convertToJson(expectedAccount)))
+                .andExpect(status().isNoContent());
+    }
 }
