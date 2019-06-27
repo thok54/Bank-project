@@ -1,8 +1,10 @@
 package ejercicio.banco.dto;
 
+import javax.persistence.Entity;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+@Entity
 public class Payment implements InternalDto {
 
     private int paymentId;

@@ -33,8 +33,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<Payment> findByName(String name) {
-        int id = Integer.parseInt(name);
+    public List<Payment> findByBankId(int id) {
         return repository.findByBankId(id);
     }
 
