@@ -25,9 +25,9 @@ public class PaymentController {
         return paymentService.find(id);
     }
 
-    @GetMapping("/byName/{name}")
-    public List<Payment> getByName(@PathVariable String name) {
-        return paymentService.findByName(name);
+    @GetMapping("/byBankId/{id}")
+    public List<Payment> getByName(@PathVariable int id) {
+        return paymentService.findByBankId(id);
     }
 
     @PostMapping

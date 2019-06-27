@@ -23,8 +23,6 @@ public class PaymentServiceImplTest {
 
     private static final int BANK_ID = 10876;
     private static final int PAYMENT_ID = 27428;
-    private static final String PAYMENT_STRING = "27428";
-    private Bank tsBank = new Bank(BANK_ID);
     private Payment expectedPayment = new Payment(PAYMENT_ID);
 
     @Mock
@@ -57,7 +55,7 @@ public class PaymentServiceImplTest {
 
     @Test
     public void testFindPaymentsCallsFindByNameFromRepository() {
-        paymentService.findByName(PAYMENT_STRING);
+        paymentService.findByBankId(PAYMENT_ID);
         verify(repository).findByBankId(PAYMENT_ID);
     }
 
