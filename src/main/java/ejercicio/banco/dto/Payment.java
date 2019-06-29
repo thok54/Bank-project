@@ -29,6 +29,12 @@ public class Payment implements InternalDto {
         this.amount = amount;
     }
 
+    public Payment(int bankId, int userId, float amount) {
+        this.bankId = bankId;
+        this.userId = userId;
+        this.amount = amount;
+    }
+
     public int getId() {
         return id;
     }

@@ -70,16 +70,16 @@ public class MySqlBankRepository implements BankRepository {
         try {
             PreparedStatement pstmt = con.prepareStatement(String.format("select * from BANKS where name = %s", name));
             ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                while (rs.next()) {
-                    Integer id = rs.getInt("id");
-                    String address = rs.getString("address");
-                    Bank bank = new Bank(id, name, address);
-                    banks.add(bank);
-                }
-                return banks;
+            while (rs.next()) {
+                Integer id = rs.getInt("id");
+                String address = rs.getString("address");
+                Bank bank = new Bank(id, name, address);
+                banks.add(bank);
             }
-            throw new EntityNotFoundException(String.format("Bank with name = %s does not exist", name));
+            if (banks.isEmpty()) {
+                throw new EntityNotFoundException(String.format("Bank with name = %s does not exist", name));
+            }
+            return banks;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
