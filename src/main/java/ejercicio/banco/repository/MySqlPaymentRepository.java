@@ -74,17 +74,17 @@ public class MySqlPaymentRepository implements PaymentRepository {
         try {
             PreparedStatement pstmt = con.prepareStatement(String.format("select * from PAYMENTS where bankId = %d", bankId));
             ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                while (rs.next()) {
-                    Integer id = rs.getInt("id");
-                    Integer userId = rs.getInt("userId");
-                    Float amount = rs.getFloat("amount");
-                    Payment payment = new Payment(id, bankId, userId, amount);
-                    payments.add(payment);
-                }
-                return payments;
+            while (rs.next()) {
+                Integer id = rs.getInt("id");
+                Integer userId = rs.getInt("userId");
+                Float amount = rs.getFloat("amount");
+                Payment payment = new Payment(id, bankId, userId, amount);
+                payments.add(payment);
             }
-            throw new EntityNotFoundException(String.format("Payment with bankId = %d does not exist", bankId));
+            if (payments.isEmpty()) {
+                throw new EntityNotFoundException(String.format("Payment with bankId = %d does not exist", bankId));
+            }
+            return payments;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

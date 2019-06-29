@@ -80,7 +80,7 @@ public class MySqlAccountRepository implements AccountRepository {
                 String iban = rs.getString("iban");
                 Account account = new Account(id, name, money, iban);
                 accounts.add(account);
-            }//TODO: change for payment and Bank repositories
+            }
             if (accounts.isEmpty()) {
                 throw new EntityNotFoundException(String.format("Account with NAME = %s does not exist", name));
             }

@@ -19,8 +19,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class PaymentControllerTest {
     //TODO: Payment controller test using memory
     private Payment payment;
-    private Payment expectedPayment1 = new Payment(1, 3, 5, (float) 1.87);
-    private Payment expectedPayment2 = new Payment(2, 4, 6, (float) 3.41);
+    private Payment expectedPayment1 = new Payment(3, 5, (float) 1.87);
+    private Payment expectedPayment2 = new Payment(4, 6, (float) 3.41);
 
     @Autowired
     private TestEntityManager entityManager;
