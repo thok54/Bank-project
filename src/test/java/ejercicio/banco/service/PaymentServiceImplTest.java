@@ -3,7 +3,6 @@ package ejercicio.banco.service;
 import java.util.Arrays;
 import java.util.List;
 
-import ejercicio.banco.dto.Bank;
 import ejercicio.banco.dto.Payment;
 import ejercicio.banco.repository.MySqlPaymentRepository;
 import org.junit.Test;
@@ -44,7 +43,7 @@ public class PaymentServiceImplTest {
         verify(repository).findAll();
 
         assertNotNull(payments);
-        assertEquals(PAYMENT_ID, payments.get(0).getPaymentId());
+        assertEquals(PAYMENT_ID, payments.get(0).getId());
     }
 
     @Test

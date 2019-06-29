@@ -1,26 +1,27 @@
-package ejercicio.banco;
+package ejercicio.banco.config;
 
-import org.omg.CORBA.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.activation.DataSource;
+import javax.sql.DataSource;
+
 
 @Configuration
-@EnableJpaRepositories(basePackages = "org.baeldung.persistence.dao")
-@PropertySource("persistence-properties")
+@EnableJpaRepositories(basePackages = "ejercicio.banco.repository.jpa")
+@PropertySource("persistence.properties")
 @EnableTransactionManagement
 public class JpaConfig {
 
     @Autowired
     private Environment env;
 
-    /*@Bean
+    @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
@@ -29,11 +30,11 @@ public class JpaConfig {
         dataSource.setPassword(env.getProperty("jdbc.pass"));
 
         return dataSource;
-    }*/
+    }
 
     // configure entityManagerFactory
 
     // configure transactionManager
 
-    // configure additional Hibernate persistence-properties
+    // configure additional Hibernate persistence.properties
 }

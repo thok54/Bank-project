@@ -73,18 +73,20 @@ public class MySqlAccountRepository implements AccountRepository {
         try {
             PreparedStatement pstmt = con.prepareStatement(String.format("select * from ACCOUNTS where name = %s", name));
             ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                while (rs.next()) {
-                    Integer id = rs.getInt("id");
-                    Float money = rs.getFloat("money");
-                    String iban = rs.getString("iban");
-                    Account account = new Account(id, name, money, iban);
-                    accounts.add(account);
-                }
-                return accounts;
+
+            while (rs.next()) {
+                Integer id = rs.getInt("id");
+                Float money = rs.getFloat("money");
+                String iban = rs.getString("iban");
+                Account account = new Account(id, name, money, iban);
+                accounts.add(account);
+            }//TODO: change for payment and Bank repositories
+            if (accounts.isEmpty()) {
+                throw new EntityNotFoundException(String.format("Account with NAME = %s does not exist", name));
             }
-            throw new EntityNotFoundException(String.format("Account with NAME = %s does not exist", name));
-        } catch (Exception e) {
+            return accounts;
+        } catch (
+                Exception e) {
             e.printStackTrace();
         } finally {
             dataBaseUtil.closeConections(con);

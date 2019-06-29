@@ -1,13 +1,16 @@
 package ejercicio.banco.dto;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 @Entity
+@Table(name = "PAYMENTS")
 public class Payment implements InternalDto {
 
-    private int paymentId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     private int bankId;
     private int userId;
     private float amount;
@@ -16,22 +19,22 @@ public class Payment implements InternalDto {
     }
 
     public Payment(int id) {
-        this.paymentId = id;
+        this.id = id;
     }
 
-    public Payment(int paymentId, int bankId, int userId, float amount) {
-        this.paymentId = paymentId;
+    public Payment(int id, int bankId, int userId, float amount) {
+        this.id = id;
         this.bankId = bankId;
         this.userId = userId;
         this.amount = amount;
     }
 
-    public int getPaymentId() {
-        return paymentId;
+    public int getId() {
+        return id;
     }
 
-    public void setPaymentId(int paymentId) {
-        this.paymentId = paymentId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getBankId() {
@@ -61,7 +64,7 @@ public class Payment implements InternalDto {
     @Override
     public String toString() {
         return new StringJoiner(", ", Payment.class.getSimpleName() + "[", "]")
-                .add("paymentId=" + paymentId)
+                .add("id=" + id)
                 .add("bankId=" + bankId)
                 .add("userId=" + userId)
                 .add("amount=" + amount)
@@ -73,7 +76,7 @@ public class Payment implements InternalDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return paymentId == payment.paymentId &&
+        return id == payment.id &&
                 bankId == payment.bankId &&
                 userId == payment.userId &&
                 Float.compare(payment.amount, amount) == 0;
@@ -81,6 +84,6 @@ public class Payment implements InternalDto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(paymentId, bankId, userId, amount);
+        return Objects.hash(id, bankId, userId, amount);
     }
 }

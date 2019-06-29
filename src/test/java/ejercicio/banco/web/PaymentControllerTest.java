@@ -1,7 +1,8 @@
 package ejercicio.banco.web;
 
 import ejercicio.banco.dto.Payment;
-import ejercicio.banco.repository.PaymentRepository;
+
+import ejercicio.banco.repository.jpa.PaymentRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,13 @@ public class PaymentControllerTest {
     private PaymentRepository mySqlPaymentRepository;
 
 
-   /* @Test
+    @Test
     public void whenFind_thenReturnPayment() throws SQLException {
         entityManager.persist(expectedPayment1);
         entityManager.flush();
 
-        payment = mySqlPaymentRepository.find(1);
+        payment = mySqlPaymentRepository.getOne(1);
 
         assertThat(payment).isEqualTo(expectedPayment1);
-    }*/
+    }
 }
