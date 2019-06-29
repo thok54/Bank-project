@@ -1,10 +1,15 @@
 package ejercicio.banco.dto;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+@Entity
+@Table(name = "ACCOUNTS")
 public class Account implements InternalDto {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
     private float money;

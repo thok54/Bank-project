@@ -32,7 +32,7 @@ public class MySqlPaymentRepositoryTest extends AbstractMySqlRepositoryTest {
         executeQuery(util, "select * from PAYMENTS");
 
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(resultSet.getInt("id")).thenReturn(expectedPayment1.getPaymentId()).thenReturn(expectedPayment2.getPaymentId());
+        when(resultSet.getInt("id")).thenReturn(expectedPayment1.getId()).thenReturn(expectedPayment2.getId());
         when(resultSet.getInt("bankId")).thenReturn(expectedPayment1.getBankId()).thenReturn(expectedPayment2.getBankId());
         when(resultSet.getInt("userId")).thenReturn(expectedPayment1.getUserId()).thenReturn(expectedPayment2.getUserId());
         when(resultSet.getFloat("amount")).thenReturn(expectedPayment1.getAmount()).thenReturn(expectedPayment2.getAmount());
@@ -84,7 +84,7 @@ public class MySqlPaymentRepositoryTest extends AbstractMySqlRepositoryTest {
         executeQuery(util, "select * from PAYMENTS where bankId = " + expectedPayment2.getBankId());
 
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(resultSet.getInt("id")).thenReturn(expectedPayment1.getPaymentId()).thenReturn(expectedPayment2.getPaymentId());
+        when(resultSet.getInt("id")).thenReturn(expectedPayment1.getId()).thenReturn(expectedPayment2.getId());
         when(resultSet.getInt("userId")).thenReturn(expectedPayment1.getUserId()).thenReturn(expectedPayment2.getUserId());
         when(resultSet.getFloat("amount")).thenReturn(expectedPayment1.getAmount()).thenReturn(expectedPayment2.getAmount());
 
