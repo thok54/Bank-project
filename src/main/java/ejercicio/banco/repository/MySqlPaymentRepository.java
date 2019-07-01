@@ -48,14 +48,13 @@ public class MySqlPaymentRepository implements PaymentRepository {
         Connection con = dataBaseUtil.startConnection();
 
         try {
-            PreparedStatement pstmt = con.prepareStatement("select * from PAYMENTS where id = " + id);
+            PreparedStatement pstmt = con.prepareStatement(String.format("select * from PAYMENTS where id = %d", id));
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 Integer bankId = rs.getInt("bankId");
                 Integer userId = rs.getInt("userId");
                 Float amount = rs.getFloat("amount");
-                Payment payment = new Payment(id, bankId, userId, amount);
-                return payment;
+                return new Payment(id, bankId, userId, amount);
             }
             throw new EntityNotFoundException(String.format("Payment with ID = %d does not exist", id));
         } catch (Exception e) {
@@ -67,7 +66,7 @@ public class MySqlPaymentRepository implements PaymentRepository {
     }
 
     @Override
-    public List<Payment> findByBankId(int bankId) {
+    public List<Payment> findAllByBankId(int bankId) {
         List<Payment> payments = new ArrayList();
         Connection con = dataBaseUtil.startConnection();
 

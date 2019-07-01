@@ -75,7 +75,7 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
 
         when(resultSet.next()).thenReturn(false);
 
-        List<Bank> banks = repository.findByName("nothing");
+        List<Bank> banks = repository.findAllByName("nothing");
         assertTrue(banks.isEmpty());
     }
 
@@ -88,7 +88,7 @@ public class MySqlBankRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.getString("address")).thenReturn(expectedBank1.getAddress()).thenReturn(expectedBank2.getAddress());
 
 
-        List<Bank> banks = repository.findByName(expectedBank2.getName());
+        List<Bank> banks = repository.findAllByName(expectedBank2.getName());
         assertFalse(banks.isEmpty());
         assertEquals(expectedBank2.getName(), banks.get(0).getName());
     }

@@ -63,7 +63,7 @@ public class MySqlBankRepository implements BankRepository {
     }
 
     @Override
-    public List<Bank> findByName(String name) {
+    public List<Bank> findAllByName(String name) {
         List<Bank> banks = new ArrayList();
         Connection con = dataBaseUtil.startConnection();
 

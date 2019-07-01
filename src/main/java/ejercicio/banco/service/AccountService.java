@@ -11,7 +11,7 @@ public interface AccountService {
 
     Account find(int accountId);
 
-    List<Account> findByName(String name);
+    List<Account> findAllByName(String name);
 
     void store(Account acc);
 

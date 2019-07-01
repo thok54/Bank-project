@@ -66,7 +66,7 @@ public class MySqlAccountRepository implements AccountRepository {
     }
 
     @Override
-    public List<Account> findByName(String name) {
+    public List<Account> findAllByName(String name) {
         List<Account> accounts = new ArrayList();
         Connection con = dataBaseUtil.startConnection();
 

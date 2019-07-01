@@ -27,7 +27,7 @@ public class AccountController {
 
     @GetMapping("/byName/{name}")
     public List<Account> getByName(@PathVariable String name) {
-        return accountService.findByName(name);
+        return accountService.findAllByName(name);
     }
 
     @PostMapping

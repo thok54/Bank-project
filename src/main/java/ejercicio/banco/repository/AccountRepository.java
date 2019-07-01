@@ -11,7 +11,7 @@ public interface AccountRepository {
 
     Account find(int id);
 
-    List<Account> findByName(String name);
+    List<Account> findAllByName(String name);
 
     void store(Account account);
 

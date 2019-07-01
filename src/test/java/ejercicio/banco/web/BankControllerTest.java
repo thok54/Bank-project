@@ -75,7 +75,7 @@ public class BankControllerTest {
 
     @Test
     public void shouldReturnBankByName() throws Exception {
-        when(mySqlBankRepository.findByName("bestBank")).thenReturn(expectedBanks);
+        when(mySqlBankRepository.findAllByName("bestBank")).thenReturn(expectedBanks);
 
         mockMvc.perform(get("/bank/byName/bestBank"))
                 .andExpect(status().isOk())
@@ -84,7 +84,7 @@ public class BankControllerTest {
 
     @Test
     public void shouldReturnNotFoundWhenBanksNameDoesNotExist() throws Exception {
-        when(mySqlBankRepository.findByName("10")).thenThrow(new EntityNotFoundException(""));
+        when(mySqlBankRepository.findAllByName("10")).thenThrow(new EntityNotFoundException(""));
 
         mockMvc.perform(get("/bank/byName/10"))
                 .andExpect(status().isNotFound());

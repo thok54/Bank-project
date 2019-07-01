@@ -11,7 +11,7 @@ public interface BankService {
 
     Bank find(int n);
 
-    List<Bank> findByName(String name);
+    List<Bank> findAllByName(String name);
 
     void store(Bank bank);
 

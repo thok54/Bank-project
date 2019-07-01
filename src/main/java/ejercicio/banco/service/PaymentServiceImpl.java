@@ -33,8 +33,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<Payment> findByBankId(int id) {
-        return repository.findByBankId(id);
+    public List<Payment> findAllByBankId(int id) {
+        return repository.findAllByBankId(id);
     }
 
     @Override

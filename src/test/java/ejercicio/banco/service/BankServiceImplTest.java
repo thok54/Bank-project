@@ -54,8 +54,8 @@ public class BankServiceImplTest {
 
     @Test
     public void testFindBanksCallsFindByNameFromRepository() {
-        bankService.findByName(BANK_NAME);
-        verify(repository).findByName(BANK_NAME);
+        bankService.findAllByName(BANK_NAME);
+        verify(repository).findAllByName(BANK_NAME);
     }
 
     @Test

@@ -54,8 +54,8 @@ public class PaymentServiceImplTest {
 
     @Test
     public void testFindPaymentsCallsFindByNameFromRepository() {
-        paymentService.findByBankId(PAYMENT_ID);
-        verify(repository).findByBankId(PAYMENT_ID);
+        paymentService.findAllByBankId(PAYMENT_ID);
+        verify(repository).findAllByBankId(PAYMENT_ID);
     }
 
     @Test

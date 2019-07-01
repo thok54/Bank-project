@@ -10,7 +10,7 @@ public interface PaymentService {
 
     Payment find(int n);
 
-    List<Payment> findByBankId(int id);
+    List<Payment> findAllByBankId(int id);
 
     void store(Payment payment);
 

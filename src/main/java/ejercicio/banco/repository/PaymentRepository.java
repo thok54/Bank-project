@@ -10,7 +10,7 @@ public interface PaymentRepository {
 
     Payment find(int id) throws SQLException;
 
-    List<Payment> findByBankId(int id);
+    List<Payment> findAllByBankId(int id);
 
     void store(Payment payment);
 

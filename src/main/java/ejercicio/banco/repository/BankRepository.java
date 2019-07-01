@@ -10,7 +10,7 @@ public interface BankRepository {
 
     Bank find(int id) throws SQLException;
 
-    List<Bank> findByName(String name);
+    List<Bank> findAllByName(String name);
   
     void store(Bank bank);
 

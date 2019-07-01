@@ -69,8 +69,8 @@ public class AccountServiceImplTest {
 
     @Test
     public void testFindAccountsCallsFindByNameFromRepository() {
-        accountService.findByName(ACCOUNT_NAME);
-        verify(repository).findByName(ACCOUNT_NAME);
+        accountService.findAllByName(ACCOUNT_NAME);
+        verify(repository).findAllByName(ACCOUNT_NAME);
     }
 
     @Test

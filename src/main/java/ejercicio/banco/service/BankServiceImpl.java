@@ -33,8 +33,8 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public List<Bank> findByName(String name) {
-        return repository.findByName(name);
+    public List<Bank> findAllByName(String name) {
+        return repository.findAllByName(name);
     }
 
     @Override

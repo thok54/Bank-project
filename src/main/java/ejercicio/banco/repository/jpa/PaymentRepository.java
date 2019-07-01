@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface PaymentRepository extends JpaRepository<Payment, Integer> {
     List<Payment> findAllByBankId(Integer bankId);
+    void store(Payment payment);
+    void update(Integer id, Payment payment);
+    void delete(Integer id);
 }

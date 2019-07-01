@@ -10,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +83,7 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
 
         when(resultSet.next()).thenReturn(false);
 
-        List<Account> accounts = repository.findByName("nothing");
+        List<Account> accounts = repository.findAllByName("nothing");
         assertTrue(accounts.isEmpty());
     }
 
@@ -98,7 +97,7 @@ public class MySqlAccountRepositoryTest extends AbstractMySqlRepositoryTest {
         when(resultSet.getString("iban")).thenReturn(expectedAccount1.getIban()).thenReturn(expectedAccount2.getIban());
 
 
-        List<Account> accounts = repository.findByName(expectedAccount2.getName());
+        List<Account> accounts = repository.findAllByName(expectedAccount2.getName());
 
         assertFalse(accounts.isEmpty());
         assertEquals(expectedAccount2.getName(), accounts.get(0).getName());

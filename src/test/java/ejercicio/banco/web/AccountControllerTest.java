@@ -75,7 +75,7 @@ public class AccountControllerTest {
 
     @Test
     public void shouldReturnAccountByName() throws Exception {
-        when(mySqlAccountRepository.findByName("Peter")).thenReturn(expectedAccounts);
+        when(mySqlAccountRepository.findAllByName("Peter")).thenReturn(expectedAccounts);
 
         mockMvc.perform(get("/account/byName/Peter"))
                 .andExpect(status().isOk())
@@ -84,7 +84,7 @@ public class AccountControllerTest {
 
     @Test
     public void shouldReturnNotFoundWhenAccountsNameDoesNotExist() throws Exception {
-        when(mySqlAccountRepository.findByName("10")).thenThrow(new EntityNotFoundException(""));
+        when(mySqlAccountRepository.findAllByName("10")).thenThrow(new EntityNotFoundException(""));
 
         mockMvc.perform(get("/account/byName/10"))
                 .andExpect(status().isNotFound());
