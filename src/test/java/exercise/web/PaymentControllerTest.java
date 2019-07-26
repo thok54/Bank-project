@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -33,7 +34,7 @@ public class PaymentControllerTest {
     private PaymentRepository mySqlPaymentRepository;
 
 
-    /*@Test
+    @Test
     public void findAllReturnsAllPayments() throws SQLException {
         entityManager.persist(expectedPayment1);
         entityManager.persist(expectedPayment2);
@@ -86,7 +87,7 @@ public class PaymentControllerTest {
 
         List<Payment> payments = mySqlPaymentRepository.findAllByBankId(5);
         assertThat(payments.isEmpty());
-    }*/
+    }
 
     @Test
     public void storeCreatesNewPayment() throws SQLException {

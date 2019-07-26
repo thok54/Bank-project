@@ -1,7 +1,6 @@
 package exercise.service;
 
 import exercise.dto.Account;
-import exercise.repository.EntityNotFoundException;
 import exercise.repository.MySqlAccountRepository;
 import org.junit.Rule;
 import org.junit.Test;
