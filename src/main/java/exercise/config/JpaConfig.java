@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
-
 @Configuration
 @EnableJpaRepositories(basePackages = "exercise.repository.jpa")
 @PropertySource("persistence.properties")
